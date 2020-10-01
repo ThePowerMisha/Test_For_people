@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace WpfApp1{
+namespace TestTrainingProgram{
     public static class Placeholder{
         public static void add(this TextBox textbox, string placeholder) {
             //base styles

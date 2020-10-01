@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace WpfApp1{
+namespace TestTrainingProgram{
     public class SpecialColor{
         //fields
         private static Color Transparent = Color.FromArgb(0, 0, 0, 0);
