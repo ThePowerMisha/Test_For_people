@@ -12,8 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
-namespace TestTrainingProgram{
+namespace WpfApp1{
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
@@ -41,9 +42,6 @@ namespace TestTrainingProgram{
         //=======================navBar=======================
         //navBarButton1 ' ТЕОРЕТИЧЕСКИЙ МАТЕРИАЛ
         //-----hoverEffect
-        private void navBarButton1_MouseEnter(object sender, MouseEventArgs e){
-            navBarButton1.Background = SpecialColor.mainBackHover();
-        }
         private void navBarButton1_MouseLeave(object sender, MouseEventArgs e){
             navBarButton1.Background = SpecialColor.mainBack();
         }
@@ -51,9 +49,6 @@ namespace TestTrainingProgram{
 
         //navBarButton2 ' СПРАВКА
         //-----hoverEffect
-        private void navBarButton2_MouseEnter(object sender, MouseEventArgs e){
-            navBarButton2.Background = SpecialColor.mainBackHover();
-        }
         private void navBarButton2_MouseLeave(object sender, MouseEventArgs e){
             navBarButton2.Background = SpecialColor.mainBack();
         }
@@ -61,9 +56,6 @@ namespace TestTrainingProgram{
 
         //navBarButton3 ' О ПРОГРАММЕ
         //-----hoverEffect
-        private void navBarButton3_MouseEnter(object sender, MouseEventArgs e){
-            navBarButton3.Background = SpecialColor.mainBackHover();
-        }
         private void navBarButton3_MouseLeave(object sender, MouseEventArgs e){
             navBarButton3.Background = SpecialColor.mainBack();
         }
@@ -73,10 +65,6 @@ namespace TestTrainingProgram{
         //=======================mainLayout=======================
         //mainLayoutStart
         //-----hoverEffect
-        private void mainLayoutStart_MouseEnter(object sender, MouseEventArgs e){
-            mainLayoutStart.Background = SpecialColor.mainBlue();
-            mainLayoutStart.Foreground = SpecialColor.white();
-        }
         private void mainLayoutStart_MouseLeave(object sender, MouseEventArgs e) {
             mainLayoutStart.Background = SpecialColor.mainBack();
             mainLayoutStart.Foreground = SpecialColor.mainBlue();
@@ -85,10 +73,6 @@ namespace TestTrainingProgram{
 
         //mainLayoutResults
         //-----hoverEffect
-        private void mainLayoutResults_MouseEnter(object sender, MouseEventArgs e){
-            mainLayoutResults.Background = SpecialColor.mainBlue();
-            mainLayoutResults.Foreground = SpecialColor.white();
-        }
         private void mainLayoutResults_MouseLeave(object sender, MouseEventArgs e){
             mainLayoutResults.Background = SpecialColor.mainBack();
             mainLayoutResults.Foreground = SpecialColor.mainBlue();
@@ -97,10 +81,6 @@ namespace TestTrainingProgram{
 
         //mainLayoutExit
         //-----hoverEffect
-        private void mainLayoutExit_MouseEnter(object sender, MouseEventArgs e){
-            mainLayoutExit.Background = SpecialColor.mainBlue();
-            mainLayoutExit.Foreground = SpecialColor.white();
-        }
         private void mainLayoutExit_MouseLeave(object sender, MouseEventArgs e){
             mainLayoutExit.Background = SpecialColor.mainBack();
             mainLayoutExit.Foreground = SpecialColor.mainBlue();
@@ -109,10 +89,6 @@ namespace TestTrainingProgram{
 
         //recordBlock
         //-----hoverEffect
-        private void recordBlock_MouseEnter(object sender, MouseEventArgs e){
-            recordLabel.Foreground = SpecialColor.white();
-            recordBlock.Background = SpecialColor.mainBlue();
-        }
         private void recordBlock_MouseLeave(object sender, MouseEventArgs e){
             recordLabel.Foreground = SpecialColor.mainBlue();
             recordBlock.Background = SpecialColor.transparent();
