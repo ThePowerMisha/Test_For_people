@@ -55,6 +55,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="View\aboutProgramm.xaml.cs">
+      <DependentUpon>aboutProgramm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\mainPage.xaml.cs">
+      <DependentUpon>mainPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -69,6 +75,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\aboutProgramm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\mainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -95,6 +109,34 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="sources\" />
+    <Folder Include="ViewModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Karpenko.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Sinitsin.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Smirnov.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Jagaev.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\instWhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\vkWhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\vkBlue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\instBlue.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
