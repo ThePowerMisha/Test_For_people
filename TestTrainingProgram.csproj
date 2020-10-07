@@ -63,7 +63,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GeneralClass.cs" />
+    <Compile Include="Loader.cs" />
     <Compile Include="Placeholder.cs" />
+    <Compile Include="QuestionClass.cs" />
+    <Compile Include="ResultClass.cs" />
     <Compile Include="SpecialColor.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
