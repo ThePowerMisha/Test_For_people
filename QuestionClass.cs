@@ -3,8 +3,12 @@ using System.Runtime.CompilerServices;
 
 namespace TestTrainingProgram
 {
-    class QuestionClass
+    public class QuestionClass
     {
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        public QuestionClass(){}
         /// <summary>
         /// Конструктор класса
         /// </summary>
@@ -20,29 +24,30 @@ namespace TestTrainingProgram
             this.questionAnswer = questionAnswer;
             this.questionFormulaGraphs = questionFormulaGraphs;
         }
+        
         /// <summary>
         /// Текст вопроса
         /// </summary>
-        public string questionText { get; set; }
+        public string questionText { get; }
 
         /// <summary>
         /// Путь к изображениям
         /// </summary>
-        public string questionImagepath { get; set; }
+        public string questionImagepath { get; }
 
         /// <summary>
         /// Текст подсказки
         /// </summary>
-        public string questionHelptext { get; set; }
+        public string questionHelptext { get; }
 
         /// <summary>
         /// Ответы на вопросы
         /// </summary>
-        public string[] questionAnswer { get; set; }
+        public string[] questionAnswer { get; }
 
         /// <summary>
         /// Формула графика
         /// </summary>
-        public string questionFormulaGraphs { get; set; }
+        public string questionFormulaGraphs { get; }
     }
 }    
