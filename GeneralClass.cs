@@ -8,7 +8,7 @@ namespace TestTrainingProgram
         /// <summary>
         /// 
         /// </summary>
-        private List<QuestionClass> qustions = new List<QuestionClass>();
+        private List<QuestionClass> questions = new List<QuestionClass>();
         
         /// <summary>
         /// Возвращает данные по вопросу
@@ -16,7 +16,7 @@ namespace TestTrainingProgram
         /// <param name="index"></param>
         /// <returns></returns>
         public QuestionClass returnQuestionInfo(int index) {
-            return question[index];
+            return questions[index];
         }
         
         /// <summary>
