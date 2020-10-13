@@ -12,8 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
+using WpfApp1.View;
 
-namespace TestTrainingProgram{
+namespace WpfApp1{
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
@@ -21,120 +23,30 @@ namespace TestTrainingProgram{
         public MainWindow() {
             InitializeComponent();
 
-            //=============mainStyle================
-            mainLayoutStart.BorderBrush = SpecialColor.mainBlue();
-            mainLayoutResults.BorderBrush = SpecialColor.mainBlue();
-            mainLayoutExit.BorderBrush = SpecialColor.mainBlue();
-            
             //Настройка размеров всего приложения
             this.WindowState = WindowState.Maximized;
             this.WindowStyle = WindowStyle.None;
 
-            //placeholders
-            Placeholder.add(lastName, "Фамилия");
-            Placeholder.add(firstName, "Имя");
-            Placeholder.add(secondtName, "Отчество");
-            Placeholder.add(group, "Группа");
-            //=============mainStyle================
+            //ояистка шлавного грида
+            //mainContentGrid.Children.RemoveRange(0, mainContentGrid.Children.Count);
         }
-
-        //=======================navBar=======================
-        //navBarButton1 ' ТЕОРЕТИЧЕСКИЙ МАТЕРИАЛ
-        //-----hoverEffect
-        private void navBarButton1_MouseEnter(object sender, MouseEventArgs e){
-            navBarButton1.Background = SpecialColor.mainBackHover();
-        }
-        private void navBarButton1_MouseLeave(object sender, MouseEventArgs e){
-            navBarButton1.Background = SpecialColor.mainBack();
-        }
-        //-----hoverEffect
-
-        //navBarButton2 ' СПРАВКА
-        //-----hoverEffect
-        private void navBarButton2_MouseEnter(object sender, MouseEventArgs e){
-            navBarButton2.Background = SpecialColor.mainBackHover();
-        }
-        private void navBarButton2_MouseLeave(object sender, MouseEventArgs e){
-            navBarButton2.Background = SpecialColor.mainBack();
-        }
-        //-----hoverEffect
-
-        //navBarButton3 ' О ПРОГРАММЕ
-        //-----hoverEffect
-        private void navBarButton3_MouseEnter(object sender, MouseEventArgs e){
-            navBarButton3.Background = SpecialColor.mainBackHover();
-        }
-        private void navBarButton3_MouseLeave(object sender, MouseEventArgs e){
-            navBarButton3.Background = SpecialColor.mainBack();
-        }
-        //-----hoverEffect
-        //=======================navBar=======================
 
         //=======================mainLayout=======================
-        //mainLayoutStart
-        //-----hoverEffect
-        private void mainLayoutStart_MouseEnter(object sender, MouseEventArgs e){
-            mainLayoutStart.Background = SpecialColor.mainBlue();
-            mainLayoutStart.Foreground = SpecialColor.white();
-        }
-        private void mainLayoutStart_MouseLeave(object sender, MouseEventArgs e) {
-            mainLayoutStart.Background = SpecialColor.mainBack();
-            mainLayoutStart.Foreground = SpecialColor.mainBlue();
-        }
-        //-----hoverEffect
 
-        //mainLayoutResults
-        //-----hoverEffect
-        private void mainLayoutResults_MouseEnter(object sender, MouseEventArgs e){
-            mainLayoutResults.Background = SpecialColor.mainBlue();
-            mainLayoutResults.Foreground = SpecialColor.white();
+        //-----LoadedEvent-----
+        private void windowApp_Loaded(object sender, RoutedEventArgs e) {
+            contentControl.Content = new mainPage(this, currentRecord);
         }
-        private void mainLayoutResults_MouseLeave(object sender, MouseEventArgs e){
-            mainLayoutResults.Background = SpecialColor.mainBack();
-            mainLayoutResults.Foreground = SpecialColor.mainBlue();
+        private void navBarButton3_Click(object sender, RoutedEventArgs e) {
+            contentControl.Content = new aboutProgramm(contentControl);
         }
-        //-----hoverEffect
+        //-----LoadedEvent-----
 
-        //mainLayoutExit
-        //-----hoverEffect
-        private void mainLayoutExit_MouseEnter(object sender, MouseEventArgs e){
-            mainLayoutExit.Background = SpecialColor.mainBlue();
-            mainLayoutExit.Foreground = SpecialColor.white();
-        }
-        private void mainLayoutExit_MouseLeave(object sender, MouseEventArgs e){
-            mainLayoutExit.Background = SpecialColor.mainBack();
-            mainLayoutExit.Foreground = SpecialColor.mainBlue();
-        }
-        //-----hoverEffect
-
-        //recordBlock
-        //-----hoverEffect
-        private void recordBlock_MouseEnter(object sender, MouseEventArgs e){
-            recordLabel.Foreground = SpecialColor.white();
-            recordBlock.Background = SpecialColor.mainBlue();
-        }
-        private void recordBlock_MouseLeave(object sender, MouseEventArgs e){
-            recordLabel.Foreground = SpecialColor.mainBlue();
-            recordBlock.Background = SpecialColor.transparent();
-        }
-        //-----hoverEffect
-
-        //------saveData
-        //-----hoverEffect
-        private void saveData_MouseEnter(object sender, MouseEventArgs e){
-            saveData.Background = SpecialColor.mainBackHover();
-        }
-        private void saveData_MouseLeave(object sender, MouseEventArgs e){
-            saveData.Background = SpecialColor.mainBack();
-        }
-        //-----hoverEffect
-
-
-        //-----ClickEvent
-        private void mainLayoutExit_Click(object sender, RoutedEventArgs e){
+        //-----ClickEvent-----
+        private void mainLayoutExit_Click(object sender, RoutedEventArgs e) {
             this.Close();
         }
-        //-----ClickEvent
+        //-----ClickEvent-----
 
         //=======================mainLayout=======================
     }

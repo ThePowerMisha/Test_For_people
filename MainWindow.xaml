@@ -1,11 +1,13 @@
-﻿<Window x:Class="TestTrainingProgram.MainWindow"
+﻿<Window x:Class="WpfApp1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TestTrainingProgram"
+        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:view="clr-namespace:WpfApp1.View"
         mc:Ignorable="d"
-        Title="контролирующее-обучающая программа" Height="1080" Width="1920" ResizeMode="NoResize" WindowState="Maximized" Background="#EFEFEF">
+        Name="windowApp"
+        Title="контролирующее-обучающая программа" Height="1080" Width="1920" ResizeMode="NoResize" WindowState="Maximized" Background="#EFEFEF" Loaded="windowApp_Loaded">
 
     <!--Styles-->
     <Window.Resources>
@@ -29,104 +31,128 @@
     <!--Styles-->
 
     <Grid HorizontalAlignment="Stretch">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="34"></RowDefinition>
-            <RowDefinition Height="110"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="303*"></ColumnDefinition>
+            <ColumnDefinition Width="16*"/>
+            <ColumnDefinition Width="319*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <!--NavBar-->
-        <Button x:Name="navBarButton1" Content="Теоретиеский материал" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="8" FontFamily="Arial" FontSize="16" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" MouseEnter="navBarButton1_MouseEnter" MouseLeave="navBarButton1_MouseLeave" Width="194" HorizontalAlignment="Left" Height="34" VerticalAlignment="Bottom"/>
-        <Button x:Name="navBarButton2" Content="Справка" Margin="194,0,0,0" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="8" FontFamily="Arial" FontSize="16" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" MouseEnter="navBarButton2_MouseEnter" MouseLeave="navBarButton2_MouseLeave" Height="34" Width="79" HorizontalAlignment="Left"/>
-        <Button x:Name="navBarButton3" Content="О программе" Margin="273,0,0,0" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="8" FontFamily="Arial" FontSize="16" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" MouseEnter="navBarButton3_MouseEnter" MouseLeave="navBarButton3_MouseLeave" Height="34" Width="116" HorizontalAlignment="Left"/>
-        <Label x:Name="navBarButton4" Grid.Column="1" Content="*Учетная запись" FontWeight="Bold" Margin="273,0,0,0" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="8" FontFamily="Arial" FontSize="16" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"/>
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
+
+            <!--ТЕОРЕТИЧЕСКИЙ МАТЕРИАЛ-->
+            <Button x:Name="navBarButton1" Content="Теоретиеский материал" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="8" FontFamily="Arial" FontSize="16" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" Width="194" Height="34">
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation To="#e4e4e4" 
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                                <ColorAnimation To="#e4e4e4" 
+                                    Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Button.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation To="#EFEFEF" 
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                                <ColorAnimation To="#EFEFEF" 
+                                    Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+            </Button>
+
+            <!--СПРАВКА-->
+            <Button x:Name="navBarButton2" Content="Справка" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="8" FontFamily="Arial" FontSize="16" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" RenderTransformOrigin="-2,0.412" Height="34" Width="81" HorizontalAlignment="Left">
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="UIElement.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation To="#e4e4e4" 
+                                    Storyboard.TargetProperty="(Control.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                                <ColorAnimation To="#e4e4e4" 
+                                    Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="UIElement.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation To="#EFEFEF" 
+                                    Storyboard.TargetProperty="(Control.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                                <ColorAnimation To="#EFEFEF" 
+                                    Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+            </Button>
+
+            <!--О ПРОГРАММЕ-->
+            <Button x:Name="navBarButton3" Content="О программе" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="8" FontFamily="Arial" FontSize="16" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" Height="34" Width="116" Click="navBarButton3_Click">
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation To="#e4e4e4" 
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                                <ColorAnimation To="#e4e4e4" 
+                                    Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Button.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation To="#EFEFEF" 
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                                <ColorAnimation To="#EFEFEF" 
+                                    Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+            </Button>
+        </StackPanel>
+        <Label x:Name="currentRecord" Grid.Column="2" Content="*Учетная запись" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="8" FontFamily="Arial" FontSize="16" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"/>
         <!--NavBar-->
 
-        <!--title-->
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="15"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="15"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.RowSpan="4" Background="#3E94D1"></StackPanel>
-            <Label Grid.Row="1" Content="ИНСТИТУТ АРХИТЕКТУРЫ и СТРОИТЕЛЬСТВА" FontFamily="Arial" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Foreground="White" Margin="582,0" Padding="0" />
-            <Label Grid.Row="2" Content="Кафедра строительной механики" FontFamily="Arial" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Foreground="White" Margin="582,0" Padding="0" />
-        </Grid>
-        <!--title-->
-
-        <!--mainLayout-->
-        <!--left-->
-        <Button x:Name="mainLayoutStart"  Grid.Row="2" Grid.Column="0" Content="НАЧАТЬ ТЕСТИРОВАНИЕ" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" MouseEnter="mainLayoutStart_MouseEnter" MouseLeave="mainLayoutStart_MouseLeave" FontFamily="Arial"/>
-        <Button x:Name="mainLayoutResults"  Grid.Row="3" Grid.Column="0" Content="РЕЗУЛЬТАТЫ ТЕСТИРОВАНИЙ" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" MouseEnter="mainLayoutResults_MouseEnter" MouseLeave="mainLayoutResults_MouseLeave" FontFamily="Arial"/>
-        <Button x:Name="mainLayoutExit" Grid.Row="4" Grid.Column="0" Content="ВЫХОД" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" MouseEnter="mainLayoutExit_MouseEnter" MouseLeave="mainLayoutExit_MouseLeave" Click="mainLayoutExit_Click" FontFamily="Arial"/>
-        <!--left-->
-        <!--right-->
-        <Border x:Name="recordBlock" Grid.Row="2" Grid.RowSpan="3" Grid.Column="1" BorderBrush="#3E94D1" BorderThickness="1" MouseEnter="recordBlock_MouseEnter" MouseLeave="recordBlock_MouseLeave">
-            <StackPanel Grid.Row="2" Grid.RowSpan="3" Grid.Column="1" Background="Transparent" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-
-                <StackPanel x:Name="inRecordBlock" MinWidth="450">
-                <!--lastName-->
-                <Label x:Name="recordLabel" Content="УЧЕТНАЯ ЗАПИСЬ"  Foreground="#3E94D1" FontSize="32" FontWeight="bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,15" FontFamily="Arial" MinWidth="450" HorizontalContentAlignment="Center"></Label>
-                <TextBox x:Name="lastName" BorderBrush="#3E94D1" BorderThickness="2" MaxWidth="450" Background="#EFEFEF"  FontWeight="bold" Foreground="black" FontSize="28" Padding="15" FontFamily="Arial" Margin="0,0,0,15" MinWidth="450" MaxLength="32" Height="65" Cursor="Hand">
-                    <TextBox.Resources>
-                        <!--CornerRadius for textBox-->
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </TextBox.Resources>
-                </TextBox>
-                <!--firstName-->
-                    <TextBox x:Name="firstName" BorderBrush="#3E94D1" BorderThickness="2" MaxWidth="450" Background="#EFEFEF"  FontWeight="bold" Foreground="black" FontSize="28" Padding="15" FontFamily="Arial" Margin="0,0,0,15" MaxLength="32" Height="65" Cursor="Hand">
-                    <TextBox.Resources>
-                        <!--CornerRadius for textBox-->
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </TextBox.Resources>
-                </TextBox>
-                <!--secondName-->
-                    <TextBox x:Name="secondtName" BorderBrush="#3E94D1" BorderThickness="2" MaxWidth="450" Background="#EFEFEF"  FontWeight="bold" Foreground="black" FontSize="28" Padding="15" FontFamily="Arial" Margin="0,0,0,15" MaxLength="32" Height="65" Cursor="Hand">
-                    <TextBox.Resources>
-                        <!--CornerRadius for textBox-->
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </TextBox.Resources>
-                </TextBox>
-                <!--group-->
-                    <TextBox x:Name="group" BorderBrush="#3E94D1" BorderThickness="2" MaxWidth="450" Background="#EFEFEF"  FontWeight="Bold" Foreground="black" FontSize="28" Padding="15" FontFamily="Arial" Margin="0,0,0,15" MaxLength="32" Height="65" Cursor="Hand">
-                    <TextBox.Resources>
-                        <!--CornerRadius for textBox-->
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </TextBox.Resources>
-                </TextBox>
-                <!--saveData-->
-                    <Button x:Name="saveData" Content="СОХРАНИТЬ ДАННЫЕ" BorderBrush="#3E94D1" BorderThickness="2" MaxWidth="450" Background="#EFEFEF"  FontWeight="bold" Foreground="#3E94D1" FontSize="22" Padding="15" FontFamily="Arial" Margin="0" Height="65" Cursor="Hand" MouseEnter="saveData_MouseEnter" MouseLeave="saveData_MouseLeave">
-                    <Button.Resources>
-                        <!--CornerRadius for textBox-->
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-            </StackPanel>
-        </StackPanel>
-        </Border>
-        <!--right-->
-        <!--mainLayout-->
+        <!--ОКНО ДЛЯ ИЗМЕНЕНИЯ СОДЕРЖИМОГО (FOR USER CONTROL)-->
+        <ContentControl Name="contentControl" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"></ContentControl>
+        <!--ОКНО ДЛЯ ИЗМЕНЕНИЯ СОДЕРЖИМОГО (FOR USER CONTROL)-->
 
     </Grid>
 </Window>
