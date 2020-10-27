@@ -55,15 +55,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GeneralClass.cs" />
-    <Compile Include="Loader.cs" />
-    <Compile Include="QuestionClass.cs" />
-    <Compile Include="ResultClass.cs" />
     <Compile Include="View\aboutProgramm.xaml.cs">
       <DependentUpon>aboutProgramm.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\mainPage.xaml.cs">
       <DependentUpon>mainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\resultsPage.xaml.cs">
+      <DependentUpon>resultsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\spravkaPage.xaml.cs">
+      <DependentUpon>spravkaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TheoryPage.xaml.cs">
+      <DependentUpon>TheoryPage.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -84,6 +89,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\mainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\resultsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\spravkaPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TheoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

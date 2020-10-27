@@ -46,7 +46,7 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
 
             <!--ТЕОРЕТИЧЕСКИЙ МАТЕРИАЛ-->
-            <Button x:Name="navBarButton1" Content="Теоретиеский материал" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="8" FontFamily="Arial" FontSize="16" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" Width="194" Height="34">
+            <Button x:Name="navBarButton1" Content="Теоретиеский материал" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="8" FontFamily="Arial" FontSize="16" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" Width="194" Height="34" Click="navBarButton1_Click">
                 <Button.Triggers>
                     <EventTrigger RoutedEvent="Button.MouseEnter">
                         <BeginStoryboard>
@@ -80,7 +80,7 @@
             </Button>
 
             <!--СПРАВКА-->
-            <Button x:Name="navBarButton2" Content="Справка" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="8" FontFamily="Arial" FontSize="16" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" RenderTransformOrigin="-2,0.412" Height="34" Width="81" HorizontalAlignment="Left">
+            <Button x:Name="navBarButton2" Content="Справка" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="8" FontFamily="Arial" FontSize="16" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" RenderTransformOrigin="-2,0.412" Height="34" Width="81" HorizontalAlignment="Left" Click="navBarButton2_Click">
                 <Button.Triggers>
                     <EventTrigger RoutedEvent="UIElement.MouseEnter">
                         <BeginStoryboard>

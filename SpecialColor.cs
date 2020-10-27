@@ -11,9 +11,9 @@ namespace WpfApp1{
         private static Color Transparent = Color.FromArgb(0, 0, 0, 0);
         private static Color MainBack = Color.FromRgb(239, 239, 239);
         private static Color MainBackHover = Color.FromRgb(228, 228, 228);
-        private static Color MainBlue = Color.FromRgb(62, 148, 209);
-        private static Color Red = Color.FromRgb(255, 64, 64);
-        private static Color Green = Color.FromRgb(54, 214, 149);
+        private static Color MainBlue = Color.FromRgb(62, 148, 209);        //#3E94D1
+        private static Color Red = Color.FromRgb(255, 64, 64);              //#FF4040
+        private static Color Green = Color.FromRgb(54, 214, 149);           //#36D695
         private static Color White = Color.FromRgb(255, 255, 255);
         private static Color Black = Color.FromRgb(0, 0, 0);
         private static Color Placeholder = Color.FromArgb(100, 0, 0, 0);
