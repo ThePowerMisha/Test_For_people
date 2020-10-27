@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="WpfApp1.View.resultsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp1.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="1046" d:DesignWidth="1920" Background="#EFEFEF">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="65"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="450"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="450"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <!--ТЕКСТ ТЕКУЩЕГО ОКНА-->
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#3E94D1">
+            <Label Content="Результаты" FontSize="35" Foreground="white" FontWeight="Bold" HorizontalAlignment="Center"></Label>
+        </StackPanel>
+        <Button Name="onMainPage" Grid.Column="0" Grid.Row="0" Content="ВЕРНУТЬСЯ НАЗАД" FontSize="20" FontWeight="Bold" Foreground="white" Background="#3E94D1" Cursor="Hand" BorderBrush="#FF3E94D1" Click="onMainPage_Click">
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="#8864b1e8" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                            <ColorAnimation To="#8864b1e8" 
+                                            Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                            <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+        <!--ТЕКСТ ТЕКУЩЕГО ОКНА-->
+
+        <Grid Name="contentBlock" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+            
+        </Grid>
+    </Grid>
+</UserControl>
