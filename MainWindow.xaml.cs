@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using WpfApp1.View;
+using System.Runtime.CompilerServices;
 
 namespace WpfApp1{
     /// <summary>
@@ -35,10 +36,16 @@ namespace WpfApp1{
 
         //-----LoadedEvent-----
         private void windowApp_Loaded(object sender, RoutedEventArgs e) {
-            contentControl.Content = new mainPage(this, currentRecord);
+            contentControl.Content = new mainPage(this, currentRecord, contentControl);
         }
         private void navBarButton3_Click(object sender, RoutedEventArgs e) {
             contentControl.Content = new aboutProgramm(contentControl);
+        }
+        private void navBarButton2_Click(object sender, RoutedEventArgs e) {
+            contentControl.Content = new spravkaPage(contentControl);
+        }
+        private void navBarButton1_Click(object sender, RoutedEventArgs e) {
+            contentControl.Content = new TheoryPage(contentControl);
         }
         //-----LoadedEvent-----
 
