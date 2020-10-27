@@ -17,8 +17,7 @@ namespace TestTrainingProgram
         /// <param name="questionHelptext"></param>
         /// <param name="questionAnswer"></param>
         /// <param name="questionFormulaGraphs"></param>
-        public QuestionClass(string questionText, string questionImagepath,string questionHelptext,string[] questionAnswer,string questionFormulaGraphs) 
-        {
+        public QuestionClass(string questionText, string questionImagepath,string questionHelptext,string[] questionAnswer,string questionFormulaGraphs) {
             this.questionText = questionText;
             this.questionImagepath = questionImagepath;
             this.questionHelptext = questionHelptext;
