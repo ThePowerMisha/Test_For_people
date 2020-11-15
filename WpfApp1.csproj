@@ -61,6 +61,7 @@
     <Compile Include="View\mainPage.xaml.cs">
       <DependentUpon>mainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Person.cs" />
     <Compile Include="View\resultsPage.xaml.cs">
       <DependentUpon>resultsPage.xaml</DependentUpon>
     </Compile>
