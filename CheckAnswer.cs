@@ -1,12 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Xml.Schema;
-
+// original author - https://github.com/mariuszgromada/MathParser.org-mXparser
+using org.mariuszgromada.math.mxparser;
 
 namespace TestTrainingProgram
 {
@@ -160,11 +156,12 @@ namespace TestTrainingProgram
             // Соединяем элементы массива обратно в строку
             Formula = string.Join(null, array);
 
-            // Высчитываем готовый ответ
-            string formTest = new DataTable().Compute(Formula, null).ToString();
+            // Высчитываем готовый ответ с помощью пользвательской библиотеки "mXparser"
+            Expression expFormula = new Expression(Formula);
+            string calculatedFormula = expFormula.calculate().ToString();
 
             // Выводим ответ
-            return formTest;
+            return calculatedFormula;
         }
     }
 }
