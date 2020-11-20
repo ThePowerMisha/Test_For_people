@@ -27,7 +27,7 @@
             <!--mainLayout-->
             <!--left-->
             <!--НАЧАТЬ ТЕСТИРОВАНИЕ-->
-            <Button x:Name="mainLayoutStart" BorderBrush="#3E94D1" Grid.Row="1" Grid.Column="0" Content="НАЧАТЬ ТЕСТИРОВАНИЕ" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" FontFamily="Arial">
+            <Button x:Name="mainLayoutStart" BorderBrush="#3E94D1" Grid.Row="1" Grid.Column="0" Content="НАЧАТЬ ТЕСТИРОВАНИЕ" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" FontFamily="Arial" Click="mainLayoutStart_Click">
                 <Button.Triggers>
                     <EventTrigger RoutedEvent="Button.MouseEnter">
                         <BeginStoryboard>

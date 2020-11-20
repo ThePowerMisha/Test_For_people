@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MathParser.org-mXparser, Version=4.4.2.0, Culture=neutral, PublicKeyToken=0fbab7add73ed6e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathParser.org-mXparser.4.4.2\lib\net472\MathParser.org-mXparser.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -55,8 +58,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CheckAnswer.cs" />
     <Compile Include="View\aboutProgramm.xaml.cs">
       <DependentUpon>aboutProgramm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\choiceBlock.xaml.cs">
+      <DependentUpon>choiceBlock.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\mainPage.xaml.cs">
       <DependentUpon>mainPage.xaml</DependentUpon>
@@ -86,6 +93,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\aboutProgramm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\choiceBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -124,6 +135,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

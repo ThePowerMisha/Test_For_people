@@ -25,7 +25,7 @@ namespace WpfApp1.View {
 
             //массив значений для loadDataSubTypeCB
             loadDataSubTypeCB.ItemsSource = loadDataSubType;
-            Placeholder.add(searchData,"Введите ключевое слово");
+            Placeholder.add(searchData, "Введите ключевое слово");
 
             //массив результатов людей для resultsPeople
             loadResultsPeople.Add(new Person("Девственно", "Чистый", "И", "Не", new List<PersonData> { new PersonData(1, 1), new PersonData(1, 5) }));
@@ -58,7 +58,7 @@ namespace WpfApp1.View {
         private static ContentControl contentControl;
         //возвращает на главную страницу
         private void onMainPage_Click(object sender, RoutedEventArgs e) {
-            contentControl.Content = new mainPage(mainWin, curRec, contentControl);
+            contentControl.Content = WpfApp1.MainWindow.getMainPage();//new mainPage(mainWin, curRec, contentControl);
         }
 
         //закрытие подробной информации по повторному клику
@@ -70,6 +70,10 @@ namespace WpfApp1.View {
             } else {
                 prevSelectedIndex = resultsPeople.SelectedIndex;
             }
+
+            //CheckAnswer checkF = new CheckAnswer();
+            //checkF.Formula = "sqrt(25)+(F1)";
+            //searchData.Text = checkF.Check();
 
             //if ((e.OriginalSource as DataGridCell).IsSelected)
             //    resultsPeople.UnselectAllCells(); 

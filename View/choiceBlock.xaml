@@ -1,0 +1,380 @@
+﻿<UserControl x:Class="WpfApp1.View.choiceBlock"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp1.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="1046" d:DesignWidth="1920" Background="#EFEFEF">
+
+    <UserControl.Resources>
+        <Style TargetType="Label" x:Key="labelStyle">
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="Margin" Value="0,25,0,10"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="textBlockStyle">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Padding" Value="15,0,15,0"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+        </Style>
+        <Style TargetType="Button" x:Key="buttonStyle">
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="brdr" TextBlock.Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="#e4e4e4" 
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="Transparent" 
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+
+
+        <!--выпадающий список-->
+        <ControlTemplate  x:Key="ComboBoxToggleButtonLeft" TargetType="{x:Type ToggleButton}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                <Border
+                    x:Name="Border"
+                    Grid.ColumnSpan="2"
+                    CornerRadius="10"
+                    Background="#EFEFEF"
+                    Cursor="Hand"
+                    BorderBrush="#3E94D1"
+                    BorderThickness="2" />
+                <Border 
+                    Grid.Column="0"
+                    CornerRadius="15" 
+                    Margin="1" 
+                    Cursor="Hand"
+                    Background="Transparent" 
+                    BorderBrush="Transparent"
+                    BorderThickness="0,0,2,0" />
+                <Path 
+                    x:Name="Arrow"
+                    Grid.Column="1"
+                    Cursor="Hand"
+                    Fill="#3E94D1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"/>
+
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
+            <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}" />
+        </ControlTemplate>
+        <!--x:Key="{x:Type ComboBox}"-->
+        <Style x:Key="CBStyleLeft" TargetType="{x:Type ComboBox}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Foreground" Value="#3E94D1"/>
+            <Setter Property="Margin" Value="0,0,15,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid>
+                            <ToggleButton 
+                                Name="ToggleButton" 
+                                Template="{StaticResource ComboBoxToggleButtonLeft}" 
+                                Grid.Column="2"
+                                Focusable="false"
+                                IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                ClickMode="Press">
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            Margin="15,3,23,3"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left" />
+                            <TextBox x:Name="PART_EditableTextBox"
+                            Style="{x:Null}" 
+                            Template="{StaticResource ComboBoxTextBox}" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Center"
+                            Margin="3,3,23,3"
+                            Focusable="True" 
+                            Background="#FF3F3F3F"
+                            Foreground="Green"
+                            Visibility="Hidden"
+                            IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                            <Popup 
+                            Name="Popup"
+                            Placement="Bottom"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            AllowsTransparency="True" 
+                            Focusable="False"
+                            PopupAnimation="Fade">
+
+                                <Grid Name="DropDown"
+                                SnapsToDevicePixels="True"                
+                                MinWidth="{TemplateBinding ActualWidth}"
+                                MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border 
+                                x:Name="DropDownBorder"
+                                Background="#EFEFEF"
+                                CornerRadius="0,0,10,10"
+                                BorderThickness="2"
+                                BorderBrush="#3E94D1"/>
+                                    <ScrollViewer Margin="0" VerticalScrollBarVisibility="Hidden" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </Trigger>
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                                <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0,0,0,0"/>
+                                <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsEditable"  Value="true">
+                                <Setter Property="IsTabStop" Value="false"/>
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+                            <Trigger Property="IsDropDownOpen"  Value="true">
+                                <Setter TargetName="DropDownBorder" Property="ClipToBounds" Value="True"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="Foreground" Value="#3E94D1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                        <Border Name="Border"
+                            Padding="15,10"
+                            SnapsToDevicePixels="true">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#3E94D1"/>
+                                <Setter Property="Foreground" Value="white"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--выпадающий список-->
+
+        <!--стиль карточек-->
+        <Style TargetType="Button" x:Key="buttonCard">
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Style.Resources>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="brdr" TextBlock.Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <!--<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}"/>-->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Padding="15,0,0,0"
+                                    FontSize="25"
+                                    Foreground="#3E94D1"
+                                    FontWeight="Bold"
+                                    Background="Black"
+                                    Text="{TemplateBinding ContentStringFormat}">
+                                    
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="#3E94D1"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+        <!--стиль карточек-->
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="65"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="450"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="450"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <!--ТЕКСТ ТЕКУЩЕГО ОКНА-->
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#3E94D1">
+            <Label Content="Выбор блока" FontSize="35" Foreground="white" FontWeight="Bold" HorizontalAlignment="Center"></Label>
+        </StackPanel>
+
+        <Button Name="onMainPage" Grid.Column="0" Grid.Row="0" Content="ВЕРНУТЬСЯ НАЗАД" FontSize="20" FontWeight="Bold" Foreground="white" Background="#3E94D1" Cursor="Hand" BorderBrush="#FF3E94D1" Click="onMainPage_Click">
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="#8864b1e8" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                            <ColorAnimation To="#8864b1e8" 
+                                            Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                            <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+        <!--ТЕКСТ ТЕКУЩЕГО ОКНА-->
+
+        <Grid Name="contentBlock" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--ОСНОВНАЯ ЧАСТЬ-->
+
+            <Label Grid.Row="0"
+                       Grid.Column="0" 
+                       Foreground="#3E94D1"
+                       HorizontalContentAlignment="Center" 
+                       VerticalContentAlignment="Center" 
+                       FontWeight="Bold" 
+                       FontSize="25">Выбор темы</Label>
+            <ComboBox Name="loadDataThemesCB" Style="{StaticResource CBStyleLeft}"
+                          Grid.Row="0" 
+                          Grid.Column="1"
+                          Grid.ColumnSpan="4"
+                          Height="55" 
+                          BorderBrush="#3E94D1" 
+                          Foreground="#3E94D1" 
+                          Background="#EFEFEF" 
+                          FontSize="25" 
+                          VerticalContentAlignment="Center"
+                          SelectedIndex="0">
+            </ComboBox>
+
+            <Border Grid.Column="0"
+                    Grid.ColumnSpan="5"
+                    Grid.Row="1"
+                    CornerRadius="10"
+                    BorderThickness="2"
+                    BorderBrush="#3E94D1"
+                    Margin="15,0,15,15">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled"
+                              Padding="15">
+                    <WrapPanel Name="choiceContent"
+                               Orientation="Vertical">
+
+                        <Button Style="{StaticResource buttonCard}" Height="250" Width="400" Content="I.">
+                            
+                        </Button>
+                        
+                    </WrapPanel>
+                </ScrollViewer>
+                
+            </Border>
+
+            <!--ОСНОВНАЯ ЧАСТЬ-->
+        </Grid>
+
+    </Grid>
+</UserControl>

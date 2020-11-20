@@ -15,19 +15,27 @@ using System.Windows.Shapes;
 
 namespace WpfApp1.View {
     /// <summary>
-    /// Логика взаимодействия для aboutProgramm.xaml
+    /// Логика взаимодействия для choiceBlock.xaml
     /// </summary>
-    public partial class aboutProgramm : UserControl {
-        public aboutProgramm(ContentControl headerControl) {
+    public partial class choiceBlock : UserControl {
+        public choiceBlock(ContentControl cC) {
             InitializeComponent();
 
-            this.headerControl = headerControl;
+            contentControl = cC;
+
+            loadDataThemesCB.ItemsSource = themes;
+
+
         }
-        private ContentControl headerControl;
+        private static ContentControl contentControl;
+        private static List<string> themes = new List<string> {
+            "Фермы"
+        };
+
+        //возвращает на главную страницу
         private void onMainPage_Click(object sender, RoutedEventArgs e) {
-            this.headerControl.IsEnabled = false;
-            this.headerControl.Opacity = 0;
-            this.headerControl.IsHitTestVisible = false;
+            contentControl.Content = WpfApp1.MainWindow.getMainPage();
         }
     }
+    
 }

@@ -32,6 +32,9 @@ namespace WpfApp1.View {
             curRec = currec;
             contentControl = cC;
 
+            rPage = new resultsPage(mainWin, curRec, contentControl);
+            cBlock = new choiceBlock(contentControl);
+
             //ширина попапа
             DataPopup.Width = SystemParameters.VirtualScreenWidth / 2;
             
@@ -43,6 +46,8 @@ namespace WpfApp1.View {
             Placeholder.add(group, "Группа");
             //=============mainStyle================
         }
+        private static resultsPage rPage;
+        private static choiceBlock cBlock;
         //КОНСТРУКТОР ПО УМОЛЧАНИЮ
         public mainPage() {
             InitializeComponent();
@@ -101,7 +106,7 @@ namespace WpfApp1.View {
             }
         }
 
-        //ВАЛИДАТОР ДЛЯ ПОЛКЙ ВВОДА
+        //ВАЛИДАТОР ДЛЯ ПОЛЕЙ ВВОДА
         private void textBox_TextChanged(object sender, TextChangedEventArgs e) {
             string input = (sender as TextBox).Text;
             if (!Regex.IsMatch(input, "^([А-Я]|[A-Z]){1}(([а-я]|[a-z]){1,})?$")) {
@@ -122,6 +127,7 @@ namespace WpfApp1.View {
             textBeforeChange = (sender as TextBox).Text;
         }
 
+        //СОБЫТИЕ НА КЛИК ПО РЕЗУЛЬТАТАМ
         private void mainLayoutResults_Click(object sender, RoutedEventArgs e) {
             resultPopup.IsOpen = !resultPopup.IsOpen;
             if (resultPopup.IsOpen) {
@@ -167,7 +173,8 @@ namespace WpfApp1.View {
 
                 if (popupTextBox.Password == passwordKey) {
                     popupButtonFlag = true;
-                    contentControl.Content = new resultsPage(mainWin, curRec, contentControl);
+                    setPopupStatus();
+                    contentControl.Content = rPage;//new resultsPage(mainWin, curRec, contentControl);
                 } else {
                     popupButtonConfirm.IsOpen = true;
                     popupTextBox.Clear();
@@ -178,6 +185,21 @@ namespace WpfApp1.View {
             }
         }
         //ПОПАП
+
+        //возвращает состояние попапа resultPopup
+        public bool getPopupStatus() {
+            return resultPopup.IsOpen;
+        }
+        //закрывает попап resultPopup
+        public void setPopupStatus() {
+            resultPopup.IsOpen=false;
+            mainContentGrid.Opacity = 1;
+            mainContentGrid.IsEnabled = true;
+        }
+
+        private void mainLayoutStart_Click(object sender, RoutedEventArgs e) {
+            contentControl.Content = cBlock;
+        }
         //=======================mainLayout=======================
     }
 

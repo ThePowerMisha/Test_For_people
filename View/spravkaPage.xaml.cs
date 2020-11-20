@@ -19,10 +19,10 @@ namespace WpfApp1.View {
     /// Логика взаимодействия для spravkaPage.xaml
     /// </summary>
     public partial class spravkaPage : UserControl {
-        public spravkaPage(ContentControl cC) {
+        public spravkaPage(ContentControl headerControl) {
             InitializeComponent();
 
-            contentControl = cC;
+            this.headerControl = headerControl;
 
             //вешаем события на клик
             foreach (Button el in navButtons.Children) {
@@ -30,16 +30,22 @@ namespace WpfApp1.View {
             }
         }
 
-        //возвращает на главную страницу
-        private static ContentControl contentControl;
+        //возвращает на предыдущую страницу
+        private ContentControl headerControl;
         private void onMainPage_Click(object sender, RoutedEventArgs e) {
-            contentControl.Content = new mainPage();
+            this.headerControl.IsEnabled = false;
+            this.headerControl.Opacity = 0;
+            this.headerControl.IsHitTestVisible = false;
         }
 
+        private static bool firstLoaded = true;
         //добавление 10 пикселей сверху/снизу для элементов меню
         private void UserControl_Loaded(object sender, RoutedEventArgs e) {
-            foreach (UIElement el in navButtons.Children) {
-                (el as Button).Height = (el as Button).ActualHeight + 20;
+            if (firstLoaded == true) {
+                firstLoaded = false;
+                foreach (UIElement el in navButtons.Children) {
+                    (el as Button).Height = (el as Button).ActualHeight + 20;
+                }
             }
         }
 
