@@ -154,5 +154,9 @@
         <ContentControl Name="contentControl" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"></ContentControl>
         <!--ОКНО ДЛЯ ИЗМЕНЕНИЯ СОДЕРЖИМОГО (FOR USER CONTROL)-->
 
+        <!--Попап для изменения содержимого шапки-->
+        <ContentControl Name="headerControl" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" IsEnabled="False" Opacity="0" IsHitTestVisible="False"/>
+        <!--Попап для изменения содержимого шапки-->
+
     </Grid>
 </Window>

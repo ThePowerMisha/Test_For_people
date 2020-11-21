@@ -18,14 +18,16 @@ namespace WpfApp1.View {
     /// Логика взаимодействия для aboutProgramm.xaml
     /// </summary>
     public partial class aboutProgramm : UserControl {
-        public aboutProgramm(ContentControl cC) {
+        public aboutProgramm(ContentControl headerControl) {
             InitializeComponent();
 
-            contentControl = cC;
+            this.headerControl = headerControl;
         }
-        private static ContentControl contentControl;
+        private ContentControl headerControl;
         private void onMainPage_Click(object sender, RoutedEventArgs e) {
-            contentControl.Content = new mainPage();
+            this.headerControl.IsEnabled = false;
+            this.headerControl.Opacity = 0;
+            this.headerControl.IsHitTestVisible = false;
         }
     }
 }
