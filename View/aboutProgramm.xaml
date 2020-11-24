@@ -115,7 +115,7 @@
             <!--О РАЗБОТЧИКАХ-->
             
             <!--WEBS-->
-            <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Padding="15">
+            <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Padding="15" MaxHeight="116" MaxWidth="254" MinHeight="116" MinWidth="254">
                 <Image Source="instWhite.png" Width="37"/>
                 <Label Content="a1exkarpenko" FontSize="25" Foreground="white" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <LineBreak/>
@@ -123,7 +123,7 @@
                 <Label Content="sashakarpenko" FontSize="25" Foreground="white" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </TextBlock>
 
-            <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Padding="15">
+            <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Padding="15" MaxHeight="116" MaxWidth="254" MinHeight="116" MinWidth="254">
                 <Image Source="instWhite.png" Width="37"/>
                 <Label Content="iokarch" FontSize="25" Foreground="white" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <LineBreak/>
@@ -131,7 +131,7 @@
                 <Label Content="iokarch" FontSize="25" Foreground="white" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </TextBlock>
 
-            <TextBlock Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Padding="15">
+            <TextBlock Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Padding="15" MaxHeight="116" MaxWidth="254" MinHeight="116" MinWidth="254">
                 <Image Source="instBlue.png" Width="37"/>
                 <Label Content="thepowermisha_" FontSize="25" Foreground="#3E94D1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <LineBreak/>
@@ -139,7 +139,7 @@
                 <Label Content="thepowermisha" FontSize="25" Foreground="#3E94D1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </TextBlock>
 
-            <TextBlock Grid.Row="3" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Padding="15">
+            <TextBlock Grid.Row="3" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Padding="15" MaxHeight="116" MaxWidth="254" MinHeight="116" MinWidth="254">
                 <Image Source="instBlue.png" Width="37"/>
                 <Label Content="ryavk" FontSize="25" Foreground="#3E94D1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <LineBreak/>

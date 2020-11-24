@@ -20,26 +20,14 @@
             </Grid.RowDefinitions>
 
             <!--title-->
-            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="15"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="15"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.RowSpan="4" Background="#3E94D1"></StackPanel>
-                <Label Grid.Row="1" Content="ИНСТИТУТ АРХИТЕКТУРЫ и СТРОИТЕЛЬСТВА" FontFamily="Arial" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Foreground="White" Margin="582,0" Padding="0" />
-                <Label Grid.Row="2" Content="Кафедра строительной механики" FontFamily="Arial" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Foreground="White" Margin="582,0" Padding="0" />
-            </Grid>
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#3E94D1"></StackPanel>
+            <Label  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="ВОЛГОГРАДСКИЙ ГОСУДАРСТВЕННЫЙ ТЕХНИЧЕСКИЙ УНИВЕРСИТЕТ" FontFamily="Arial" FontSize="35" FontWeight="Bold" Foreground="White" Margin="0,0,10,0" Padding="0" Width="1900" Height="106" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
             <!--title-->
 
             <!--mainLayout-->
             <!--left-->
             <!--НАЧАТЬ ТЕСТИРОВАНИЕ-->
-            <Button x:Name="mainLayoutStart" BorderBrush="#3E94D1" Grid.Row="1" Grid.Column="0" Content="НАЧАТЬ ТЕСТИРОВАНИЕ" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" FontFamily="Arial">
+            <Button x:Name="mainLayoutStart" BorderBrush="#3E94D1" Grid.Row="1" Grid.Column="0" Content="НАЧАТЬ ТЕСТИРОВАНИЕ" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" FontFamily="Arial" Click="mainLayoutStart_Click">
                 <Button.Triggers>
                     <EventTrigger RoutedEvent="Button.MouseEnter">
                         <BeginStoryboard>
@@ -73,7 +61,7 @@
             </Button>
 
             <!--РЕЗУЛЬТАТЫ ТЕСТИРОВАНИЙ-->
-            <Button x:Name="mainLayoutResults" BorderBrush="#3E94D1" Grid.Row="2" Grid.Column="0" Content="РЕЗУЛЬТАТЫ ТЕСТИРОВАНИЙ" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" FontFamily="Arial">
+            <Button x:Name="mainLayoutResults" BorderBrush="#3E94D1" Grid.Row="2" Grid.Column="0" Content="РЕЗУЛЬТАТЫ ТЕСТИРОВАНИЙ" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" FontFamily="Arial" Click="mainLayoutResults_Click">
                 <Button.Triggers>
                     <EventTrigger RoutedEvent="Button.MouseEnter">
                         <BeginStoryboard>
@@ -106,6 +94,112 @@
                 </Button.Triggers>
             </Button>
 
+            <!--ПОПАП ДЛЯ РЕЗУЛЬТАТОВ Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="4"-->
+            <Popup Name="resultPopup" StaysOpen="True" PopupAnimation="Fade" AllowsTransparency="True" Placement="Center" PlacementTarget="{Binding ElementName=mainContentGrid}">
+                <Grid Background="#88000000" Width="480" Height="272">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="430"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="222"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="#EFEFEF" BorderBrush="#3E94D1" BorderThickness="2">
+                        <StackPanel>
+                            <Label Margin="30" Foreground="#3E94D1" FontSize="32" FontFamily="Arial" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">ВВЕДИТЕ ПАРОЛЬ</Label>
+
+                            <PasswordBox Name="popupTextBox" BorderBrush="#3E94D1" BorderThickness="2" Margin="15,0,15,30" MaxWidth="450"  Background="#EFEFEF"  FontWeight="Bold" Foreground="black" FontSize="28" Padding="15" FontFamily="Arial" MaxLength="5" Height="65" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                                <PasswordBox.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </PasswordBox.Resources>
+                            </PasswordBox>
+                            
+                            <Button Name="popupButton" Height="66.5" Cursor="Hand" BorderThickness="0" FontSize="25" FontWeight="SemiBold" Foreground="#3E94D1" Padding="15" Background="#EFEFEF" Content="ПОДТВЕРДИТЬ" Click="popupButton_Click">
+                                <Button.Triggers>
+                                    <EventTrigger RoutedEvent="Button.MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                                <ColorAnimation To="White" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="Button.MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation To="#EFEFEF" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                                <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </StackPanel>
+
+                    </Border>
+
+                    <Button x:Name="popupExit" Click="popupExit_Click" Grid.Row="0" Grid.Column="1" Cursor="Hand" BorderThickness="0,2,2,0" BorderBrush="#3E94D1" MouseEnter="popupExit_MouseEnter" MouseLeave="popupExit_MouseLeave">
+                        <Viewbox Margin="10">
+                            <Grid>
+                                <Line x:Name="line1" X1="0" Y1="0" X2="100" Y2="100" Stroke="#3E94D1" StrokeThickness="7"/>
+                                <Line x:Name="line2" X1="0" Y1="100" X2="100" Y2="0" Stroke="#3E94D1" StrokeThickness="7"/>
+                            </Grid>
+                        </Viewbox>
+
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                        <ColorAnimation To="White" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#EFEFEF" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                        <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </Grid>
+            </Popup>
+            <!--ПОПАП ПОДТВЕРЖДЕНИЯ ПАРОЛЯ Width="{Binding ElementName=popupButton}"-->
+            <Popup Name="popupButtonConfirm" Placement="Center" PlacementTarget="{Binding ElementName=popupButton}"  StaysOpen="True" PopupAnimation="Fade" AllowsTransparency="True" Height="70">
+                <Label Background="#FF4040" Foreground="White" FontSize="25" FontWeight="SemiBold" Padding="15"  Width="476" Height="66.5" HorizontalContentAlignment="Center">НЕВЕРНЫЙ ПАРОЛЬ</Label>
+            </Popup>
+            
             <!--ВЫХОД-->
             <Button x:Name="mainLayoutExit" BorderBrush="#3E94D1" Grid.Row="3" Grid.Column="0" Content="ВЫХОД" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" FontFamily="Arial" Click="mainLayoutExit_Click">
                 <Button.Triggers>
@@ -176,7 +270,6 @@
                         </BeginStoryboard>
                     </EventTrigger>
                 </Border.Triggers>
-
                 <StackPanel Grid.Row="2" Grid.RowSpan="3" Grid.Column="1" Background="Transparent" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center">
 
                     <StackPanel x:Name="inRecordBlock" MinWidth="450">
@@ -267,7 +360,13 @@
                         </Button>
                     </StackPanel>
                 </StackPanel>
+
             </Border>
+            
+            <!--ПОПАП ДЛЯ СОХРАНЕНИЯ ДАННЫХ-->
+            <Popup Name="DataPopup" IsOpen="False" StaysOpen="True" PopupAnimation="Fade" AllowsTransparency="True" Placement="Bottom" PlacementTarget="{Binding ElementName=recordBlock}" VerticalOffset="-75" Cursor="Arrow">
+                <Label Name="DataPopupText" FontFamily="Arial" FontSize="32" FontWeight="Bold" Foreground="White" Background="#36D695" Padding="20" HorizontalContentAlignment="Center">ДАННЫЕ СОХРАНЕНЫ</Label>
+            </Popup>
             <!--right-->
             <!--mainLayout-->
 
