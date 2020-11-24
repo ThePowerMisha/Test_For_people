@@ -48,21 +48,25 @@ namespace WpfApp1.View {
         }
         private static resultsPage rPage;
         private static choiceBlock cBlock;
-        //КОНСТРУКТОР ПО УМОЛЧАНИЮ
-        public mainPage() {
-            InitializeComponent();
 
-            //ширина попапа
-            DataPopup.Width = SystemParameters.VirtualScreenWidth / 2;
-
-            //=============mainStyle================
-            //placeholders
-            Placeholder.add(lastName, "Фамилия");
-            Placeholder.add(firstName, "Имя");
-            Placeholder.add(secondName, "Отчество");
-            Placeholder.add(group, "Группа");
-            //=============mainStyle================
+        public static choiceBlock getChoiceBlock() {
+            return cBlock;
         }
+        //КОНСТРУКТОР ПО УМОЛЧАНИЮ
+        //public mainPage() {
+        //    InitializeComponent();
+
+        //    //ширина попапа
+        //    DataPopup.Width = SystemParameters.VirtualScreenWidth / 2;
+
+        //    //=============mainStyle================
+        //    //placeholders
+        //    Placeholder.add(lastName, "Фамилия");
+        //    Placeholder.add(firstName, "Имя");
+        //    Placeholder.add(secondName, "Отчество");
+        //    Placeholder.add(group, "Группа");
+        //    //=============mainStyle================
+        //}
 
         private static Window mainWin;
         private static Label curRec;

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WpfApp1.View.choiceBlock"
+﻿<UserControl x:Class="WpfApp1.View.choiceNextPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -218,7 +218,7 @@
         </Style>
         <!--выпадающий список-->
 
-        <!--стиль карточек-->        
+        <!--стиль карточек-->
         <Style TargetType="Button" x:Key="buttonCard">
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -230,7 +230,7 @@
             <Setter Property="MinWidth" Value="400"/>
             <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}"/>
             <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height}"/>
-            <Setter Property="Margin" Value="7.5,0,7.5,15"/>
+            <Setter Property="Margin" Value="7.5,0"/>
             <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -288,7 +288,7 @@
         <!--стиль карточек-->
     </UserControl.Resources>
 
-    <Grid>
+    <Grid Name="forPopup">
         <Grid.RowDefinitions>
             <RowDefinition Height="65"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -304,7 +304,7 @@
             <Label Content="Выбор блока" FontSize="35" Foreground="white" FontWeight="Bold" HorizontalAlignment="Center"></Label>
         </StackPanel>
 
-        <Button Name="onMainPage" Grid.Column="0" Grid.Row="0" Content="ВЕРНУТЬСЯ НАЗАД" FontSize="20" FontWeight="Bold" Foreground="white" Background="#3E94D1" Cursor="Hand" BorderBrush="#FF3E94D1" Click="onMainPage_Click">
+        <Button Name="onPreviousPage" Grid.Column="0" Grid.Row="0" Content="ВЕРНУТЬСЯ НАЗАД" FontSize="20" FontWeight="Bold" Foreground="white" Background="#3E94D1" Cursor="Hand" BorderBrush="#FF3E94D1" Click="onPreviousPage_Click">
             <Button.Triggers>
                 <EventTrigger RoutedEvent="Button.MouseEnter">
                     <BeginStoryboard>
@@ -337,7 +337,7 @@
             </Button.Triggers>
         </Button>
 
-        <Button Name="onNextPage" Grid.Column="2" Grid.Row="0" Content="ПРОДОЛЖИТЬ" FontSize="20" FontWeight="Bold" Foreground="white" Background="#3E94D1" Cursor="Hand" BorderBrush="#FF3E94D1" Click="onNextPage_Click">
+        <Button Name="onNextPage" Grid.Column="2" Grid.Row="0" Content="НАЧАТЬ ТЕСТ" FontSize="20" FontWeight="Bold" Foreground="white" Background="#3E94D1" Cursor="Hand" BorderBrush="#FF3E94D1" Click="onNextPage_Click">
             <Button.Triggers>
                 <EventTrigger RoutedEvent="Button.MouseEnter">
                     <BeginStoryboard>
@@ -376,8 +376,13 @@
 
         <Grid Name="contentBlock" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
+                <RowDefinition Height="65"/>
                 <RowDefinition Height="100"/>
+                <RowDefinition Height="65"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="65"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="15"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -388,52 +393,283 @@
             </Grid.ColumnDefinitions>
 
             <!--ОСНОВНАЯ ЧАСТЬ-->
+            <Label x:Name="titleLabel" Content="123"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="5"
+                   HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center"
+                   FontSize="30"
+                   FontWeight="Bold"
+                   Foreground="#3E94D1"/>
 
-            <Label Grid.Row="0"
-                       Grid.Column="0" 
-                       Foreground="#3E94D1"
-                       HorizontalContentAlignment="Center" 
-                       VerticalContentAlignment="Center" 
-                       FontWeight="Bold" 
-                       FontSize="25">Выбор темы</Label>
-            <ComboBox Name="loadDataThemesCB" Style="{StaticResource CBStyleLeft}"
-                          Grid.Row="0" 
-                          Grid.Column="1"
-                          Grid.ColumnSpan="4"
-                          Height="55" 
-                          BorderBrush="#3E94D1" 
-                          Foreground="#3E94D1" 
-                          Background="#EFEFEF" 
-                          FontSize="25" 
-                          VerticalContentAlignment="Center"
-                          SelectedIndex="0">
-            </ComboBox>
-
-            <Border Grid.Column="0"
-                    Grid.ColumnSpan="5"
-                    Grid.Row="1"
-                    CornerRadius="10,0,0,10"
+            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5"
+                    CornerRadius="15"
                     BorderThickness="2"
                     BorderBrush="#3E94D1"
-                    Margin="15,0,15,15">
-                <ScrollViewer VerticalScrollBarVisibility="Visible"
-                              HorizontalScrollBarVisibility="Disabled"
+                    Margin="15,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" 
+                           Content="Время теста"
+                           HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center"
+                           FontSize="30"
+                           FontWeight="Bold"
+                           Foreground="#3E94D1"/>
+
+                    <TextBox Name="timeCount"
+                             Grid.Row="0" Grid.Column="1"
+                             Margin="15"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Center"
+                             FontSize="30"
+                             FontWeight="Bold"
+                             Foreground="black"
+                             BorderBrush="#3E94D1"
+                             BorderThickness="2" TextChanged="timeCount_TextChanged" PreviewKeyDown="textBox_PreviewKeyDown">
+                            <TextBox.Resources>
+                                <!--CornerRadius for textBox-->
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                </Style>
+                            </TextBox.Resources>
+                    </TextBox>
+
+                    <Label Grid.Row="0" Grid.Column="2" 
+                           Content="Визуальные подсказки"
+                           HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center"
+                           FontSize="30"
+                           FontWeight="Bold"
+                           Foreground="#3E94D1"
+                           BorderThickness="2,0,0,0"
+                           BorderBrush="#3E94D1"/>
+
+                    <TextBox Name="tipCount"
+                             Grid.Row="0" Grid.Column="3"
+                             Margin="15"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Center"
+                             FontSize="30"
+                             FontWeight="Bold"
+                             Foreground="black"
+                             BorderBrush="#3E94D1"
+                             BorderThickness="2" TextChanged="tipCount_TextChanged" PreviewKeyDown="textBox_PreviewKeyDown">
+                        <TextBox.Resources>
+                            <!--CornerRadius for textBox-->
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </TextBox.Resources>
+                    </TextBox>
+
+                </Grid>
+             </Border>
+
+            <Label Content="Положение нагрузок"
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="5"
+                   HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center"
+                   FontSize="30"
+                   FontWeight="Bold"
+                   Foreground="#3E94D1"/>
+
+            <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5"
+                    CornerRadius="10,10,0,0"
+                    BorderThickness="2"
+                    BorderBrush="#3E94D1"
+                    Margin="15,0">
+                <ScrollViewer HorizontalScrollBarVisibility="Visible"
+                              VerticalScrollBarVisibility="Disabled"
                               Padding="7.5,15">
-                    <WrapPanel Name="choiceContent"
-                               Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal"
+                                Name="loadPosition">
 
                         <!--<Button Style="{StaticResource buttonCard}" Tag="View\Karpenko.jpeg" Content="I."/>
                         <Button Style="{StaticResource buttonCard}" Tag="View\Sinitsin.jpg" Content="II."/>
                         <Button Style="{StaticResource buttonCard}" Tag="View\Jagaev.jpg" Content="III."/>
+                        <Button Style="{StaticResource buttonCard}" Tag="View\Smirnov.jpg" Content="IV."/>
+                        <Button Style="{StaticResource buttonCard}" Tag="View\Karpenko.jpeg" Content="I."/>
+                        <Button Style="{StaticResource buttonCard}" Tag="View\Sinitsin.jpg" Content="II."/>
+                        <Button Style="{StaticResource buttonCard}" Tag="View\Jagaev.jpg" Content="III."/>
                         <Button Style="{StaticResource buttonCard}" Tag="View\Smirnov.jpg" Content="IV."/>-->
 
-                    </WrapPanel>
+                    </StackPanel>
                 </ScrollViewer>
                 
             </Border>
 
+            <Label Content="Вариант"
+                   Grid.Row="4"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="5"
+                   HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center"
+                   FontSize="30"
+                   FontWeight="Bold"
+                   Foreground="#3E94D1"/>
+
+            <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5"
+                    CornerRadius="10,10,0,0"
+                    BorderThickness="2"
+                    BorderBrush="#3E94D1"
+                    Margin="15,0">
+                <ScrollViewer HorizontalScrollBarVisibility="Visible"
+                              VerticalScrollBarVisibility="Disabled"
+                              Padding="7.5,15">
+                    <StackPanel Orientation="Horizontal"
+                                Name="variant">
+
+                        <!--<Button Style="{StaticResource buttonCard}" Tag="View\Karpenko.jpeg" Content="I."/>
+                        <Button Style="{StaticResource buttonCard}" Tag="View\Sinitsin.jpg" Content="II."/>
+                        <Button Style="{StaticResource buttonCard}" Tag="View\Jagaev.jpg" Content="III."/>
+                        <Button Style="{StaticResource buttonCard}" Tag="View\Smirnov.jpg" Content="IV."/>
+                        <Button Style="{StaticResource buttonCard}" Tag="View\Karpenko.jpeg" Content="I."/>
+                        <Button Style="{StaticResource buttonCard}" Tag="View\Sinitsin.jpg" Content="II."/>
+                        <Button Style="{StaticResource buttonCard}" Tag="View\Jagaev.jpg" Content="III."/>
+                        <Button Style="{StaticResource buttonCard}" Tag="View\Smirnov.jpg" Content="IV."/>-->
+
+                    </StackPanel>
+                </ScrollViewer>
+
+            </Border>
+
+
             <!--ОСНОВНАЯ ЧАСТЬ-->
         </Grid>
+
+        <!--попап перехода к началу теста-->
+        <Popup Name="testPopup" 
+               IsOpen="False" 
+               StaysOpen="True" 
+               PopupAnimation="Fade" 
+               AllowsTransparency="True" 
+               Placement="Absolute"  
+               Width="{Binding ElementName=forPopup, Path=ActualWidth}" 
+               Height="{Binding ElementName=forPopup, Path=ActualHeight}" 
+               PlacementTarget="{Binding ElementName=forPopup}"
+               Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="2">
+            <Grid Background="#88000000">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="65"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="6" 
+                        Background="#EFEFEF" 
+                        BorderBrush="#3E94D1" 
+                        BorderThickness="2">
+                    <StackPanel>
+                        <Label Margin="30" 
+                               Foreground="#3E94D1" 
+                               FontSize="32" 
+                               FontFamily="Arial" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center">ПОДГОТОВИТЕЛЬНАЯ ИНФОРМАЦИЯ</Label>
+
+
+                    </StackPanel>
+                </Border>
+
+                <Button Name="popupButton" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="4" Cursor="Hand" BorderThickness="2,0,2,2" BorderBrush="#3E94D1" FontSize="25" FontWeight="SemiBold" Foreground="#3E94D1" Padding="15" Background="#EFEFEF" Content="НАЧАТЬ ТЕСТ" Click="popupButton_Click">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    <ColorAnimation To="White" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="#EFEFEF" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Button x:Name="popupExit" Click="popupExit_Click" Grid.Row="1" Grid.Column="4" Cursor="Hand" BorderThickness="0,2,2,0" BorderBrush="#3E94D1" MouseEnter="popupExit_MouseEnter" MouseLeave="popupExit_MouseLeave">
+                    <Viewbox Margin="10">
+                        <Grid>
+                            <Line x:Name="line1" X1="0" Y1="0" X2="100" Y2="100" Stroke="#3E94D1" StrokeThickness="7"/>
+                            <Line x:Name="line2" X1="0" Y1="100" X2="100" Y2="0" Stroke="#3E94D1" StrokeThickness="7"/>
+                        </Grid>
+                    </Viewbox>
+
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    <ColorAnimation To="White" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="#EFEFEF" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+            </Grid>
+        </Popup>
+        <!--попап перехода к началу теста-->
 
     </Grid>
 </UserControl>

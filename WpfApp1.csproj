@@ -62,8 +62,12 @@
     <Compile Include="View\aboutProgramm.xaml.cs">
       <DependentUpon>aboutProgramm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Card.cs" />
     <Compile Include="View\choiceBlock.xaml.cs">
       <DependentUpon>choiceBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\choiceNextPage.xaml.cs">
+      <DependentUpon>choiceNextPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\mainPage.xaml.cs">
       <DependentUpon>mainPage.xaml</DependentUpon>
@@ -97,6 +101,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\choiceBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\choiceNextPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

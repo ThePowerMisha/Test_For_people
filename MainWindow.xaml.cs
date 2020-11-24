@@ -49,6 +49,8 @@ namespace WpfApp1{
         public static mainPage getMainPage() {
             return mPage;
         }
+
+        //обработчики событий переводов
         private void windowApp_Loaded(object sender, RoutedEventArgs e) {
             contentControl.Content = mPage;
         }
