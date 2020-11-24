@@ -89,10 +89,9 @@ namespace TestTrainingProgram
                 {"h", 10}
             };
 
-            // Перевод строки в нижний регистр
-            Formula = Formula.ToLower();
+            // Удаляем ненужные пробелы из строки и переводим все в нижний регистр
+            Formula = Formula.Replace(" ", "").ToLower();
             
-
             // Делим введенную формулу на элементы массива, используя паттерн арифметический операций
             string[] array = Regex.Split(Formula, pattern);
 
