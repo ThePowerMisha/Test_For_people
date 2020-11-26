@@ -55,12 +55,27 @@ namespace WpfApp1.View {
                 (sender as TextBox).Text = Int32.Parse(input).ToString();
             }
         }
+        private void timeCount_LostFocus(object sender, RoutedEventArgs e) {
+            string input = (sender as TextBox).Text;
+            if (input != "Время в минутах" && input.Length != 0) {
+                if (Int32.Parse(input) < 10)
+                    input = "10";
+                (sender as TextBox).Text = Int32.Parse(input).ToString();
+            }
+        }
 
         private void tipCount_TextChanged(object sender, TextChangedEventArgs e) {
             string input = (sender as TextBox).Text;
-            if (!Regex.IsMatch(input, "(^([0-3]){1,1}$|^Подсказки$)")) {
-                if (input.Length != 0)
+            if (!Regex.IsMatch(input, "(^([0-9]){1,1}$|^Подсказки$)")) {
+                if (input.Length != 0) {
                     (sender as TextBox).Text = textBeforeChange;
+                    input = textBeforeChange;
+                }
+            }
+            if (input != "Подсказки" && input.Length != 0) {
+                if (Int32.Parse(input) > 3)
+                    input = "3";
+                (sender as TextBox).Text = Int32.Parse(input).ToString();
             }
         }
 
@@ -143,16 +158,50 @@ namespace WpfApp1.View {
             }
         }
 
-        private void onNextPage_Click(object sender, RoutedEventArgs e) {
-
+        private async void onNextPage_Click(object sender, RoutedEventArgs e) {
+            bool isWrong = false;
+            if (timeCount.Text== "Время в минутах") {
+                DataPopupText.Content = "ВВЕДИТЕ ВРЕМЯ";
+                NextPopup.IsOpen = true;
+                isWrong = true;
+            } else if(tipCount.Text == "Подсказки") {
+                DataPopupText.Content = "ВВЕДИТЕ ПОДСКАЗКИ";
+                NextPopup.IsOpen = true;
+                isWrong = true;
+            } else if (loadPositioСurrentButton==null) {
+                DataPopupText.Content = "ВЫБЕРИТЕ ПОЛОЖЕНИЕ ОПОР";
+                NextPopup.IsOpen = true;
+                isWrong = true;
+            } else if (variantСurrentButton == null) {
+                DataPopupText.Content = "ВЫБЕРИТЕ ВАРИАНТ";
+                NextPopup.IsOpen = true;
+                isWrong = true;
+            } else {
+                testPopup.IsOpen = true;
+                mainLayout.IsEnabled = false;
+                mainLayout.Opacity = 0.3;
+            }
+            if (isWrong == true) {
+                await Task.Delay(2000);
+                NextPopup.IsOpen = false;
+            }
         }
 
+        private static testPage tPage;
         private void popupButton_Click(object sender, RoutedEventArgs e) {
-
+            tPage= new testPage(contentControl,
+                                titleLabel.Content + " Тест " + loadPositioСurrentButton.Content + "-" + variantСurrentButton.Content,
+                                timeCount.Text);
+            contentControl.Content = tPage;
+        }
+        public static testPage getTestPage() {
+            return tPage;
         }
 
         private void popupExit_Click(object sender, RoutedEventArgs e) {
             testPopup.IsOpen = false;
+            mainLayout.IsEnabled = true;
+            mainLayout.Opacity = 1;
         }
         private void popupExit_MouseEnter(object sender, MouseEventArgs e) {
             line1.Stroke = SpecialColor.white();
@@ -161,6 +210,17 @@ namespace WpfApp1.View {
         private void popupExit_MouseLeave(object sender, MouseEventArgs e) {
             line1.Stroke = SpecialColor.mainBlue();
             line2.Stroke = SpecialColor.mainBlue();
+        }
+
+        //возвращает состояние попапа testPopup
+        public bool getPopupStatus() {
+            return testPopup.IsOpen;
+        }
+        //закрывает попап resultPopup
+        public void setPopupStatus() {
+            testPopup.IsOpen = false;
+            mainLayout.Opacity = 1;
+            mainLayout.IsEnabled = true;
         }
     }
 }

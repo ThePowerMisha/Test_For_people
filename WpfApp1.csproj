@@ -62,6 +62,9 @@
     <Compile Include="View\aboutProgramm.xaml.cs">
       <DependentUpon>aboutProgramm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\afterTestPage.xaml.cs">
+      <DependentUpon>afterTestPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Card.cs" />
     <Compile Include="View\choiceBlock.xaml.cs">
       <DependentUpon>choiceBlock.xaml</DependentUpon>
@@ -78,6 +81,9 @@
     </Compile>
     <Compile Include="View\spravkaPage.xaml.cs">
       <DependentUpon>spravkaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\testPage.xaml.cs">
+      <DependentUpon>testPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TheoryPage.xaml.cs">
       <DependentUpon>TheoryPage.xaml</DependentUpon>
@@ -100,6 +106,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\afterTestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\choiceBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -117,6 +127,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\spravkaPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\testPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

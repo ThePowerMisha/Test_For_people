@@ -39,14 +39,6 @@ namespace WpfApp1.View {
             contentControl.Content = WpfApp1.MainWindow.getMainPage();
         }
 
-        //class Card {
-        //    public Card(string title, string path) {
-        //        this.title = title;
-        //        this.path = path;
-        //    }
-        //    public string title;
-        //    public string path;
-        //}
         private static List<Card> cardMass = new List<Card> {
             new Card("I.","View/Karpenko.jpeg"),
             new Card("II.","View/Sinitsin.jpg"),
@@ -93,8 +85,14 @@ namespace WpfApp1.View {
                 await Task.Delay(2000);
                 NextPopup.IsOpen = false;
             } else {
-                contentControl.Content = new choiceNextPage(contentControl, loadDataThemesCB.Text+". "+ currentButton.Content.ToString());
+                cNPage = new choiceNextPage(contentControl, loadDataThemesCB.Text + ". Часть " + currentButton.Content.ToString());
+                contentControl.Content = cNPage;//new choiceNextPage(contentControl, loadDataThemesCB.Text+". "+ currentButton.Content.ToString());
             }
+        }
+
+        private static choiceNextPage cNPage;
+        public static choiceNextPage getChoiceNextPage() {
+            return cNPage;
         }
     }
     
