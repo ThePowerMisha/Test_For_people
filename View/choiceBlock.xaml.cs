@@ -39,6 +39,7 @@ namespace WpfApp1.View {
             contentControl.Content = WpfApp1.MainWindow.getMainPage();
         }
 
+
         private static List<Card> cardMass = new List<Card> {
             new Card("I.","View/Karpenko.jpeg"),
             new Card("II.","View/Sinitsin.jpg"),
@@ -48,6 +49,7 @@ namespace WpfApp1.View {
 
         //тестовая загрузка карточек блоков
         private void UserControl_Loaded(object sender, RoutedEventArgs e) {
+
             //currentButton = null;
             //choiceContent.Children.Clear();
             if (choiceContent.Children.Count == 0) {
@@ -76,7 +78,7 @@ namespace WpfApp1.View {
             //    choiceContent.Children.Add(button);
             //}
         }
-        public static Button currentButton = null;
+
         private void card_Click(object sender, RoutedEventArgs e) {
             if ((sender as Button) != currentButton) {
                 if (currentButton != null) {
@@ -109,6 +111,7 @@ namespace WpfApp1.View {
         public static choiceNextPage getChoiceNextPage() {
             return cNPage;
         }
+
     }
     
 }

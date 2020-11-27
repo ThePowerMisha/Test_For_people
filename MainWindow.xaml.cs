@@ -37,6 +37,7 @@ namespace WpfApp1{
             nVB1 = navBarButton1;
             nVB2 = navBarButton2;
             nVB3 = navBarButton3;
+
             //ояистка шлавного грида
             //mainContentGrid.Children.RemoveRange(0, mainContentGrid.Children.Count);
         }
@@ -79,6 +80,7 @@ namespace WpfApp1{
             nVB3.Opacity = 1;
         }
         //обработчики событий переводов
+
         private void windowApp_Loaded(object sender, RoutedEventArgs e) {
             contentControl.Content = mPage;
         }
@@ -106,6 +108,7 @@ namespace WpfApp1{
                 WpfApp1.View.choiceBlock.getChoiceNextPage().setPopupStatus();
             if (WpfApp1.View.choiceNextPage.getTestPage() != null && WpfApp1.View.choiceNextPage.getTestPage().getPopupStatus())
                 WpfApp1.View.choiceNextPage.getTestPage().setPopupStatus();
+
         }
         //-----LoadedEvent-----
 
