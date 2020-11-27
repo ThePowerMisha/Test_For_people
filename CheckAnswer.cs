@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 // original author - https://github.com/mariuszgromada/MathParser.org-mXparser
 using org.mariuszgromada.math.mxparser;
 
-
 namespace WpfApp1
 {
     public class CheckAnswer
@@ -92,7 +91,7 @@ namespace WpfApp1
 
             // Удаляем ненужные пробелы из строки и переводим все в нижний регистр
             Formula = Formula.Replace(" ", "").ToLower();
-          
+
             // Делим введенную формулу на элементы массива, используя паттерн арифметический операций
             string[] array = Regex.Split(Formula, pattern);
 
