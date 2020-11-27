@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -62,8 +63,15 @@
     <Compile Include="View\aboutProgramm.xaml.cs">
       <DependentUpon>aboutProgramm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\afterTestPage.xaml.cs">
+      <DependentUpon>afterTestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Card.cs" />
     <Compile Include="View\choiceBlock.xaml.cs">
       <DependentUpon>choiceBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\choiceNextPage.xaml.cs">
+      <DependentUpon>choiceNextPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\mainPage.xaml.cs">
       <DependentUpon>mainPage.xaml</DependentUpon>
@@ -74,6 +82,9 @@
     </Compile>
     <Compile Include="View\spravkaPage.xaml.cs">
       <DependentUpon>spravkaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\testPage.xaml.cs">
+      <DependentUpon>testPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TheoryPage.xaml.cs">
       <DependentUpon>TheoryPage.xaml</DependentUpon>
@@ -96,7 +107,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\afterTestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\choiceBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\choiceNextPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -109,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\spravkaPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\testPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

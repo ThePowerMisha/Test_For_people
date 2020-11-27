@@ -32,6 +32,12 @@ namespace WpfApp1{
             aProgramm = new aboutProgramm(headerControl);
             sPage = new spravkaPage(headerControl);
             tPage = new TheoryPage(headerControl);
+
+            hControl = headerControl;
+            nVB1 = navBarButton1;
+            nVB2 = navBarButton2;
+            nVB3 = navBarButton3;
+
             //ояистка шлавного грида
             //mainContentGrid.Children.RemoveRange(0, mainContentGrid.Children.Count);
         }
@@ -49,6 +55,32 @@ namespace WpfApp1{
         public static mainPage getMainPage() {
             return mPage;
         }
+
+        private static ContentControl hControl;
+        private static Button nVB1;
+        private static Button nVB2;
+        private static Button nVB3;
+        public static void headersBlock() {
+            hControl.IsEnabled = false;
+            hControl.Opacity = 0;
+            hControl.IsHitTestVisible = false;
+            nVB1.IsEnabled = false;
+            nVB2.IsEnabled = false;
+            nVB3.IsEnabled = false;
+            nVB1.Opacity = 0.3;
+            nVB2.Opacity = 0.3;
+            nVB3.Opacity = 0.3;
+        }
+        public static void headersUnlock() {
+            nVB1.IsEnabled = true;
+            nVB2.IsEnabled = true;
+            nVB3.IsEnabled = true;
+            nVB1.Opacity = 1;
+            nVB2.Opacity = 1;
+            nVB3.Opacity = 1;
+        }
+        //обработчики событий переводов
+
         private void windowApp_Loaded(object sender, RoutedEventArgs e) {
             contentControl.Content = mPage;
         }
@@ -72,6 +104,11 @@ namespace WpfApp1{
             }
             if (mPage.getPopupStatus())
                 mPage.setPopupStatus();
+            if (WpfApp1.View.choiceBlock.getChoiceNextPage()!=null && WpfApp1.View.choiceBlock.getChoiceNextPage().getPopupStatus())
+                WpfApp1.View.choiceBlock.getChoiceNextPage().setPopupStatus();
+            if (WpfApp1.View.choiceNextPage.getTestPage() != null && WpfApp1.View.choiceNextPage.getTestPage().getPopupStatus())
+                WpfApp1.View.choiceNextPage.getTestPage().setPopupStatus();
+
         }
         //-----LoadedEvent-----
 

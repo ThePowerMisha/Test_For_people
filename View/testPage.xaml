@@ -1,0 +1,823 @@
+﻿<UserControl x:Class="WpfApp1.View.testPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp1.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="1046" d:DesignWidth="1920" Background="#EFEFEF">
+
+    <UserControl.Resources>
+        <Style TargetType="Label" x:Key="labelStyle">
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="Margin" Value="0,25,0,10"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="textBlockStyle">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Padding" Value="15,0,15,0"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+        </Style>
+        <Style TargetType="Button" x:Key="buttonStyle">
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="brdr" TextBlock.Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="#e4e4e4" 
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="Transparent" 
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+
+
+        <!--выпадающий список-->
+        <ControlTemplate  x:Key="ComboBoxToggleButtonLeft" TargetType="{x:Type ToggleButton}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                <Border
+                    x:Name="Border"
+                    Grid.ColumnSpan="2"
+                    CornerRadius="10,0,0,10"
+                    Background="#EFEFEF"
+                    Cursor="Hand"
+                    BorderBrush="#3E94D1"
+                    BorderThickness="2" />
+                <Border 
+                    Grid.Column="0"
+                    CornerRadius="15" 
+                    Margin="1" 
+                    Cursor="Hand"
+                    Background="Transparent" 
+                    BorderBrush="Transparent"
+                    BorderThickness="0,0,2,0" />
+                <Path 
+                    x:Name="Arrow"
+                    Grid.Column="1"
+                    Cursor="Hand"
+                    Fill="#3E94D1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"/>
+
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
+            <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}" />
+        </ControlTemplate>
+        <!--x:Key="{x:Type ComboBox}"-->
+        <Style x:Key="CBStyleLeft" TargetType="{x:Type ComboBox}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Foreground" Value="#3E94D1"/>
+            <Setter Property="Margin" Value="0,0,15,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid>
+                            <ToggleButton 
+                                Name="ToggleButton" 
+                                Template="{StaticResource ComboBoxToggleButtonLeft}" 
+                                Grid.Column="2"
+                                Focusable="false"
+                                IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                ClickMode="Press">
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            Margin="15,3,23,3"
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Left" />
+                            <TextBox x:Name="PART_EditableTextBox"
+                            Style="{x:Null}"
+                            Template="{StaticResource ComboBoxTextBox}" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Center"
+                            Margin="3,3,23,3"
+                            Focusable="True" 
+                            Background="#FF3F3F3F"
+                            Foreground="Green"
+                            Visibility="Hidden"
+                            IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                            <Popup 
+                            Name="Popup"
+                            Placement="Bottom"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            AllowsTransparency="True" 
+                            Focusable="False"
+                            PopupAnimation="Fade">
+
+                                <Grid Name="DropDown"
+                                SnapsToDevicePixels="True"                
+                                MinWidth="{TemplateBinding ActualWidth}"
+                                MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border 
+                                x:Name="DropDownBorder"
+                                Background="#EFEFEF"
+                                CornerRadius="0,0,10,10"
+                                BorderThickness="2"
+                                BorderBrush="#3E94D1"/>
+                                    <ScrollViewer Margin="0" VerticalScrollBarVisibility="Hidden" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </Trigger>
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                                <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0,0,0,0"/>
+                                <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsEditable"  Value="true">
+                                <Setter Property="IsTabStop" Value="false"/>
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+                            <Trigger Property="IsDropDownOpen"  Value="true">
+                                <Setter TargetName="DropDownBorder" Property="ClipToBounds" Value="True"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="Foreground" Value="#3E94D1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                        <Border Name="Border"
+                            Padding="15,10"
+                            SnapsToDevicePixels="true">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#3E94D1"/>
+                                <Setter Property="Foreground" Value="white"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--выпадающий список-->
+
+        <!--стиль карточек-->
+        <Style TargetType="Button" x:Key="buttonCard">
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Style.Resources>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="MinHeight" Value="250"/>
+            <Setter Property="MinWidth" Value="400"/>
+            <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}"/>
+            <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height}"/>
+            <Setter Property="Margin" Value="7.5,0"/>
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="brdr" TextBlock.Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <!--<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}"/>
+                            Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Label}, Path=Content, FallbackValue=BindingFailed}-->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" MinHeight="50"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Padding="15,0,0,0"
+                                    FontSize="25"
+                                    Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}"
+                                    FontWeight="Bold"
+                                    Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"
+                                    VerticalContentAlignment="Center"
+                                    BorderThickness="0,0,0,2"
+                                    BorderBrush="#3E94D1"
+                                    Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}">
+                                    <Label.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="10,10,0,0" />
+                                        </Style>
+                                    </Label.Resources>
+                                </Label>
+                                <Border Grid.Column="0"
+                                        Grid.Row="1"
+                                        Grid.RowSpan="4"
+                                        CornerRadius="0,0,9,9">
+                                    <Border.Background>
+                                        <ImageBrush
+                                           ImageSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
+                                           Stretch="UniformToFill"/>
+                                    </Border.Background>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="#3E94D1"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+        <!--стиль карточек-->
+
+        <!--картинки-->
+        <Style TargetType="Border" x:Key="borderImage">
+            <Setter Property="BorderBrush" Value="#3E94D1"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Width" Value="{Binding ElementName=Graph, Path=ActualWidth}"/>
+            <Setter Property="Height" Value="{Binding ElementName=Graph, Path=ActualHeight}"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush 
+                        Stretch="UniformToFill" 
+                        ImageSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Border}}, Path=Tag}"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--картинки-->
+    </UserControl.Resources>
+
+    <Grid Name="mainLayout">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="65"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="450"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="450"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <!--ТЕКСТ ТЕКУЩЕГО ОКНА-->
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#3E94D1">
+            <Label Name="testTitle" Content="Выбор блока" FontSize="35" Foreground="white" FontWeight="Bold" HorizontalAlignment="Center"></Label>
+        </StackPanel>
+
+        <!--<Button Name="onPreviousPage" Grid.Column="0" Grid.Row="0" Content="ВЕРНУТЬСЯ НАЗАД" FontSize="20" FontWeight="Bold" Foreground="white" Background="#3E94D1" Cursor="Hand" BorderBrush="#FF3E94D1" Click="onPreviousPage_Click">
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="#8864b1e8" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                            <ColorAnimation To="#8864b1e8" 
+                                            Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                            <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>-->
+
+        <Button Name="onNextPage" Grid.Column="2" Grid.Row="0" Content="ЗАВЕРШИТЬ ТЕСТ" FontSize="20" FontWeight="Bold" Foreground="white" Background="#3E94D1" Cursor="Hand" BorderBrush="#FF3E94D1" Click="onNextPage_Click">
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="#8864b1e8" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                            <ColorAnimation To="#8864b1e8" 
+                                            Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                            <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+        <Popup Name="NextPopup" IsOpen="False" StaysOpen="True" PopupAnimation="Fade" AllowsTransparency="True" Placement="Center" PlacementTarget="{Binding ElementName=onNextPage}" Cursor="Arrow"  VerticalOffset="-1">
+            <Label Name="DataPopupText" FontFamily="Arial" Width="{Binding Path=ActualWidth, ElementName=onNextPage}" Height="{Binding Path=ActualHeight, ElementName=onNextPage}" FontSize="20" FontWeight="Bold" Foreground="White" Background="#FF4040" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        </Popup>
+        <!--ТЕКСТ ТЕКУЩЕГО ОКНА-->
+
+        <Grid Name="contentBlock" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="15,0,15,15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="65"/>
+                <RowDefinition Height="300"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="300"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="480"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.15*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--ОСНОВНАЯ ЧАСТЬ-->
+
+            <Label Name="subtitleLabel" Content="123"
+                   Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
+                   VerticalContentAlignment="Center"
+                   HorizontalContentAlignment="Center"
+                   FontSize="30"
+                   FontWeight="Bold"
+                   Foreground="#3E94D1"/>
+
+            <Border Name="Graph"
+                    Grid.Row="1" Grid.Column="0">
+                <Grid Name="GraphContent">
+                    <Label Content="ИЗОБРАЖЕНИЕ ОТСУТСТВУЕТ"
+                           FontSize="25"
+                           Foreground="#3E94D1"
+                           FontWeight="Bold"
+                           VerticalContentAlignment="Center"
+                           HorizontalContentAlignment="Center"
+                           BorderBrush="#3E94D1"
+                           BorderThickness="2"
+                           Opacity="0.3" 
+                           Panel.ZIndex="-1">
+                        <Label.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <!--<Border Style="{StaticResource borderImage}" Tag="View\Karpenko.jpeg"/>-->
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Name="Data"
+                            Margin="15,0">
+                    <Label Content="Дано"
+                           FontSize="25"
+                           Foreground="#3E94D1"
+                           FontWeight="Bold"/>
+                    <TextBlock Name="DataMainInfo" 
+                                   Padding="0,0,15,0"
+                                   FontSize="25"
+                                   Foreground="black"
+                                   FontWeight="DemiBold"
+                                   TextWrapping="Wrap">Начальные данные</TextBlock>
+                    <TextBlock Name="DataExtraInfo" 
+                                   Padding="0,0,15,0"
+                                   FontSize="25"
+                                   Foreground="black"
+                                   FontWeight="DemiBold"
+                                   TextWrapping="Wrap">Дополнительные данные (будут заполняться по мере прохождения теста)</TextBlock>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Border Name="newGraph"
+                    Grid.Row="3" Grid.Column="0">
+                <Grid Name="newGraphContent">
+                    <Label Content="ИЗОБРАЖЕНИЕ ОТСУТСТВУЕТ"
+                           FontSize="25"
+                           Foreground="#3E94D1"
+                           FontWeight="Bold"
+                           VerticalContentAlignment="Center"
+                           HorizontalContentAlignment="Center"
+                           BorderBrush="#3E94D1"
+                           BorderThickness="2"
+                           Opacity="0.3" 
+                           Panel.ZIndex="-1">
+                        <Label.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <!--<Border Style="{StaticResource borderImage}" Tag="View\Karpenko.jpeg"/>-->
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Name="Question"
+                            Margin="15,0">
+                    <Label Content="Задача"
+                           FontSize="25"
+                           Foreground="#3E94D1"
+                           FontWeight="Bold"/>
+                    <TextBlock Name="QuestionInfo" 
+                                   Padding="0,0,15,0"
+                                   FontSize="25"
+                                   Foreground="black"
+                                   FontWeight="DemiBold"
+                                   TextWrapping="Wrap">Найдите переменные:</TextBlock>
+                    <StackPanel Name="QuestionVals">
+                        <StackPanel.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="FontSize" Value="25"/>
+                                <Setter Property="FontWeight" Value="DemiBold"/>
+                                <Setter Property="Foreground" Value="black"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Label Content="Переменная1 = ?" Tag="Переменная1"/>
+                        <Label Content="Переменная2 = ?" Tag="Переменная2"/>
+                        <Label Content="Переменная2 = ?" Tag="Переменная3"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4"
+                  Margin="0,0,15,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*" MinWidth="290"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <ComboBox Name="QuestionValueCB"
+                          Margin="0"
+                          Grid.Column="0"
+                          Style="{StaticResource CBStyleLeft}"
+                          
+                          BorderBrush="#3E94D1" 
+                          Foreground="#3E94D1" 
+                          Background="#EFEFEF" 
+                          FontSize="25" 
+                          VerticalContentAlignment="Center"
+                          HorizontalContentAlignment="Right"
+                          SelectedIndex="0">
+                    <ComboBoxItem Content="Переменная 1"/>
+                    <ComboBoxItem Content="Переменная 2"/>
+                    <ComboBoxItem Content="Переменная 3"/>
+                </ComboBox>
+
+                <TextBox Name="answer" 
+                         
+                         Grid.Column="1"
+                         Grid.Row="0"
+                         Background="#EFEFEF"
+                         Foreground="Black"
+                         FontWeight="DemiBold"
+                         FontSize="25"
+                         VerticalContentAlignment="Center"
+                         BorderBrush="#3E94D1"
+                         BorderThickness="0,2"
+                         Padding="15,0"/>
+
+                <Button Name="confirmAnswer"
+                        Grid.Column="3"
+                        Content="ОТВЕТИТЬ"
+                        BorderThickness="2"
+                        BorderBrush="#3E94D1"
+                        Background="#EFEFEF"
+                        Foreground="#3E94D1"
+                        FontSize="25"
+                        FontWeight="SemiBold"
+                        Cursor="Hand" Click="confirmAnswer_Click">
+                    <Button.Resources>
+                        <!--CornerRadius for textBox-->
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="0,10,10,0"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                                    <ColorAnimation To="#FFFFFF" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="#EFEFEF" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                                    <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Popup Name="AnswerPopup"
+                       VerticalOffset="-1"
+                       IsOpen="False" 
+                       StaysOpen="True" 
+                       AllowsTransparency="True" 
+                       PopupAnimation="Fade"
+                       Placement="Center"
+                       PlacementTarget="{Binding ElementName=confirmAnswer}">
+                    <Label Name="AnswerPopupContent"
+                           Content="НЕПРАВИЛЬНО"
+                           Width="{Binding ElementName=confirmAnswer, Path=ActualWidth}"
+                           Height="{Binding ElementName=confirmAnswer, Path=ActualHeight}"
+                           Background="#FF4040"
+                           Foreground="White"
+                           FontSize="25"
+                           FontWeight="SemiBold"
+                           HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center">
+                        <Label.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="0,10,10,0"/>
+                            </Style>
+                        </Label.Resources>
+                        
+                    </Label>
+                </Popup>
+
+            </Grid>
+
+            <Border Grid.Column="4"
+                    Grid.Row="1"
+                    Grid.RowSpan="6"
+                    BorderThickness="2"
+                    BorderBrush="#3E94D1"
+                    CornerRadius="10,0,0,10">
+                <Grid>
+                    <Label Content="ПОДСКАЗКИ"
+                           FontSize="25"
+                           Foreground="#3E94D1"
+                           FontWeight="Bold"
+                           VerticalContentAlignment="Center"
+                           HorizontalContentAlignment="Center"
+                           Opacity="0.3" 
+                           Panel.ZIndex="-1"/>
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Visible"
+                              Padding="15">
+                        <StackPanel Name="Tips">
+
+                            <!--ПОДСКАЗКИ-->
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4"
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto"
+                          Margin="0,15,15,0"
+                          Padding="0,0,15,0">
+                <StackPanel Name="answerTips" Margin="0,-7.5">
+                    <StackPanel.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="Foreground" Value="black"/>
+                            <Setter Property="Height" Value="55"/>
+                            <Setter Property="FontSize" Value="25"/>
+                            <Setter Property="FontWeight" Value="DemiBold"/>
+                            <Setter Property="BorderBrush" Value="#3E94D1"/>
+                            <Setter Property="Margin" Value="0,7.5"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border BorderBrush="#3E94D1" 
+                                                BorderThickness="2" 
+                                                Background="#efefef" 
+                                                Padding="15,7.5" 
+                                                SnapsToDevicePixels="true" 
+                                                CornerRadius="10">
+                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </StackPanel.Resources>
+
+                    <Label Content="Правильный ответ..."/>
+                    <Label Content="Правильный ответ..."/>
+                    <Label Content="Правильный ответ..."/>
+
+                </StackPanel>
+            </ScrollViewer>
+            
+            <!--popups-->
+            <Popup Name="exitTestPopup"
+                   IsOpen="false"
+                   StaysOpen="True"
+                   AllowsTransparency="True"
+                   PopupAnimation="Fade"
+                   Placement="Center"
+                   PlacementTarget="{Binding ElementName=mainLayout}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="450"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="150"/>
+                        <RowDefinition Height="65"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3"
+                        Background="#EFEFEF" 
+                        BorderBrush="#3E94D1" 
+                        BorderThickness="2">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Name="exitTestPopupTitle"
+                                Margin="0,-65,0,0"
+                               Foreground="#3E94D1" 
+                               FontSize="30" 
+                               FontFamily="Arial" 
+                               FontWeight="Bold" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center"
+                               TextAlignment="Center">ВЫ УВЕРЕНЫ,<LineBreak/>ЧТО ХОТИТЕ ЗАВЕРШИТЬ ТЕСТ?</TextBlock>
+
+
+                        </StackPanel>
+                    </Border>
+
+                    <Button Name="popupButton" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Cursor="Hand" BorderThickness="2,0,2,2" BorderBrush="#3E94D1" FontSize="25" FontWeight="SemiBold" Foreground="#3E94D1" Padding="15" Background="#EFEFEF" Content="ЗАВЕРШИТЬ ТЕСТ" Click="popupButton_Click">
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                        <ColorAnimation To="White" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#EFEFEF" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                        <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
+
+                    <Button x:Name="popupExit" Click="popupExit_Click" Grid.Row="0" Grid.Column="2" Cursor="Hand" BorderThickness="0,2,2,0" BorderBrush="#3E94D1" MouseEnter="popupExit_MouseEnter" MouseLeave="popupExit_MouseLeave">
+                        <Viewbox Margin="10">
+                            <Grid>
+                                <Line x:Name="line1" X1="0" Y1="0" X2="100" Y2="100" Stroke="#3E94D1" StrokeThickness="7"/>
+                                <Line x:Name="line2" X1="0" Y1="100" X2="100" Y2="0" Stroke="#3E94D1" StrokeThickness="7"/>
+                            </Grid>
+                        </Viewbox>
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                        <ColorAnimation To="White" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="#EFEFEF" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                        <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </Grid>
+            </Popup>
+            <!--popups-->
+
+            <!--ОСНОВНАЯ ЧАСТЬ-->
+        </Grid>
+    </Grid>
+</UserControl>

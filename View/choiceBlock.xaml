@@ -218,7 +218,8 @@
         </Style>
         <!--выпадающий список-->
 
-        <!--стиль карточек(для всех)-->        
+        <!--стиль карточек-->        
+
         <Style TargetType="Button" x:Key="buttonCard">
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -285,10 +286,9 @@
             <Setter Property="BorderBrush" Value="#3E94D1"/>
             <Setter Property="BorderThickness" Value="2"/>
         </Style>
-        <!--стиль карточек(для всех)-->
-        
-        <!--стиль карточек(для выбраной)-->
-        <!--стиль карточек(для выбраной)-->
+
+        <!--стиль карточек-->
+
     </UserControl.Resources>
 
     <Grid>
@@ -339,6 +339,43 @@
                 </EventTrigger>
             </Button.Triggers>
         </Button>
+
+        <Button Name="onNextPage" Grid.Column="2" Grid.Row="0" Content="ПРОДОЛЖИТЬ" FontSize="20" FontWeight="Bold" Foreground="white" Background="#3E94D1" Cursor="Hand" BorderBrush="#FF3E94D1" Click="onNextPage_Click">
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="#8864b1e8" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                            <ColorAnimation To="#8864b1e8" 
+                                            Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                            <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+        <Popup Name="NextPopup" IsOpen="False" StaysOpen="True" PopupAnimation="Fade" AllowsTransparency="True" Placement="Center" PlacementTarget="{Binding ElementName=onNextPage}" Cursor="Arrow"  VerticalOffset="-1">
+            <Label Name="DataPopupText" FontFamily="Arial" Width="{Binding Path=ActualWidth, ElementName=onNextPage}" Height="{Binding Path=ActualHeight, ElementName=onNextPage}" FontSize="20" FontWeight="Bold" Foreground="White" Background="#FF4040" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">ВЫБЕРИТЕ БЛОК</Label>
+        </Popup>
+
         <!--ТЕКСТ ТЕКУЩЕГО ОКНА-->
 
         <Grid Name="contentBlock" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
@@ -379,11 +416,12 @@
             <Border Grid.Column="0"
                     Grid.ColumnSpan="5"
                     Grid.Row="1"
-                    CornerRadius="10"
+
+                    CornerRadius="10,0,0,10"
                     BorderThickness="2"
                     BorderBrush="#3E94D1"
                     Margin="15,0,15,15">
-                <ScrollViewer VerticalScrollBarVisibility="Auto"
+
                               HorizontalScrollBarVisibility="Disabled"
                               Padding="7.5,15">
                     <WrapPanel Name="choiceContent"
