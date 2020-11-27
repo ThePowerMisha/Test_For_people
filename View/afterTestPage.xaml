@@ -303,6 +303,29 @@
             </Setter>
         </Style>
         <!--картинки-->
+
+        <!--Labels-->
+        <Style TargetType="Label" x:Key="leftLabel">
+            <Setter Property="Background" Value="#3E94D1"/>
+            <Setter Property="Foreground" Value="white"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="BorderBrush" Value="white"/>
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="Label" x:Key="rightLabel">
+            <Setter Property="Background" Value="#EFEFEF"/>
+            <Setter Property="Foreground" Value="#3E94D1"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="BorderBrush" Value="#3E94D1"/>
+            <Setter Property="BorderThickness" Value="0,0,2,2"/>
+            <Setter Property="HorizontalContentAlignment" Value="left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <!--Labels-->
     </UserControl.Resources>
 
     <Grid Name="mainLayout">
@@ -393,25 +416,206 @@
 
         <Grid Name="contentBlock" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="15,0,15,15">
             <Grid.RowDefinitions>
-                <RowDefinition Height="65"/>
-                <RowDefinition Height="300"/>
                 <RowDefinition Height="15"/>
-                <RowDefinition Height="300"/>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height="15"/>
-                <RowDefinition Height="55"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="480"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="1.15*"/>
             </Grid.ColumnDefinitions>
 
             <!--ОСНОВНАЯ ЧАСТЬ-->
 
-            
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto"
+                          Grid.Row="1" Grid.Column="1" Grid.RowSpan="4">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="65"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!--titles-->
+                    <Label Grid.Row="0" Grid.Column="0" 
+                           Style="{StaticResource leftLabel}"
+                           Content="ТЕМА    ">
+                        <Label.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10,0,0,0"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <Label Grid.Row="1" Grid.Column="0" 
+                           Style="{StaticResource leftLabel}"
+                           Content="ВИД    ">
+                    </Label>
+                    <Label Grid.Row="2" Grid.Column="0" 
+                           Style="{StaticResource leftLabel}"
+                           Content="НАГРУЗКИ    ">
+                    </Label>
+                    <Label Grid.Row="3" Grid.Column="0" 
+                           Style="{StaticResource leftLabel}"
+                           Content="ВАРИАНТ    ">
+                    </Label>
+                    <Label Grid.Row="4" Grid.Column="0" 
+                           Style="{StaticResource leftLabel}"
+                           Content="ВРЕМЯ ВЫПОЛНЕНИЯ ТЕСТА    ">
+                    </Label>
+                    <Label Grid.Row="5" Grid.Column="0" 
+                           Style="{StaticResource leftLabel}"
+                           Content="КОЛИЧЕСТВО БАЛЛОВ    ">
+                    </Label>
+                    <Label Grid.Row="6" Grid.Column="0" 
+                           Style="{StaticResource leftLabel}"
+                           Content="КОЛ-ВО ПРАВИЛЬНЫХ ОТВЕТОВ    ">
+                    </Label>
+                    <Label Grid.Row="7" Grid.Column="0" 
+                           Style="{StaticResource leftLabel}"
+                           BorderThickness="0"
+                           Content="ДАТА ПРОХОЖДЕНИЯ    ">
+                        <Label.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="0,0,0,10"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <!--titles-->
+
+                    <!--Values-->
+                    <Label Grid.Row="0" Grid.Column="1" 
+                           Style="{StaticResource rightLabel}"
+                           BorderThickness="0,2,2,2"
+                           Content="    ТЕМА">
+                        <Label.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="0,10,0,0"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <Label Grid.Row="1" Grid.Column="1" 
+                           Style="{StaticResource rightLabel}"
+                           Content="    ВИД">
+                    </Label>
+                    <Label Grid.Row="2" Grid.Column="2" 
+                           Style="{StaticResource rightLabel}"
+                           Content="    НАГРУЗКИ">
+                    </Label>
+                    <Label Grid.Row="3" Grid.Column="3" 
+                           Style="{StaticResource rightLabel}"
+                           Content="    ВАРИАНТ">
+                    </Label>
+                    <Label Grid.Row="4" Grid.Column="4" 
+                           Style="{StaticResource rightLabel}"
+                           Content="    ВРЕМЯ ВЫПОЛНЕНИЯ ТЕСТА">
+                    </Label>
+                    <Label Grid.Row="5" Grid.Column="5" 
+                           Style="{StaticResource rightLabel}"
+                           Content="    КОЛИЧЕСТВО БАЛЛОВ">
+                    </Label>
+                    <Label Grid.Row="6" Grid.Column="6" 
+                           Style="{StaticResource rightLabel}"
+                           Content="    КОЛ-ВО ПРАВИЛЬНЫХ ОТВЕТОВ">
+                    </Label>
+                    <Label Grid.Row="7" Grid.Column="7" 
+                           Style="{StaticResource rightLabel}"
+                           BorderThickness="0,0,2,2"
+                           Content="    ДАТА ПРОХОЖДЕНИЯ">
+                        <Label.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="0,0,10,0"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <!--Values-->
+
+                    <Label Content="Результаты прошлого тестирования"
+                           Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"
+                           HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center"
+                           FontSize="25"
+                           FontWeight="Bold"
+                           Foreground="#3E94D1"/>
+                    <!--titles-->
+                    <Label Grid.Row="9" Grid.Column="0" 
+                           Style="{StaticResource leftLabel}"
+                           Content="ВРЕМЯ ВЫПОЛНЕНИЯ ТЕСТА    ">
+                        <Label.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10,0,0,0"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <Label Grid.Row="10" Grid.Column="0" 
+                           Style="{StaticResource leftLabel}"
+                           Content="КОЛИЧЕСТВО БАЛЛОВ    ">
+                    </Label>
+                    <Label Grid.Row="11" Grid.Column="0" 
+                           Style="{StaticResource leftLabel}"
+                           Content="КОЛ-ВО ПРАВИЛЬНЫХ ОТВЕТОВ    ">
+                    </Label>
+                    <Label Grid.Row="12" Grid.Column="0" 
+                           Style="{StaticResource leftLabel}"
+                           BorderThickness="0"
+                           Content="ДАТА ПРОХОЖДЕНИЯ    ">
+                        <Label.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="0,0,0,10"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <!--titles-->
+
+                    <!--Values-->
+                    <Label Grid.Row="9" Grid.Column="1" 
+                           Style="{StaticResource rightLabel}"
+                           BorderThickness="0,2,2,2"
+                           Content="    ВРЕМЯ ВЫПОЛНЕНИЯ ТЕСТА">
+                        <Label.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="0,10,0,0"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <Label Grid.Row="10" Grid.Column="1" 
+                           Style="{StaticResource rightLabel}"
+                           Content="    КОЛИЧЕСТВО БАЛЛОВ">
+                    </Label>
+                    <Label Grid.Row="11" Grid.Column="2" 
+                           Style="{StaticResource rightLabel}"
+                           Content="    КОЛ-ВО ПРАВИЛЬНЫХ ОТВЕТОВ">
+                    </Label>
+                    <Label Grid.Row="12" Grid.Column="7" 
+                           Style="{StaticResource rightLabel}"
+                           BorderThickness="0,0,2,2"
+                           Content="    ДАТА ПРОХОЖДЕНИЯ">
+                        <Label.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="0,0,10,0"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <!--Values-->
+
+                </Grid>
+            </ScrollViewer>
 
             <!--ОСНОВНАЯ ЧАСТЬ-->
         </Grid>

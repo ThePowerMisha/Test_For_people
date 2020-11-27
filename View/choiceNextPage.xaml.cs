@@ -189,7 +189,7 @@ namespace WpfApp1.View {
 
         private static testPage tPage;
         private void popupButton_Click(object sender, RoutedEventArgs e) {
-            tPage= new testPage(contentControl,
+            tPage = new testPage(contentControl,
                                 titleLabel.Content + " Тест " + loadPositioСurrentButton.Content + "-" + variantСurrentButton.Content,
                                 timeCount.Text);
             contentControl.Content = tPage;

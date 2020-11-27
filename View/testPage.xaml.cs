@@ -35,9 +35,10 @@ namespace WpfApp1.View {
         private static bool timeOut = false;
         private static int score=0;
         private static TimeSpan _time;
+        private static DispatcherTimer _timer;
         //Timer
         void timer(string time) {
-            DispatcherTimer _timer;
+            //DispatcherTimer _timer;
             _time = TimeSpan.FromMinutes(Int32.Parse(time));
             subtitleLabel.Content = "Осталось: " + _time.ToString("c") + "      Балл: " + score.ToString();
             _timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate {
@@ -113,6 +114,7 @@ namespace WpfApp1.View {
 
         private void popupButton_Click(object sender, RoutedEventArgs e) {
             WpfApp1.MainWindow.headersUnlock();
+            _timer.Stop();
             contentControl.Content = new afterTestPage(contentControl);
         }
     }

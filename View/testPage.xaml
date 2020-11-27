@@ -742,7 +742,7 @@
                         </StackPanel>
                     </Border>
 
-                    <Button Name="popupButton" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Cursor="Hand" BorderThickness="2,0,2,2" BorderBrush="#3E94D1" FontSize="25" FontWeight="SemiBold" Foreground="#3E94D1" Padding="15" Background="#EFEFEF" Content="ЗАКОНЧИТЬ ТЕСТ" Click="popupButton_Click">
+                    <Button Name="popupButton" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Cursor="Hand" BorderThickness="2,0,2,2" BorderBrush="#3E94D1" FontSize="25" FontWeight="SemiBold" Foreground="#3E94D1" Padding="15" Background="#EFEFEF" Content="ЗАВЕРШИТЬ ТЕСТ" Click="popupButton_Click">
                         <Button.Triggers>
                             <EventTrigger RoutedEvent="Button.MouseEnter">
                                 <BeginStoryboard>

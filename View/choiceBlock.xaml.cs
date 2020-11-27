@@ -48,20 +48,35 @@ namespace WpfApp1.View {
 
         //тестовая загрузка карточек блоков
         private void UserControl_Loaded(object sender, RoutedEventArgs e) {
-
-            foreach(Card card in cardMass) {
-                Button button = new Button();
-                button.Style = this.Resources["buttonCard"] as Style;
-                button.Content = card.title;
-                button.Tag = card.path;
-                button.Width = (choiceContent.ActualWidth - 61) / 4;
-                button.Height = ((choiceContent.ActualWidth - 45) / 4)/8*5;
-                button.Foreground = SpecialColor.mainBlue();
-                button.Click += card_Click;
-                choiceContent.Children.Add(button);
+            //currentButton = null;
+            //choiceContent.Children.Clear();
+            if (choiceContent.Children.Count == 0) {
+                foreach (Card card in cardMass) {
+                    Button button = new Button();
+                    button.Style = this.Resources["buttonCard"] as Style;
+                    button.Content = card.title;
+                    button.Tag = card.path;
+                    button.Width = (choiceContent.ActualWidth - 61) / 4;
+                    button.Height = ((choiceContent.ActualWidth - 45) / 4) / 8 * 5;
+                    button.Foreground = SpecialColor.mainBlue();
+                    button.Click += card_Click;
+                    choiceContent.Children.Add(button);
+                }
             }
+
+            //foreach (Card card in cardMass) {
+            //    Button button = new Button();
+            //    button.Style = this.Resources["buttonCard"] as Style;
+            //    button.Content = card.title;
+            //    button.Tag = card.path;
+            //    button.Width = (choiceContent.ActualWidth - 61) / 4;
+            //    button.Height = ((choiceContent.ActualWidth - 45) / 4)/8*5;
+            //    button.Foreground = SpecialColor.mainBlue();
+            //    button.Click += card_Click;
+            //    choiceContent.Children.Add(button);
+            //}
         }
-        private static Button currentButton = null;
+        public static Button currentButton = null;
         private void card_Click(object sender, RoutedEventArgs e) {
             if ((sender as Button) != currentButton) {
                 if (currentButton != null) {

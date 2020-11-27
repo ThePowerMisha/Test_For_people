@@ -202,6 +202,11 @@ namespace WpfApp1.View {
         }
 
         private void mainLayoutStart_Click(object sender, RoutedEventArgs e) {
+            if (WpfApp1.View.choiceBlock.currentButton != null) {
+                WpfApp1.View.choiceBlock.currentButton.Foreground = SpecialColor.mainBlue();
+                WpfApp1.View.choiceBlock.currentButton.Background = SpecialColor.mainBack();
+                WpfApp1.View.choiceBlock.currentButton = null;
+            }
             contentControl.Content = cBlock;
         }
         //=======================mainLayout=======================
