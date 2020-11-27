@@ -416,12 +416,11 @@
             <Border Grid.Column="0"
                     Grid.ColumnSpan="5"
                     Grid.Row="1"
-
                     CornerRadius="10,0,0,10"
                     BorderThickness="2"
                     BorderBrush="#3E94D1"
                     Margin="15,0,15,15">
-
+                <ScrollViewer VerticalScrollBarVisibility="Visible"
                               HorizontalScrollBarVisibility="Disabled"
                               Padding="7.5,15">
                     <WrapPanel Name="choiceContent"
@@ -434,7 +433,7 @@
 
                     </WrapPanel>
                 </ScrollViewer>
-                
+
             </Border>
 
             <!--ОСНОВНАЯ ЧАСТЬ-->

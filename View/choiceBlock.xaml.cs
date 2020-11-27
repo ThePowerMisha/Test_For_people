@@ -78,7 +78,7 @@ namespace WpfApp1.View {
             //    choiceContent.Children.Add(button);
             //}
         }
-
+        public static Button currentButton = null;
         private void card_Click(object sender, RoutedEventArgs e) {
             if ((sender as Button) != currentButton) {
                 if (currentButton != null) {
