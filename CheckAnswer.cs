@@ -84,7 +84,7 @@ namespace WpfApp1
             {
                 // Ошибка!
                 //"Где то у тебя не хватило скобки...";
-                return checkStatus;
+                return !checkStatus;
             }
         }
         /// <summary>
