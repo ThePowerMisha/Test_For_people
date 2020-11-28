@@ -52,21 +52,6 @@ namespace WpfApp1.View {
         public static choiceBlock getChoiceBlock() {
             return cBlock;
         }
-        //КОНСТРУКТОР ПО УМОЛЧАНИЮ
-        //public mainPage() {
-        //    InitializeComponent();
-
-        //    //ширина попапа
-        //    DataPopup.Width = SystemParameters.VirtualScreenWidth / 2;
-
-        //    //=============mainStyle================
-        //    //placeholders
-        //    Placeholder.add(lastName, "Фамилия");
-        //    Placeholder.add(firstName, "Имя");
-        //    Placeholder.add(secondName, "Отчество");
-        //    Placeholder.add(group, "Группа");
-        //    //=============mainStyle================
-        //}
 
         private static Window mainWin;
         private static Label curRec;
@@ -102,9 +87,9 @@ namespace WpfApp1.View {
 
                 DataPopupText.Content = isCurrentData == true ? "ДАННЫЕ СОХРАНЕНЫ" : "ДАННЫЕ НЕ СОХРАНЕННЫ";
                 DataPopupText.Background = isCurrentData == true ? SpecialColor.green() : SpecialColor.red();
-                DataPopup.IsOpen = !DataPopup.IsOpen;
+                DataPopup.IsOpen = true;
                 await Task.Delay(2000);
-                DataPopup.IsOpen = !DataPopup.IsOpen;
+                DataPopup.IsOpen = false;
 
                 saveDataFlag = true;
             }
@@ -130,6 +115,8 @@ namespace WpfApp1.View {
             }
 
         }
+
+        //валидация полей
         private string textBeforeChange;
         private int selectionBeforeChange;
         private int selectionLengthBeforeChange;
@@ -167,6 +154,7 @@ namespace WpfApp1.View {
             }
         }
 
+        //анимация крестика
         private void popupExit_MouseEnter(object sender, MouseEventArgs e) {
             line1.Stroke = SpecialColor.white();
             line2.Stroke = SpecialColor.white();

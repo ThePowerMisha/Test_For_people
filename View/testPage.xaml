@@ -422,7 +422,8 @@
             <Border Name="Graph"
                     Grid.Row="1" Grid.Column="0">
                 <Grid Name="GraphContent">
-                    <Label Content="ИЗОБРАЖЕНИЕ ОТСУТСТВУЕТ"
+                    <Label Name="GraphContentLabel"
+                           Content="ИЗОБРАЖЕНИЕ ОТСУТСТВУЕТ"
                            FontSize="25"
                            Foreground="#3E94D1"
                            FontWeight="Bold"
@@ -469,7 +470,8 @@
             <Border Name="newGraph"
                     Grid.Row="3" Grid.Column="0">
                 <Grid Name="newGraphContent">
-                    <Label Content="ИЗОБРАЖЕНИЕ ОТСУТСТВУЕТ"
+                    <Label Name="newGraphContentLabel"
+                           Content="ИЗОБРАЖЕНИЕ ОТСУТСТВУЕТ"
                            FontSize="25"
                            Foreground="#3E94D1"
                            FontWeight="Bold"
@@ -704,7 +706,6 @@
                     <StackPanel.Resources>
                         <Style TargetType="Label">
                             <Setter Property="Foreground" Value="black"/>
-                            <!--<Setter Property="Height" Value="155"/>-->
                             <Setter Property="FontSize" Value="25"/>
                             <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
                             <Setter Property="FontWeight" Value="DemiBold"/>
@@ -716,7 +717,7 @@
                                     <ControlTemplate TargetType="{x:Type Label}">
                                         <Border BorderBrush="#3E94D1" 
                                                 BorderThickness="2" 
-                                                Background="#efefef"
+                                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"
                                                 Padding="15,7.5" 
                                                 SnapsToDevicePixels="true" 
                                                 CornerRadius="10">

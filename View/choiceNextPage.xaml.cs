@@ -206,6 +206,19 @@ namespace WpfApp1.View {
             dataList.Add(loadPositioСurrentButton.Content.ToString());
             dataList.Add(variantСurrentButton.Content.ToString());
             contentControl.Content = tPage;
+
+            //TestControl test = new TestControl();
+            //test.DataMainInfo(test.DataExtraInfo());
+            //test.QuestionVals(new List<string>() { "val1", "val2" });
+            //test.AnswerTip("shalom!", "red");
+            //test.AnswerTip("hallo!", "green");
+            //test.GraphContent("View/Karpenko.jpeg");
+            //test.SecondGraphContent("View/Karpenko.jpeg");
+            //test.SecondGraphContent("View/Karpenko.jpeg");
+            //test.AnswerTipRemove("Правильный ответ...");
+            //test.AnswerTipRemove(1);
+            //test.SecondGraphContentRemove(1);
+            //test.SecondGraphContentRemove("View/Karpenko.jpeg");
         }
         public static testPage getTestPage() {
             return tPage;

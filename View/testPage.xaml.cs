@@ -27,14 +27,26 @@ namespace WpfApp1.View {
             //заголовок
             adaptiveTitle(testTitle, title);
 
+            //служебная инициализация
             Placeholder.add(answer, "Введите ответ");
+            timeWaste = 0;
+            timeOut = false;
+            score = 0;
+            correctAnswersCount = 0;
 
             //общие данные (Timer and Score)
             timer(time);
 
             contentControl = cC;
+
+            //====инициализация переменных для TestControl======
+            //DataMainInfoText = DataMainInfo.Text;
+
+            //TestControl.DataMainInfo("asdasdasd");
         }
         private static ContentControl contentControl;
+
+        //адаптиваня ширина заголовка
         private void adaptiveTitle(Label testTitle, string title) {
             double fz = testTitle.FontSize;
             testTitle.Content = title;
@@ -131,6 +143,7 @@ namespace WpfApp1.View {
             mainLayout.IsEnabled = false;
         }
 
+        //подтверждение ответа
         private async void confirmAnswer_Click(object sender, RoutedEventArgs e) {
             if (false) {
                 AnswerPopupContent.Background = SpecialColor.green();
@@ -145,11 +158,13 @@ namespace WpfApp1.View {
             AnswerPopup.IsOpen = false;
         }
 
+        //выход их попапа
         private void popupExit_Click(object sender, RoutedEventArgs e) {
             exitTestPopup.IsOpen = false;
             mainLayout.IsEnabled = true;
             mainLayout.Opacity = 1;
         }
+        //анимация крестика
         private void popupExit_MouseEnter(object sender, MouseEventArgs e) {
             line1.Stroke = SpecialColor.white();
             line2.Stroke = SpecialColor.white();
@@ -166,5 +181,13 @@ namespace WpfApp1.View {
             contentControl.Content = new afterTestPage(contentControl,
                                                        TimeSpan.FromSeconds(timeWaste).ToString("c"));
         }
+
+
+        //=================ДЛЯ ВЗАИМОДЕЙСТВИЯ С TESTCONTROL====================
+        //переменные для TestControl
+        //public static string DataMainInfoText;
+        //public static void setDataMainInfo(string text) {
+        //    DataMainInfo.Text = text;
+        //}
     }
 }
