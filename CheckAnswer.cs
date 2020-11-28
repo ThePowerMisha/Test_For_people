@@ -107,10 +107,12 @@ namespace WpfApp1
 
             // паттерн арифметический операций
             string patternOperation = @"(\+)|(-)|(\*)|(/)|(\^)";
+            string patternOperationNoMinus = @"(\+)|(\*)|(/)|(\^)";
 
             // Если арифм. операция находится в начали или конце формулы, то вызывается ошибка
             // Примеры: "+a", "a+"
-            if (Regex.IsMatch(Formula[0].ToString(), patternOperation) || (Regex.IsMatch(Formula[Formula.Length - 1].ToString(), patternOperation)))
+            // Исключение: "-a"
+            if (Regex.IsMatch(Formula[0].ToString(), patternOperationNoMinus) || (Regex.IsMatch(Formula[Formula.Length - 1].ToString(), patternOperation)))
             {
                 return !checkStatus;
             }
@@ -138,7 +140,8 @@ namespace WpfApp1
                     {
                         // Если после открывающей скобки идет арифметическая операция, то вызывается ошибка
                         // Примеры: "a+(+b)", "(-)+a"
-                        if (Regex.IsMatch(Formula[i + 1].ToString(), patternOperation))
+                        // Исключение: "a+(-b)"
+                        if (Regex.IsMatch(Formula[i + 1].ToString(), patternOperationNoMinus))
                         {
                             return !checkStatus;
                         }
@@ -152,21 +155,24 @@ namespace WpfApp1
 
                         // Если перед открывающей скобкой нет арифметической операции, то вызывается ошибка (Исключение функция квадратного корня sqrt)
                         // Примеры: "a(b)", "a(b+c)"
-                        // Исключение: "sqrt(b+c)"
+                        // Исключение: "sqrt(b+c)", "((a+b))"
                         if (i > 0)
                         {
                             if (!Regex.IsMatch(Formula[i - 1].ToString(), patternOperation))
                             {
-                                if (i > 3)
+                                if (Formula[i-1] != '(')
                                 {
-                                    if (Formula[i - 4] != 's' && Formula[i - 3] != 'q' && Formula[i - 2] != 'r' && Formula[i - 1] != 't')
+                                    if (i > 3)
+                                    {
+                                        if (Formula[i - 4] != 's' && Formula[i - 3] != 'q' && Formula[i - 2] != 'r' && Formula[i - 1] != 't')
+                                        {
+                                            return !checkStatus;
+                                        }
+                                    }
+                                    else
                                     {
                                         return !checkStatus;
                                     }
-                                }
-                                else
-                                {
-                                    return !checkStatus;
                                 }
                             }
                         }
@@ -194,11 +200,15 @@ namespace WpfApp1
 
                         // Если после открывающей скобки нет арифметических операций, то вызывается ошибка
                         // Примеры: "(b+a)c", "(b)a"
+                        // Исключение: "((a+b))"
                         if (i < (Formula.Length - 1))
                         {
                             if (!Regex.IsMatch(Formula[i + 1].ToString(), patternOperation))
                             {
-                                return !checkStatus;
+                                if (Formula[i+1] != ')')
+                                {
+                                    return !checkStatus;
+                                }
                             }
                         }
                     }
