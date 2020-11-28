@@ -89,8 +89,9 @@ namespace WpfApp1
                 {"h", 10}
             };
 
-            // Удаляем ненужные пробелы из строки и переводим все в нижний регистр
-            Formula = Formula.Replace(" ", "").ToLower();
+            // Перевод строки в нижний регистр
+            Formula = Formula.ToLower();
+            
 
             // Делим введенную формулу на элементы массива, используя паттерн арифметический операций
             string[] array = Regex.Split(Formula, pattern);

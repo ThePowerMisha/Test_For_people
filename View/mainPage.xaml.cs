@@ -49,11 +49,9 @@ namespace WpfApp1.View {
         private static resultsPage rPage;
         private static choiceBlock cBlock;
 
-
         public static choiceBlock getChoiceBlock() {
             return cBlock;
         }
-
         //КОНСТРУКТОР ПО УМОЛЧАНИЮ
         //public mainPage() {
         //    InitializeComponent();
@@ -92,8 +90,8 @@ namespace WpfApp1.View {
                     secondName.Text != "" && secondName.Text != "Отчество" &&
                     group.Text != "" && group.Text != "Группа") {
                     Regex regFIO = new Regex("^([А-Я]|[A-Z])([а-я]|[a-z])+$");
-                    Regex regGroup = new Regex("^([А-Я]|[A-Z]){2,}(\\-| )?\\d{1,2}\\-\\d{2}$");
-                    if(regFIO.IsMatch(lastName.Text) &&
+                    Regex regGroup = new Regex("^[А-ЯA-Z 0-9\\-]*$");//"^([А-Я]|[A-Z]){2,}(\\-| )?\\d{1,2}\\-\\d{2}$"
+                    if (regFIO.IsMatch(lastName.Text) &&
                         regFIO.IsMatch(firstName.Text) &&
                         regFIO.IsMatch(secondName.Text) &&
                         regGroup.IsMatch(group.Text)) {
@@ -118,19 +116,27 @@ namespace WpfApp1.View {
             if (!Regex.IsMatch(input, "^([А-Я]|[A-Z]){1}(([а-я]|[a-z]){1,})?$")) {
                 if (input.Length != 0)
                     (sender as TextBox).Text = textBeforeChange;
+                (sender as TextBox).SelectionStart = selectionBeforeChange;
+                (sender as TextBox).SelectionLength = selectionLengthBeforeChange;
             }
         }
         private void textBox_TextChanged2(object sender, TextChangedEventArgs e) {
             string input = (sender as TextBox).Text;
-            if (!Regex.IsMatch(input, "^(([А-Я]|[A-Z])+(\\-| )?((\\d){1,2})?(\\-)?((\\d)?){2}$|Группа)")) {
+            if (!Regex.IsMatch(input, "(^[А-ЯA-Z 0-9\\-]*$|Группа)")) {
                 if (input.Length != 0)
                     (sender as TextBox).Text = textBeforeChange;
+                (sender as TextBox).SelectionStart = selectionBeforeChange;
+                (sender as TextBox).SelectionLength = selectionLengthBeforeChange;
             }
 
         }
         private string textBeforeChange;
+        private int selectionBeforeChange;
+        private int selectionLengthBeforeChange;
         private void textBox_PreviewKeyDown(object sender, KeyEventArgs e) {
             textBeforeChange = (sender as TextBox).Text;
+            selectionBeforeChange = (sender as TextBox).SelectionStart;
+            selectionLengthBeforeChange = (sender as TextBox).SelectionLength;
         }
 
         //СОБЫТИЕ НА КЛИК ПО РЕЗУЛЬТАТАМ
@@ -204,13 +210,11 @@ namespace WpfApp1.View {
         }
 
         private void mainLayoutStart_Click(object sender, RoutedEventArgs e) {
-
             if (WpfApp1.View.choiceBlock.currentButton != null) {
                 WpfApp1.View.choiceBlock.currentButton.Foreground = SpecialColor.mainBlue();
                 WpfApp1.View.choiceBlock.currentButton.Background = SpecialColor.mainBack();
                 WpfApp1.View.choiceBlock.currentButton = null;
             }
-
             contentControl.Content = cBlock;
         }
         //=======================mainLayout=======================

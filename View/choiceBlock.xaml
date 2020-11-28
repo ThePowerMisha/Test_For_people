@@ -219,7 +219,6 @@
         <!--выпадающий список-->
 
         <!--стиль карточек-->        
-
         <Style TargetType="Button" x:Key="buttonCard">
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -286,9 +285,7 @@
             <Setter Property="BorderBrush" Value="#3E94D1"/>
             <Setter Property="BorderThickness" Value="2"/>
         </Style>
-
         <!--стиль карточек-->
-
     </UserControl.Resources>
 
     <Grid>
@@ -375,7 +372,6 @@
         <Popup Name="NextPopup" IsOpen="False" StaysOpen="True" PopupAnimation="Fade" AllowsTransparency="True" Placement="Center" PlacementTarget="{Binding ElementName=onNextPage}" Cursor="Arrow"  VerticalOffset="-1">
             <Label Name="DataPopupText" FontFamily="Arial" Width="{Binding Path=ActualWidth, ElementName=onNextPage}" Height="{Binding Path=ActualHeight, ElementName=onNextPage}" FontSize="20" FontWeight="Bold" Foreground="White" Background="#FF4040" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">ВЫБЕРИТЕ БЛОК</Label>
         </Popup>
-
         <!--ТЕКСТ ТЕКУЩЕГО ОКНА-->
 
         <Grid Name="contentBlock" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
@@ -416,12 +412,11 @@
             <Border Grid.Column="0"
                     Grid.ColumnSpan="5"
                     Grid.Row="1"
-
                     CornerRadius="10,0,0,10"
                     BorderThickness="2"
                     BorderBrush="#3E94D1"
                     Margin="15,0,15,15">
-
+                <ScrollViewer VerticalScrollBarVisibility="Visible"
                               HorizontalScrollBarVisibility="Disabled"
                               Padding="7.5,15">
                     <WrapPanel Name="choiceContent"

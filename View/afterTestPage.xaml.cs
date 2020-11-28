@@ -18,10 +18,19 @@ namespace WpfApp1.View {
     /// Логика взаимодействия для afterTestPage.xaml
     /// </summary>
     public partial class afterTestPage : UserControl {
-        public afterTestPage(ContentControl cC) {
+        public afterTestPage(ContentControl cC, string timeWaste) {
             InitializeComponent();
 
             contentControl = cC;
+
+            result1.Content = choiceBlock.dataList[0];
+            result2.Content = choiceBlock.dataList[1];
+            result3.Content = choiceNextPage.dataList[0];
+            result4.Content = choiceNextPage.dataList[1];
+            result5.Content = timeWaste;
+            result6.Content = testPage.score.ToString();
+            result7.Content = testPage.correctAnswersCount.ToString();
+            result8.Content = DateTime.Today.ToString("D");
         }
         private static ContentControl contentControl;
         private void onPreviousPage_Click(object sender, RoutedEventArgs e) {

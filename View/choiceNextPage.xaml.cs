@@ -35,17 +35,24 @@ namespace WpfApp1.View {
             contentControl.Content = WpfApp1.View.mainPage.getChoiceBlock();
         }
 
+        //Валидаторы и плэйсхолдеры
         private string textBeforeChange;
+        private int selectionBeforeChange;
+        private int selectionLengthBeforeChange;
         private void textBox_PreviewKeyDown(object sender, KeyEventArgs e) {
             textBeforeChange = (sender as TextBox).Text;
+            selectionBeforeChange = (sender as TextBox).SelectionStart;
+            selectionLengthBeforeChange = (sender as TextBox).SelectionLength;
         }
         private void timeCount_TextChanged(object sender, TextChangedEventArgs e) {
             string input = (sender as TextBox).Text;            
             if (!Regex.IsMatch(input, "(^([0-9]){1,3}$|^Время в минутах$)")) {
                 if (input.Length != 0) {
                     (sender as TextBox).Text = textBeforeChange;
-                    input = textBeforeChange;
+                    input = textBeforeChange; 
                 }
+                (sender as TextBox).SelectionStart = selectionBeforeChange;
+                (sender as TextBox).SelectionLength = selectionLengthBeforeChange;
             }
             if (input != "Время в минутах" && input.Length != 0) {
                 if (Int32.Parse(input) > 180)
@@ -63,7 +70,6 @@ namespace WpfApp1.View {
                 (sender as TextBox).Text = Int32.Parse(input).ToString();
             }
         }
-
         private void tipCount_TextChanged(object sender, TextChangedEventArgs e) {
             string input = (sender as TextBox).Text;
             if (!Regex.IsMatch(input, "(^([0-9]){1,1}$|^Подсказки$)")) {
@@ -71,6 +77,8 @@ namespace WpfApp1.View {
                     (sender as TextBox).Text = textBeforeChange;
                     input = textBeforeChange;
                 }
+                (sender as TextBox).SelectionStart = selectionBeforeChange;
+                (sender as TextBox).SelectionLength = selectionLengthBeforeChange;
             }
             if (input != "Подсказки" && input.Length != 0) {
                 if (Int32.Parse(input) > 3)
@@ -187,22 +195,29 @@ namespace WpfApp1.View {
             }
         }
 
+        //переход к тесту
+        public static List<string> dataList = new List<string>();
         private static testPage tPage;
         private void popupButton_Click(object sender, RoutedEventArgs e) {
             tPage = new testPage(contentControl,
                                 titleLabel.Content + " Тест " + loadPositioСurrentButton.Content + "-" + variantСurrentButton.Content,
                                 timeCount.Text);
+            dataList.Clear();
+            dataList.Add(loadPositioСurrentButton.Content.ToString());
+            dataList.Add(variantСurrentButton.Content.ToString());
             contentControl.Content = tPage;
         }
         public static testPage getTestPage() {
             return tPage;
         }
 
+        //закрытие попапа
         private void popupExit_Click(object sender, RoutedEventArgs e) {
             testPopup.IsOpen = false;
             mainLayout.IsEnabled = true;
             mainLayout.Opacity = 1;
         }
+        //анимация крестика попапа
         private void popupExit_MouseEnter(object sender, MouseEventArgs e) {
             line1.Stroke = SpecialColor.white();
             line2.Stroke = SpecialColor.white();

@@ -318,7 +318,7 @@
 
         <!--ТЕКСТ ТЕКУЩЕГО ОКНА-->
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#3E94D1">
-            <Label Name="testTitle" Content="Выбор блока" FontSize="35" Foreground="white" FontWeight="Bold" HorizontalAlignment="Center"></Label>
+            <Label Name="testTitle" Content="Выбор блока" FontSize="35" Foreground="white" FontWeight="Bold" HorizontalAlignment="Center" VerticalContentAlignment="Center" Height="65"></Label>
         </StackPanel>
 
         <!--<Button Name="onPreviousPage" Grid.Column="0" Grid.Row="0" Content="ВЕРНУТЬСЯ НАЗАД" FontSize="20" FontWeight="Bold" Foreground="white" Background="#3E94D1" Cursor="Hand" BorderBrush="#FF3E94D1" Click="onPreviousPage_Click">
@@ -405,8 +405,8 @@
                 <ColumnDefinition Width="480"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="1.15*"/>
+                <ColumnDefinition Width="1.75*"/><!--1-->
+                <ColumnDefinition Width="1.45*"/><!--1.15-->
             </Grid.ColumnDefinitions>
 
             <!--ОСНОВНАЯ ЧАСТЬ-->
@@ -519,6 +519,37 @@
                 </StackPanel>
             </ScrollViewer>
 
+            <!--<ScrollViewer Grid.Row="3" Grid.Column="3"  Opacity="1"
+                          Margin="0,0,15,0"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Name="extraQuestion"
+                            Margin="15,0">
+                    <Label Content="Дополнительная задача"
+                           FontSize="25"
+                           Foreground="#3E94D1"
+                           FontWeight="Bold"/>
+                    <TextBlock Name="extraQuestionInfo" 
+                                   Padding="0,0,15,0"
+                                   FontSize="25"
+                                   Foreground="black"
+                                   FontWeight="DemiBold"
+                                   TextWrapping="Wrap">Найдите переменные:</TextBlock>
+                    <StackPanel Name="extraQuestionVals">
+                        <StackPanel.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="FontSize" Value="25"/>
+                                <Setter Property="FontWeight" Value="DemiBold"/>
+                                <Setter Property="Foreground" Value="black"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Label Content="Переменная1 = ?" Tag="Переменная1"/>
+                        <Label Content="Переменная2 = ?" Tag="Переменная2"/>
+                        <Label Content="Переменная2 = ?" Tag="Переменная3"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>-->
+
             <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4"
                   Margin="0,0,15,0">
                 <Grid.ColumnDefinitions>
@@ -558,7 +589,7 @@
                          VerticalContentAlignment="Center"
                          BorderBrush="#3E94D1"
                          BorderThickness="0,2"
-                         Padding="15,0"/>
+                         Padding="15,0" PreviewKeyDown="textBox_PreviewKeyDown" TextChanged="answer_TextChanged"/>
 
                 <Button Name="confirmAnswer"
                         Grid.Column="3"
@@ -673,8 +704,9 @@
                     <StackPanel.Resources>
                         <Style TargetType="Label">
                             <Setter Property="Foreground" Value="black"/>
-                            <Setter Property="Height" Value="55"/>
+                            <!--<Setter Property="Height" Value="155"/>-->
                             <Setter Property="FontSize" Value="25"/>
+                            <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
                             <Setter Property="FontWeight" Value="DemiBold"/>
                             <Setter Property="BorderBrush" Value="#3E94D1"/>
                             <Setter Property="Margin" Value="0,7.5"/>
@@ -684,11 +716,12 @@
                                     <ControlTemplate TargetType="{x:Type Label}">
                                         <Border BorderBrush="#3E94D1" 
                                                 BorderThickness="2" 
-                                                Background="#efefef" 
+                                                Background="#efefef"
                                                 Padding="15,7.5" 
                                                 SnapsToDevicePixels="true" 
                                                 CornerRadius="10">
-                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"></TextBlock>
+                                            <!--<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>-->
                                         </Border>
                                     </ControlTemplate>
                                 </Setter.Value>
@@ -696,6 +729,7 @@
                         </Style>
                     </StackPanel.Resources>
 
+                    <Label Content="Правильный ответ...Правильный ответ...Правильный ответ...Правильный ответ...Правильный ответ...Правильный ответ...Правильный ответ..."/>
                     <Label Content="Правильный ответ..."/>
                     <Label Content="Правильный ответ..."/>
                     <Label Content="Правильный ответ..."/>
