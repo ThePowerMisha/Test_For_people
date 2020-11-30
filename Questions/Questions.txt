@@ -1,0 +1,15 @@
+[Question ID:1]
+[QuestionParams]
+"a":11
+"b":26
+"h":5
+"x":8
+[/QuestionParams]
+[QuestionText]
+"Найти сторону c прямоугольного треугольника"
+[/QuestionText]
+[QuestionFormula]
+"sqrt(a^2+b^2)"
+{if (f != NONE)
+	"(a+b)/f"}
+[/QuestionFormula]
