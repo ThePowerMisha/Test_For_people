@@ -60,7 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="CheckAnswer.cs" />
     <Compile Include="GeneralClass.cs" />
-    <Compile Include="Loader.cs" />
+    <Compile Include="LoaderClass.cs" />
     <Compile Include="QuestionClass.cs" />
     <Compile Include="ResultClass.cs" />
     <Compile Include="View\aboutProgramm.xaml.cs">

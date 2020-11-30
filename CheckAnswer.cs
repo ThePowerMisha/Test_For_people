@@ -9,6 +9,10 @@ namespace WpfApp1
     public class CheckAnswer
     {
         /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        public CheckAnswer() { }
+        /// <summary>
         /// Строка формулы, который вводит студент
         /// </summary>
         public string Formula { get; set; }
@@ -19,10 +23,19 @@ namespace WpfApp1
         /// </summary>
         public Dictionary<string, int> Variables { get; set; }
 
+        public void AddVariables(Dictionary<string, int> variables)
+        {
+            if (variables.Count <=0)
+            {
+                return;
+            }
+            Variables = variables;
+        }
+
         /// <summary>
         /// Паттерн арифметических операций ('+', '-', '*', '/', '(', ')'), необходимый для разделения формулы на массив
         /// </summary>
-        private string pattern = @"(\+)|(-)|(\*)|(/)|(\))|(\()";
+        private string pattern = @"(\+)|(-)|(\*)|(/)|(\))|(\()(\^)";
 
         /// <summary>
         /// Функция, реализующая проверку введенной формулы на правильность написания скобок, а именно:
@@ -71,23 +84,19 @@ namespace WpfApp1
             }
         }
 
-        /// <summary>
-        /// Конструктор класса
-        /// </summary>
-        public CheckAnswer() { }
         public String Check()
         {
-            // Тестовый словарь для проверки работоспособности алгоритма
-            // Ключ - название переменной
-            // Значение - значение перменной
-            Dictionary<string, int> Variables = new Dictionary<string, int>
-            {
-                {"f1", 21},
-                {"f2", 5},
-                {"f3", 6},
-                {"d", 7},
-                {"h", 10}
-            };
+            // // Тестовый словарь для проверки работоспособности алгоритма
+            // // Ключ - название переменной
+            // // Значение - значение перменной
+            // Dictionary<string, int> Variables = new Dictionary<string, int>
+            // {
+            //     {"f1", 21},
+            //     {"f2", 5},
+            //     {"f3", 6},
+            //     {"d", 7},
+            //     {"h", 10}
+            // };
 
             // Удаляем ненужные пробелы из строки и переводим все в нижний регистр
             Formula = Formula.Replace(" ", "").ToLower();
