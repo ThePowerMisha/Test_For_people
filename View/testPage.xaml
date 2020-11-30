@@ -670,14 +670,14 @@
 
             </Grid>
 
-            <Border Grid.Column="4"
+            <Border Grid.Column="4" Name="BorderContainer"
                     Grid.Row="1"
                     Grid.RowSpan="6"
                     BorderThickness="2"
                     BorderBrush="#3E94D1"
                     CornerRadius="10,0,0,10">
                 <Grid>
-                    <Label Content="ПОДСКАЗКИ"
+                    <Label Content="ПОДСКАЗКИ" 
                            FontSize="25"
                            Foreground="#3E94D1"
                            FontWeight="Bold"
@@ -687,10 +687,28 @@
                            Panel.ZIndex="-1"/>
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                               VerticalScrollBarVisibility="Visible"
-                              Padding="15">
+                              Padding="15,7.5">
                         <StackPanel Name="Tips">
+                            <StackPanel.Resources>
+                                <Style TargetType="Border">
+                                    <!--<Setter Property="Width" Value="{Binding ElementName=Tips, Path=ActualWidth}"/>
+                                    <Setter Property="Height" Value="{Binding ElementName=Tips, Path=ActualWidth}"/>-->
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="Margin" Value="0,7.5"/>
+                                    <Setter Property="BorderBrush" Value="#3E94D1"/>
+                                    <Setter Property="BorderThickness" Value="2"/>
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <ImageBrush 
+                                                Stretch="UniformToFill" 
+                                                ImageSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Border}}, Path=Tag}"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </StackPanel.Resources>
 
-                            <!--ПОДСКАЗКИ-->
+                            <Border Tag="View\Karpenko.jpeg" Width="228" Height="120"/>
 
                         </StackPanel>
                     </ScrollViewer>

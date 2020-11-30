@@ -471,6 +471,14 @@
                             <!--<Setter Property="BorderBrush" Value="White"/>-->
                             <!--<Setter Property="BorderThickness" Value="2,0,0,0"/>-->
                             <Setter Property="Margin" Value="-1,0,0,0"/>
+                            
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding}"></TextBlock>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
                         </Style>
                         <Style TargetType="DataGridCell">
                             <Setter Property="Padding" Value="0,15"/>
@@ -649,6 +657,7 @@
                                         <DataGrid.Resources>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="Foreground" Value="#3E94D1"/>
+                                                <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
                                                 <Setter Property="BorderThickness" Value="0"/>
                                                 <Setter Property="TextBlock.TextAlignment" Value="Center"/>
                                                 <Setter Property="TextBlock.VerticalAlignment" Value="Center"/>
@@ -657,7 +666,8 @@
                                                     <Setter.Value>
                                                         <ControlTemplate TargetType="{x:Type DataGridCell}">
                                                             <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                                                                <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                                                <!--<ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>-->
+                                                                <TextBlock TextWrapping="Wrap" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.Text}"/>
                                                             </Border>
                                                         </ControlTemplate>
                                                     </Setter.Value>
@@ -672,7 +682,7 @@
                                             </Style>
                                         </DataGrid.Resources>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Вариант" Binding="{Binding variant}" Width="*">
+                                            <DataGridTextColumn Header="Тема" Binding="{Binding variant}" Width="1.75*">
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
                                                         <Setter Property="BorderBrush" Value="White"/>
@@ -680,7 +690,63 @@
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="Балл" Binding="{Binding score}" Width="*">
+                                            <DataGridTextColumn Header="Часть" Binding="{Binding score}" Width="*">
+                                                <DataGridTextColumn.HeaderStyle>
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
+                                                        <Setter Property="BorderBrush" Value="White"/>
+                                                        <Setter Property="BorderThickness" Value="0,0,2,0"/>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="Положение нагрузок" Binding="{Binding score}" Width="*">
+                                                <DataGridTextColumn.HeaderStyle>
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
+                                                        <Setter Property="BorderBrush" Value="White"/>
+                                                        <Setter Property="BorderThickness" Value="0,0,2,0"/>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="Вариант" Binding="{Binding score}" Width="*">
+                                                <DataGridTextColumn.HeaderStyle>
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
+                                                        <Setter Property="BorderBrush" Value="White"/>
+                                                        <Setter Property="BorderThickness" Value="0,0,2,0"/>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="Время выполнения теста" Binding="{Binding score}" Width="*">
+                                                <DataGridTextColumn.HeaderStyle>
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
+                                                        <Setter Property="BorderBrush" Value="White"/>
+                                                        <Setter Property="BorderThickness" Value="0,0,2,0"/>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="Подсказки" Binding="{Binding score}" Width="*">
+                                                <DataGridTextColumn.HeaderStyle>
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
+                                                        <Setter Property="BorderBrush" Value="White"/>
+                                                        <Setter Property="BorderThickness" Value="0,0,2,0"/>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="Количество баллов" Binding="{Binding score}" Width="*">
+                                                <DataGridTextColumn.HeaderStyle>
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
+                                                        <Setter Property="BorderBrush" Value="White"/>
+                                                        <Setter Property="BorderThickness" Value="0,0,2,0"/>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="Кол-во правильных ответов" Binding="{Binding score}" Width="*">
+                                                <DataGridTextColumn.HeaderStyle>
+                                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
+                                                        <Setter Property="BorderBrush" Value="White"/>
+                                                        <Setter Property="BorderThickness" Value="0,0,2,0"/>
+                                                    </Style>
+                                                </DataGridTextColumn.HeaderStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="Дата прохождения" Binding="{Binding score}" Width="*">
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}"/>
                                                 </DataGridTextColumn.HeaderStyle>

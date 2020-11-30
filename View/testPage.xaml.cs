@@ -38,13 +38,9 @@ namespace WpfApp1.View {
             timer(time);
 
             contentControl = cC;
-
-            //====инициализация переменных для TestControl======
-            //DataMainInfoText = DataMainInfo.Text;
-
-            //TestControl.DataMainInfo("asdasdasd");
         }
         private static ContentControl contentControl;
+        public double aWidth;
 
         //адаптиваня ширина заголовка
         private void adaptiveTitle(Label testTitle, string title) {
@@ -64,15 +60,15 @@ namespace WpfApp1.View {
         //флаг остановки при выходе времени
         private static bool timeOut = false;
         //общий счет баллов
-        public static int score=0;
+        public int score=0;
         //общий счет кол-во правельных ответов
         public static int correctAnswersCount=0;
         //время затраченное на тест
-        private static int timeWaste=0;
+        public int timeWaste=0;
 
         //таймер
-        private static TimeSpan _time;
-        private static DispatcherTimer _timer;
+        public TimeSpan _time;
+        private DispatcherTimer _timer;
         //Timer
         void timer(string time) {
             _time = TimeSpan.FromMinutes(Int32.Parse(time)); //FromSeconds(5);
@@ -179,15 +175,8 @@ namespace WpfApp1.View {
             WpfApp1.MainWindow.headersUnlock();
             _timer.Stop();
             contentControl.Content = new afterTestPage(contentControl,
-                                                       TimeSpan.FromSeconds(timeWaste).ToString("c"));
+                                                       TimeSpan.FromSeconds(timeWaste).ToString("c"),
+                                                       score.ToString());
         }
-
-
-        //=================ДЛЯ ВЗАИМОДЕЙСТВИЯ С TESTCONTROL====================
-        //переменные для TestControl
-        //public static string DataMainInfoText;
-        //public static void setDataMainInfo(string text) {
-        //    DataMainInfo.Text = text;
-        //}
     }
 }

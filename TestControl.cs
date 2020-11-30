@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 
 namespace WpfApp1 {
@@ -13,6 +14,9 @@ namespace WpfApp1 {
         /// </summary>
         public TestControl() {
             this.tPage = View.choiceNextPage.getTestPage();
+
+            this.tPage.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            this.tPage.Arrange(new Rect(0, 0, this.tPage.ActualWidth, this.tPage.ActualHeight));
         }
         private View.testPage tPage;
 
@@ -175,7 +179,7 @@ namespace WpfApp1 {
         /// <summary>
         /// Удаляет эпюру моментов с определенным путем к изображению (удаляется только первое встреченное изображения)
         /// </summary>
-        /// <param name="text">текст для удаления</param>
+        /// <param name="path">текст для удаления</param>
         public void SecondGraphContentRemove(string path) {
             for (int i = 0; i < this.tPage.newGraphContent.Children.Count; i++) {
                 if (this.tPage.newGraphContent.Children[i] is Border && (this.tPage.newGraphContent.Children[i] as Border).Tag.ToString() == path) {
@@ -188,13 +192,101 @@ namespace WpfApp1 {
         }
 
         /// <summary>
-        /// Удаляет эпюру моментов под определенным индексом (учти, что самый первый дочерний элемент в данном массиве это Label, а не нужное изображение)
+        /// Удаляет эпюру моментов под определенным индексом 
+        /// (учти, что самый первый дочерний элемент в данном массиве это Label, а не нужное изображение, если индекс будет равен нулю, то будет преднамеренная ошибка)
         /// </summary>
         /// <param name="index">индекс элемента</param>
         public void SecondGraphContentRemove(int index) {
+            if (index==0)
+                throw new ArgumentException();
             this.tPage.newGraphContent.Children.RemoveAt(index);
             if (this.tPage.newGraphContent.Children.Count == 1)
                 this.tPage.newGraphContentLabel.Opacity = 0.3;
         }
+
+        /// <summary>
+        /// Добавляет изображение к списку визуальных подсказок (добавляет его в конец)
+        /// </summary>
+        /// <param name="path">путь к изображению</param>
+        public void VisualTip(string path) {
+            BitmapImage logo = new BitmapImage();
+            logo.BeginInit();
+            logo.UriSource = new Uri(path, UriKind.Relative);
+            logo.EndInit();
+
+            double percent = logo.Width > this.tPage.Tips.ActualWidth ? (this.tPage.Tips.ActualWidth+27) / logo.Width : 1 ;
+            Border border = new Border();
+            border.Tag = path;
+            border.Height = logo.Height * percent;
+            border.Width = logo.Width * percent;
+            this.tPage.Tips.Children.Add(border);
+        }
+
+        /// <summary>
+        /// Очищает список визуальных посказок
+        /// </summary>
+        public void VisualTipsClear() {
+            this.tPage.Tips.Children.Clear();
+        }
+
+        /// <summary>
+        /// Удаляет визуальную подсказку с определенным путем к изображению (удаляется только первое встреченное изображения)
+        /// </summary>
+        /// <param name="path">текст для удаления</param>
+        public void VisualTipRemove(string path) {
+            foreach(Border border in this.tPage.Tips.Children) {
+                if (border.Tag.ToString() == path) {
+                    this.tPage.Tips.Children.Remove(border);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Удаляет визуальную подсказку под определенным индексом 
+        /// </summary>
+        /// <param name="index">индекс элемента</param>
+        public void VisualTipRemove(int index) {
+            this.tPage.Tips.Children.RemoveAt(index);
+        }
+
+        /// <summary>
+        /// Возвращает выбранную переменную в виде строки
+        /// </summary>
+        /// <returns>выбранная переменная из из списка</returns>
+        public string SelectedValue() => this.tPage.QuestionValueCB.Text;
+
+        /// <summary>
+        /// Возвращает индекс выбранной переменной
+        /// </summary>
+        /// <returns>индекс текущей переменной</returns>
+        public int SelectedIndex() => this.tPage.QuestionValueCB.SelectedIndex;
+
+        /// <summary>
+        /// Возвращает ответ вписаный в поле ответа в виде строки
+        /// </summary>
+        /// <returns>ответ вписаный в поле ответа</returns>
+        public string Answer() => this.tPage.answer.Text;
+
+        /// <summary>
+        /// Добавляет к общему кол-ву баллов передаваемое число
+        /// </summary>
+        /// <param name="value">число</param>
+        public void Score(int value) {
+            this.tPage.score += value;
+            this.tPage.subtitleLabel.Content = "Осталось: " + this.tPage._time.ToString("c") + "      Балл: " + this.tPage.score.ToString();
+        }
+
+        /// <summary>
+        /// Возвращает общее кол-во баллов
+        /// </summary>
+        /// <returns>счет в виде целочисленного числа</returns>
+        public int Score() => this.tPage.score;
+
+        /// <summary>
+        /// В виде строки возвращает время прохождения теста (от начала до текущего момента)
+        /// </summary>
+        /// <returns>время с начала теста в виде строки</returns>
+        public string Time() => TimeSpan.FromSeconds(this.tPage.timeWaste).ToString("c");
     }
 }

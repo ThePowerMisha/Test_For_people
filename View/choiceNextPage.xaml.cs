@@ -205,20 +205,28 @@ namespace WpfApp1.View {
             dataList.Clear();
             dataList.Add(loadPositioСurrentButton.Content.ToString());
             dataList.Add(variantСurrentButton.Content.ToString());
+            dataList.Add(tipCount.Text.ToString());
             contentControl.Content = tPage;
 
-            //TestControl test = new TestControl();
-            //test.DataMainInfo(test.DataExtraInfo());
-            //test.QuestionVals(new List<string>() { "val1", "val2" });
-            //test.AnswerTip("shalom!", "red");
-            //test.AnswerTip("hallo!", "green");
-            //test.GraphContent("View/Karpenko.jpeg");
-            //test.SecondGraphContent("View/Karpenko.jpeg");
-            //test.SecondGraphContent("View/Karpenko.jpeg");
-            //test.AnswerTipRemove("Правильный ответ...");
-            //test.AnswerTipRemove(1);
-            //test.SecondGraphContentRemove(1);
-            //test.SecondGraphContentRemove("View/Karpenko.jpeg");
+            //=================
+            TestControl test = new TestControl();
+            test.DataMainInfo(test.DataExtraInfo());
+            test.QuestionVals(new List<string>() { "val1", "val2" });
+            test.AnswerTip("shalom!", "red");
+            test.AnswerTip("hallo!", "green");
+            test.GraphContent("View/Karpenko.jpeg");
+            test.SecondGraphContent("View/Karpenko.jpeg");
+            test.SecondGraphContent("View/Karpenko.jpeg");
+            test.AnswerTipRemove("Правильный ответ...");
+            test.AnswerTipRemove(1);
+            test.SecondGraphContentRemove(1);
+            test.SecondGraphContentRemove("View/Karpenko.jpeg");
+            test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Karpenko.jpeg");
+            test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Jagaev.jpg");
+            test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Smirnov.jpg");
+            test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Sinitsin.jpg");
+            test.DataExtraInfo(test.Time());
+            //==================
         }
         public static testPage getTestPage() {
             return tPage;

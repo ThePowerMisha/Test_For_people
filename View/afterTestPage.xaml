@@ -453,6 +453,7 @@
                         <RowDefinition Height="65"/>
                         <RowDefinition Height="65"/>
                         <RowDefinition Height="65"/>
+                        <RowDefinition Height="65"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     
@@ -484,13 +485,17 @@
                     </Label>
                     <Label Grid.Row="5" Grid.Column="0" 
                            Style="{StaticResource leftLabel}"
-                           Content="КОЛИЧЕСТВО БАЛЛОВ">
+                           Content="ПОДСКАЗКИ">
                     </Label>
                     <Label Grid.Row="6" Grid.Column="0" 
                            Style="{StaticResource leftLabel}"
-                           Content="КОЛ-ВО ПРАВИЛЬНЫХ ОТВЕТОВ">
+                           Content="КОЛИЧЕСТВО БАЛЛОВ">
                     </Label>
                     <Label Grid.Row="7" Grid.Column="0" 
+                           Style="{StaticResource leftLabel}"
+                           Content="КОЛ-ВО ПРАВИЛЬНЫХ ОТВЕТОВ">
+                    </Label>
+                    <Label Grid.Row="8" Grid.Column="0" 
                            Style="{StaticResource leftLabel}"
                            BorderThickness="0"
                            Content="ДАТА ПРОХОЖДЕНИЯ">
@@ -548,17 +553,22 @@
                            Content="ВРЕМЯ ВЫПОЛНЕНИЯ ТЕСТА">
                     </Label>
                     <Label Name="result6" 
-                        Grid.Row="5" Grid.Column="5" 
+                        Grid.Row="5" Grid.Column="4" 
+                           Style="{StaticResource rightLabel}"
+                           Content="ПОДСКАЗКИ">
+                    </Label>
+                    <Label Name="result7" 
+                        Grid.Row="6" Grid.Column="5" 
                            Style="{StaticResource rightLabel}"
                            Content="КОЛИЧЕСТВО БАЛЛОВ">
                     </Label>
-                    <Label Name="result7" 
-                        Grid.Row="6" Grid.Column="6" 
+                    <Label Name="result8" 
+                        Grid.Row="7" Grid.Column="6" 
                            Style="{StaticResource rightLabel}"
                            Content="КОЛ-ВО ПРАВИЛЬНЫХ ОТВЕТОВ">
                     </Label>
-                    <Label Name="result8" 
-                        Grid.Row="7" Grid.Column="7" 
+                    <Label Name="result9" 
+                        Grid.Row="8" Grid.Column="7" 
                            Style="{StaticResource rightLabel}"
                            BorderThickness="0,0,2,2"
                            Content="ДАТА ПРОХОЖДЕНИЯ">
@@ -571,14 +581,14 @@
                     <!--Values-->
 
                     <Label Content="Результаты прошлого тестирования"
-                           Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"
+                           Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2"
                            HorizontalContentAlignment="Center"
                            VerticalContentAlignment="Center"
                            FontSize="25"
                            FontWeight="Bold"
                            Foreground="#3E94D1"/>
                     <!--titles-->
-                    <Label Grid.Row="9" Grid.Column="0" 
+                    <Label Grid.Row="10" Grid.Column="0" 
                            Style="{StaticResource leftLabel}"
                            Content="ВРЕМЯ ВЫПОЛНЕНИЯ ТЕСТА">
                         <Label.Resources>
@@ -587,15 +597,15 @@
                             </Style>
                         </Label.Resources>
                     </Label>
-                    <Label Grid.Row="10" Grid.Column="0" 
+                    <Label Grid.Row="11" Grid.Column="0" 
                            Style="{StaticResource leftLabel}"
                            Content="КОЛИЧЕСТВО БАЛЛОВ">
                     </Label>
-                    <Label Grid.Row="11" Grid.Column="0" 
+                    <Label Grid.Row="12" Grid.Column="0" 
                            Style="{StaticResource leftLabel}"
                            Content="КОЛ-ВО ПРАВИЛЬНЫХ ОТВЕТОВ">
                     </Label>
-                    <Label Grid.Row="12" Grid.Column="0" 
+                    <Label Grid.Row="13" Grid.Column="0" 
                            Style="{StaticResource leftLabel}"
                            BorderThickness="0"
                            Content="ДАТА ПРОХОЖДЕНИЯ">
@@ -609,7 +619,7 @@
 
                     <!--Values-->
                     <Label Name="previusResult1" 
-                        Grid.Row="9" Grid.Column="1" 
+                        Grid.Row="10" Grid.Column="1" 
                            Style="{StaticResource rightLabel}"
                            BorderThickness="0,2,2,2"
                            Content="ВРЕМЯ ВЫПОЛНЕНИЯ ТЕСТА">
@@ -620,17 +630,17 @@
                         </Label.Resources>
                     </Label>
                     <Label Name="previusResult2" 
-                        Grid.Row="10" Grid.Column="1" 
+                        Grid.Row="11" Grid.Column="1" 
                            Style="{StaticResource rightLabel}"
                            Content="КОЛИЧЕСТВО БАЛЛОВ">
                     </Label>
                     <Label Name="previusResult3"  
-                        Grid.Row="11" Grid.Column="2" 
+                        Grid.Row="12" Grid.Column="2" 
                            Style="{StaticResource rightLabel}"
                            Content="КОЛ-ВО ПРАВИЛЬНЫХ ОТВЕТОВ">
                     </Label>
                     <Label Name="previusResult4"  
-                        Grid.Row="12" Grid.Column="7" 
+                        Grid.Row="13" Grid.Column="7" 
                            Style="{StaticResource rightLabel}"
                            BorderThickness="0,0,2,2"
                            Content="ДАТА ПРОХОЖДЕНИЯ">
