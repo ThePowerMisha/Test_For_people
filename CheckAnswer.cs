@@ -47,7 +47,7 @@ namespace WpfApp1
         /// <summary>
         /// Паттерн арифметических операций ('+', '-', '*', '/', '(', ')'), необходимый для разделения формулы на массив
         /// </summary>
-        private string pattern = @"(\+)|(-)|(\*)|(/)|(\))|(\()(\^)";
+        private string pattern = @"(\+)|(-)|(\*)|(/)|(\))|(\()|(\^)";
 
 
         /// <summary>
@@ -291,6 +291,14 @@ namespace WpfApp1
                     if (array[i] == element.Key)
                     {
                         array[i] = element.Value.ToString();
+                        variableArrayCheck = true;
+                    }
+
+                    // Если значение переменной является десятичным числом с запятой, то меняем запятую на точку, чтобы не возникало ошибок при обработке
+                    if (Regex.IsMatch(array[i], @"^\d+([(\.)|(\,)]\d+)?$"))
+                    {
+                        // Заменяем запятую на точку
+                        array[i] = array[i].Replace(",", ".");
                         variableArrayCheck = true;
                     }
                 }

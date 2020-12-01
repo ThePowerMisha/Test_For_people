@@ -212,10 +212,24 @@ namespace WpfApp1.View {
             TestControl test = new TestControl();
             LoaderClass loaderClass = new LoaderClass("Questions.txt");
             CheckAnswer checkAnswer = new CheckAnswer();
-            
+
+            // Загружаем из файла словарь
+            checkAnswer.Variables = loaderClass.returnVariables();
+
+            // Загружаем текст вопроса
             test.DataMainInfo(loaderClass.returnQuestionText());
+
+            // Загружаем в графический интерфейс данные массива
+            string testtext = "";
+            foreach (var massiv in checkAnswer.Variables)
+            {
+                testtext += $"{massiv.Key} = {massiv.Value}\n";
+            }
+            test.DataExtraInfo(testtext);
+
+            // Загружаем неизвестные переменные, которые нужно найти
             test.QuestionVals(loaderClass.returnQuestionFindParams());
-            
+
             // test.AnswerTip("shalom!", "red");
             // test.AnswerTip("hallo!", "green");
             // test.GraphContent("View/Karpenko.jpeg");

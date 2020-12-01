@@ -39,6 +39,9 @@ namespace WpfApp1.View {
 
             contentControl = cC;
         }
+
+        LoaderClass loaderClass = new LoaderClass("Questions.txt");
+
         private static ContentControl contentControl;
         public double aWidth;
 
@@ -108,7 +111,7 @@ namespace WpfApp1.View {
         }
         private void answer_TextChanged(object sender, TextChangedEventArgs e) {
             string input = (sender as TextBox).Text;
-            if (!Regex.IsMatch(input, "(^[0-9a-zA-Z\\/\\*\\^\\+\\-\\(\\)]*$|^Введите ответ$)")) {
+            if (!Regex.IsMatch(input, "(^[0-9a-zA-Z\\/\\*\\^\\+\\-\\(\\)\\.]*$|^Введите ответ$)")) {
                 if (input.Length != 0) {
                     (sender as TextBox).Text = textBeforeChange;
                     input = textBeforeChange;
@@ -141,17 +144,120 @@ namespace WpfApp1.View {
 
         //подтверждение ответа
         private async void confirmAnswer_Click(object sender, RoutedEventArgs e) {
-            if (true) {
+            TestControl test_one = new TestControl();
+            CheckAnswer checkAnswer = new CheckAnswer(loaderClass.returnVariables());
+
+
+            // Рассчитывем введенную формулу
+            checkAnswer.Formula = answer.Text;
+            string formualaInput = checkAnswer.Check();
+
+            // Строка правильной формулы
+            checkAnswer.Formula = loaderClass.returnFormula()[test_one.SelectedIndex()];
+            string formulaCorrectExport = checkAnswer.Formula;
+            string formulaCorrect = checkAnswer.Check();
+
+            // Проверяем на ошибку "NullOrEmpty Error!" - если была передана пустая строка
+            if (formualaInput == "NullOrEmpty Error!")
+            {
+                AnswerPopupContent.Background = SpecialColor.orange();
+                AnswerPopupContent.Content = "ОШИБКА";
+                test_one.AnswerTipsClear();
+                test_one.AnswerTip($"Ошибка! Введена пустая строка", "orange");
+            }
+
+            // Проверяем на ошибку "Syntax Error!" - если была выявлена синтаксическая ошибка
+            else if (formualaInput == "Syntax Error!")
+            {
+                AnswerPopupContent.Background = SpecialColor.orange();
+                AnswerPopupContent.Content = "ОШИБКА";
+                test_one.AnswerTipsClear();
+                test_one.AnswerTip($"Была выявлена синтаксическая ошибка!", "orange");
+            }
+
+            // Проверяем на ошибку "Bracket Error!" - если была выявлена ошибка правильности написания скобок
+            else if (formualaInput == "Bracket Error!")
+            {
+                AnswerPopupContent.Background = SpecialColor.orange();
+                AnswerPopupContent.Content = "ОШИБКА";
+                test_one.AnswerTipsClear();
+                test_one.AnswerTip($"Ошибка! Неправильно расставлены скобки!", "orange");
+            }
+
+            // Проверяем на ошибку "UnknownData Error!" - если были переданы неизвестные данные
+            else if (formualaInput == "UnknownData Error!")
+            {
+                AnswerPopupContent.Background = SpecialColor.orange();
+                AnswerPopupContent.Content = "ОШИБКА";
+                test_one.AnswerTipsClear();
+                test_one.AnswerTip($"Ошибка! Введены неизвестные данные!", "orange");
+            }
+
+            // Если ошибок нет, то проводим рассчет введенной формулы и сравниваем её с правильной формулой
+            // Если ответ совпал, то выводим информацию о "правильности" ответа и засчитываем правильный ответ.
+            else if (Convert.ToDouble(formulaCorrect) == Convert.ToDouble(formualaInput))
+            {
                 AnswerPopupContent.Background = SpecialColor.green();
                 AnswerPopupContent.Content = "ПРАВИЛЬНО";
                 correctAnswersCount++;
-            } else {
+                test_one.AnswerTipsClear();
+                test_one.AnswerTip($"Правильно! Ответ: {formulaCorrectExport}", "green");
+
+
+                // Если эта переменная еще не найдена, то добавляем ее в словарь переменных
+                int checkKey = 0;
+                foreach (var i in checkAnswer.Variables)
+                {
+                    if (i.Key == loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()])
+                    {
+                        checkKey = 1;
+                    }
+                }
+                if (checkKey == 0)
+                {
+                    checkAnswer.Variables.Add(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()], Convert.ToDouble(formulaCorrect));
+                }
+            }
+
+            // Если ответы не совпали, то выводим информацию об ошибке и выводим правильную формулу. Правильный ответ не засчитывается
+            else
+            {
                 AnswerPopupContent.Background = SpecialColor.red();
                 AnswerPopupContent.Content = "НЕПРАВИЛЬНО";
+                test_one.AnswerTipsClear();
+                test_one.AnswerTip($"Правильная формула: {formulaCorrectExport}", "red");
+                //test_one.AnswerTip(loaderClass.returnFormula()[test_one.SelectedIndex()], "red");
+
+                // Если эта переменная еще не найдена, то добавляем ее в словарь переменных
+                int checkKey = 0;
+                foreach (var i in checkAnswer.Variables)
+                {
+                    if (i.Key == loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()])
+                    {
+                        checkKey = 1;
+                    }
+                }
+                if (checkKey == 0)
+                {
+                    checkAnswer.Variables.Add(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()], Convert.ToDouble(formulaCorrect));
+                }
+
             }
+
+
+            // Обновляем данные словаря на графический интерфейс
+            string testtext = "";
+            foreach (var massiv in checkAnswer.Variables)
+            {
+                testtext += $"{massiv.Key} = {massiv.Value}\n";
+            }
+            test_one.DataExtraInfo(testtext);
+
+
             AnswerPopup.IsOpen = true;
             await Task.Delay(2000);
             AnswerPopup.IsOpen = false;
+
         }
 
         //выход их попапа
