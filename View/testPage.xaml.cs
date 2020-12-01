@@ -141,7 +141,7 @@ namespace WpfApp1.View {
 
         //подтверждение ответа
         private async void confirmAnswer_Click(object sender, RoutedEventArgs e) {
-            if (false) {
+            if () {
                 AnswerPopupContent.Background = SpecialColor.green();
                 AnswerPopupContent.Content = "ПРАВИЛЬНО";
                 correctAnswersCount++;

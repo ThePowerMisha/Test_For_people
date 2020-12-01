@@ -210,22 +210,26 @@ namespace WpfApp1.View {
 
             //=================
             TestControl test = new TestControl();
-            test.DataMainInfo(test.DataExtraInfo());
-            test.QuestionVals(new List<string>() { "val1", "val2" });
-            test.AnswerTip("shalom!", "red");
-            test.AnswerTip("hallo!", "green");
-            test.GraphContent("View/Karpenko.jpeg");
-            test.SecondGraphContent("View/Karpenko.jpeg");
-            test.SecondGraphContent("View/Karpenko.jpeg");
-            test.AnswerTipRemove("Правильный ответ...");
-            test.AnswerTipRemove(1);
-            test.SecondGraphContentRemove(1);
-            test.SecondGraphContentRemove("View/Karpenko.jpeg");
-            test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Karpenko.jpeg");
-            test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Jagaev.jpg");
-            test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Smirnov.jpg");
-            test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Sinitsin.jpg");
-            test.DataExtraInfo(test.Time());
+            LoaderClass loaderClass = new LoaderClass("Questions.txt");
+            CheckAnswer checkAnswer = new CheckAnswer();
+            
+            test.DataMainInfo(loaderClass.returnQuestionText());
+            test.QuestionVals(loaderClass.returnQuestionFindParams());
+            
+            // test.AnswerTip("shalom!", "red");
+            // test.AnswerTip("hallo!", "green");
+            // test.GraphContent("View/Karpenko.jpeg");
+            // test.SecondGraphContent("View/Karpenko.jpeg");
+            // test.SecondGraphContent("View/Karpenko.jpeg");
+            // test.AnswerTipRemove("Правильный ответ...");
+            // test.AnswerTipRemove(1);
+            // test.SecondGraphContentRemove(1);
+            // test.SecondGraphContentRemove("View/Karpenko.jpeg");
+            // test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Karpenko.jpeg");
+            // test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Jagaev.jpg");
+            // test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Smirnov.jpg");
+            // test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Sinitsin.jpg");
+            // test.DataExtraInfo(test.Time());
             //==================
         }
         public static testPage getTestPage() {
