@@ -92,7 +92,7 @@
             <TextBlock Grid.Row="2" Grid.Column="1" Foreground="White" Background="#3E94D1" FontSize="25" FontWeight="Bold" Padding="15" TextWrapping="Wrap">
                 <Label Content="Конор Макгрегор" Foreground="White" FontSize="33" FontWeight="Bold"/>
                 <LineBreak/> 
-                Программист, разработчик графического интерфейса,<LineBreak/>UI/UX дизайнер
+                Программист, разработчик графического интерфейса, разработчик функционала программы, UI/UX дизайнер
             </TextBlock>
 
             <TextBlock Grid.Row="2" Grid.Column="3" Foreground="White" Background="#3E94D1" FontSize="25" FontWeight="Bold" Padding="15" TextWrapping="Wrap">

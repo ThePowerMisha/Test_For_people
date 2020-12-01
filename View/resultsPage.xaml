@@ -640,10 +640,10 @@
                                         CanUserResizeColumns="False" 
                                         CanUserReorderColumns="False" 
                                         CanUserSortColumns="False"
-                                        HorizontalGridLinesBrush="#3E94D1"
+                                        HorizontalGridLinesBrush="Transparent"
                                         VerticalGridLinesBrush="#3E94D1"
                                         RowBackground="#113E94D1"
-                        
+                                        
                                         AutoGenerateColumns="False"
                                         SelectionUnit="FullRow"
                                         SelectionMode="Single"
@@ -655,9 +655,14 @@
                                         HorizontalAlignment="Stretch"
                                         ItemsSource="{Binding data,Mode=TwoWay}">
                                         <DataGrid.Resources>
+                                            <Style TargetType="DataGridRow">
+                                                <Setter Property="BorderBrush" Value="#3E94D1"/>
+                                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                            </Style>
                                             <Style TargetType="DataGridCell">
+                                                <!--<Setter Property="Height" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}, Path=ActualHeight}"/>-->
                                                 <Setter Property="Foreground" Value="#3E94D1"/>
-                                                <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+                                                <!--<Setter Property="Cursor" Value="Hand"/>-->
                                                 <Setter Property="BorderThickness" Value="0"/>
                                                 <Setter Property="TextBlock.TextAlignment" Value="Center"/>
                                                 <Setter Property="TextBlock.VerticalAlignment" Value="Center"/>
@@ -682,7 +687,7 @@
                                             </Style>
                                         </DataGrid.Resources>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Тема" Binding="{Binding variant}" Width="1.75*">
+                                            <DataGridTextColumn Header="Тема" Binding="{Binding theme}" Width="1.75*">
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
                                                         <Setter Property="BorderBrush" Value="White"/>
@@ -690,7 +695,7 @@
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="Часть" Binding="{Binding score}" Width="*">
+                                            <DataGridTextColumn Header="Часть" Binding="{Binding part}" Width="*">
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
                                                         <Setter Property="BorderBrush" Value="White"/>
@@ -698,7 +703,7 @@
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="Положение нагрузок" Binding="{Binding score}" Width="*">
+                                            <DataGridTextColumn Header="Положение нагрузок" Binding="{Binding loads}" Width="*">
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
                                                         <Setter Property="BorderBrush" Value="White"/>
@@ -706,7 +711,7 @@
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="Вариант" Binding="{Binding score}" Width="*">
+                                            <DataGridTextColumn Header="Вариант" Binding="{Binding variant}" Width="*">
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
                                                         <Setter Property="BorderBrush" Value="White"/>
@@ -714,7 +719,7 @@
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="Время выполнения теста" Binding="{Binding score}" Width="*">
+                                            <DataGridTextColumn Header="Время выполнения теста" Binding="{Binding time}" Width="*">
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
                                                         <Setter Property="BorderBrush" Value="White"/>
@@ -722,7 +727,7 @@
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="Подсказки" Binding="{Binding score}" Width="*">
+                                            <DataGridTextColumn Header="Подсказки" Binding="{Binding tips}" Width="*">
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
                                                         <Setter Property="BorderBrush" Value="White"/>
@@ -738,7 +743,7 @@
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="Кол-во правильных ответов" Binding="{Binding score}" Width="*">
+                                            <DataGridTextColumn Header="Кол-во правильных ответов" Binding="{Binding answers}" Width="*">
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}">
                                                         <Setter Property="BorderBrush" Value="White"/>
@@ -746,7 +751,7 @@
                                                     </Style>
                                                 </DataGridTextColumn.HeaderStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Header="Дата прохождения" Binding="{Binding score}" Width="*">
+                                            <DataGridTextColumn Header="Дата прохождения" Binding="{Binding date}" Width="*">
                                                 <DataGridTextColumn.HeaderStyle>
                                                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource headerStyle}"/>
                                                 </DataGridTextColumn.HeaderStyle>

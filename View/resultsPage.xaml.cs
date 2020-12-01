@@ -28,8 +28,8 @@ namespace WpfApp1.View {
             Placeholder.add(searchData, "Введите ключевое слово");
 
             //массив результатов людей для resultsPeople
-            loadResultsPeople.Add(new Person("Девственно", "Чистый", "И", "Не", new List<PersonData> { new PersonData(1, 1), new PersonData(1, 5) }));
-            loadResultsPeople.Add(new Person("Тронутый", "Рот", "Этого", "Казино", new List<PersonData> { new PersonData(1, 1) }));
+            loadResultsPeople.Add(new Person("Девственно", "Чистый", "И", "Не", new List<PersonData> { new PersonData("hello World! what the fuck is going on", "1", "1", "1", "1", "1", "1", "1", "31 января 2020 г."), new PersonData("1", "1", "1", "1", "1", "1", "1", "1", "1") }));
+            loadResultsPeople.Add(new Person("Тронутый", "Рот", "Этого", "Казино", new List<PersonData> { new PersonData("1", "1", "1", "1", "1", "1", "1", "1", "1") }));
             resultsPeople.ItemsSource = loadResultsPeople;
 
             mainWin = win;
@@ -43,14 +43,14 @@ namespace WpfApp1.View {
 
         //массив для таблицы данных (это тестовые значения, потом этот массив будет заполняться из бд)
         private static List<Person> loadResultsPeople = new List<Person> {
-            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData(1,2)}),
-            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData(1,3)}),
-            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData(1,4)}),
-            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData(3,2)}),
-            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData(2,1)}),
-            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData(5,3)}),
-            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData(4,2)}),
-            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData(2,5)})
+            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData("hello World! what the fuck is going on? oh my god! what are you two doing?","1", "1", "1", "1", "1", "1", "1", "31 января 2020 г.") }),
+            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData("1", "1", "1", "1", "1", "1", "1", "1", "31 января 2020 г.") }),
+            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData("1", "1", "1", "1", "1", "1", "1", "1", "1") }),
+            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData("1", "1", "1", "1", "1", "1", "1", "1", "1") }),
+            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData("1", "1", "1", "1", "1", "1", "1", "1", "1") }),
+            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData("1", "1", "1", "1", "1", "1", "1", "1", "1") }),
+            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData("1", "1", "1", "1", "1", "1", "1", "1", "1") }),
+            new Person("lastName", "firstName", "secondName", "group", new List<PersonData> { new PersonData("1", "1", "1", "1", "1", "1", "1", "1", "1") })
         };
 
         private static Window mainWin;
