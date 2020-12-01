@@ -306,7 +306,7 @@ namespace WpfApp1
                 // Если такой элемент массива недопустим, то выводится ошибка
                 if (!variableArrayCheck)
                 {
-                    return ("Введены неизвестные данные!");
+                    return ("UnknownData Error!");
                 }
 
             }
