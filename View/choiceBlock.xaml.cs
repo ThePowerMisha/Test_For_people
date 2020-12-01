@@ -39,7 +39,6 @@ namespace WpfApp1.View {
             contentControl.Content = WpfApp1.MainWindow.getMainPage();
         }
 
-
         private static List<Card> cardMass = new List<Card> {
             new Card("I.","View/Karpenko.jpeg"),
             new Card("II.","View/Sinitsin.jpg"),
@@ -49,7 +48,6 @@ namespace WpfApp1.View {
 
         //тестовая загрузка карточек блоков
         private void UserControl_Loaded(object sender, RoutedEventArgs e) {
-
             //currentButton = null;
             //choiceContent.Children.Clear();
             if (choiceContent.Children.Count == 0) {
@@ -95,6 +93,7 @@ namespace WpfApp1.View {
             }
         }
 
+        public static List<string> dataList = new List<string>();
         //переход на следующий этап начала тестирования
         private async void onNextPage_Click(object sender, RoutedEventArgs e) {
             if (currentButton == null) {
@@ -102,6 +101,9 @@ namespace WpfApp1.View {
                 await Task.Delay(2000);
                 NextPopup.IsOpen = false;
             } else {
+                dataList.Clear();
+                dataList.Add(loadDataThemesCB.Text);
+                dataList.Add(currentButton.Content.ToString());
                 cNPage = new choiceNextPage(contentControl, loadDataThemesCB.Text + ". Часть " + currentButton.Content.ToString());
                 contentControl.Content = cNPage;//new choiceNextPage(contentControl, loadDataThemesCB.Text+". "+ currentButton.Content.ToString());
             }
@@ -111,7 +113,6 @@ namespace WpfApp1.View {
         public static choiceNextPage getChoiceNextPage() {
             return cNPage;
         }
-
     }
     
 }

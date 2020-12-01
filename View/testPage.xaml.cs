@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Text.RegularExpressions;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Globalization;
 
 namespace WpfApp1.View {
     /// <summary>
@@ -23,7 +25,14 @@ namespace WpfApp1.View {
             InitializeComponent();
 
             //заголовок
-            testTitle.Content = title;
+            adaptiveTitle(testTitle, title);
+
+            //служебная инициализация
+            Placeholder.add(answer, "Введите ответ");
+            timeWaste = 0;
+            timeOut = false;
+            score = 0;
+            correctAnswersCount = 0;
 
             //общие данные (Timer and Score)
             timer(time);
@@ -31,18 +40,42 @@ namespace WpfApp1.View {
             contentControl = cC;
         }
         private static ContentControl contentControl;
+        public double aWidth;
 
+        //адаптиваня ширина заголовка
+        private void adaptiveTitle(Label testTitle, string title) {
+            double fz = testTitle.FontSize;
+            testTitle.Content = title;
+            FormattedText ft = new FormattedText(title, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), fz, SpecialColor.white());
+            while ((ft.Width * 96 / 72) >= (SystemParameters.PrimaryScreenWidth - 900)) {
+                if (fz == 10)
+                    break;
+                fz -= 0.1;
+                ft.SetFontSize(fz);
+            }
+            testTitle.FontSize = fz;
+            testTitle.Content = ft.Text;
+        }
+
+        //флаг остановки при выходе времени
         private static bool timeOut = false;
-        private static int score=0;
-        private static TimeSpan _time;
-        private static DispatcherTimer _timer;
+        //общий счет баллов
+        public int score=0;
+        //общий счет кол-во правельных ответов
+        public static int correctAnswersCount=0;
+        //время затраченное на тест
+        public int timeWaste=0;
+
+        //таймер
+        public TimeSpan _time;
+        private DispatcherTimer _timer;
         //Timer
         void timer(string time) {
-            //DispatcherTimer _timer;
-            _time = TimeSpan.FromMinutes(Int32.Parse(time));
+            _time = TimeSpan.FromMinutes(Int32.Parse(time)); //FromSeconds(5);
             subtitleLabel.Content = "Осталось: " + _time.ToString("c") + "      Балл: " + score.ToString();
             _timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate {
                 _time = _time.Add(TimeSpan.FromSeconds(-1));
+                timeWaste++;
                 subtitleLabel.Content = "Осталось: " + _time.ToString("c") + "      Балл: " + score.ToString();
             }, Application.Current.Dispatcher);
 
@@ -62,6 +95,27 @@ namespace WpfApp1.View {
 
             _timer.Tick += timerStop;
             _timer.Start();
+        }
+
+        //вылидация поля ввода
+        private string textBeforeChange;
+        private int selectionBeforeChange;
+        private int selectionLengthBeforeChange;
+        private void textBox_PreviewKeyDown(object sender, KeyEventArgs e) {
+            textBeforeChange = (sender as TextBox).Text;
+            selectionBeforeChange = (sender as TextBox).SelectionStart;
+            selectionLengthBeforeChange = (sender as TextBox).SelectionLength;
+        }
+        private void answer_TextChanged(object sender, TextChangedEventArgs e) {
+            string input = (sender as TextBox).Text;
+            if (!Regex.IsMatch(input, "(^[0-9a-zA-Z\\/\\*\\^\\+\\-\\(\\)]*$|^Введите ответ$)")) {
+                if (input.Length != 0) {
+                    (sender as TextBox).Text = textBeforeChange;
+                    input = textBeforeChange;
+                }
+                (sender as TextBox).SelectionStart = selectionBeforeChange;
+                (sender as TextBox).SelectionLength = selectionLengthBeforeChange;
+            }
         }
 
         //возвращает состояние попапа exitTestPopup
@@ -85,10 +139,12 @@ namespace WpfApp1.View {
             mainLayout.IsEnabled = false;
         }
 
+        //подтверждение ответа
         private async void confirmAnswer_Click(object sender, RoutedEventArgs e) {
             if (false) {
                 AnswerPopupContent.Background = SpecialColor.green();
                 AnswerPopupContent.Content = "ПРАВИЛЬНО";
+                correctAnswersCount++;
             } else {
                 AnswerPopupContent.Background = SpecialColor.red();
                 AnswerPopupContent.Content = "НЕПРАВИЛЬНО";
@@ -98,11 +154,13 @@ namespace WpfApp1.View {
             AnswerPopup.IsOpen = false;
         }
 
+        //выход их попапа
         private void popupExit_Click(object sender, RoutedEventArgs e) {
             exitTestPopup.IsOpen = false;
             mainLayout.IsEnabled = true;
             mainLayout.Opacity = 1;
         }
+        //анимация крестика
         private void popupExit_MouseEnter(object sender, MouseEventArgs e) {
             line1.Stroke = SpecialColor.white();
             line2.Stroke = SpecialColor.white();
@@ -112,10 +170,13 @@ namespace WpfApp1.View {
             line2.Stroke = SpecialColor.mainBlue();
         }
 
+        //переход к результатам
         private void popupButton_Click(object sender, RoutedEventArgs e) {
             WpfApp1.MainWindow.headersUnlock();
             _timer.Stop();
-            contentControl.Content = new afterTestPage(contentControl);
+            contentControl.Content = new afterTestPage(contentControl,
+                                                       TimeSpan.FromSeconds(timeWaste).ToString("c"),
+                                                       score.ToString());
         }
     }
 }

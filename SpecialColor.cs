@@ -16,6 +16,7 @@ namespace WpfApp1{
         private static Color Green = Color.FromRgb(54, 214, 149);           //#36D695
         private static Color White = Color.FromRgb(255, 255, 255);
         private static Color Black = Color.FromRgb(0, 0, 0);
+        private static Color Orange = Color.FromRgb(255, 128, 0);
         private static Color Placeholder = Color.FromArgb(100, 0, 0, 0);
 
         //getters
@@ -54,6 +55,10 @@ namespace WpfApp1{
         //return Black
         public static SolidColorBrush black(){
             return new SolidColorBrush(Black);
+        }
+        //return Orange
+        public static SolidColorBrush orange() {
+            return new SolidColorBrush(Orange);
         }
         //return Placeholder
         public static SolidColorBrush placeholder(){

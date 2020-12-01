@@ -403,7 +403,7 @@
                    FontWeight="Bold"
                    Foreground="#3E94D1"/>
 
-            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5"
+            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" 
                     CornerRadius="15"
                     BorderThickness="2"
                     BorderBrush="#3E94D1"
@@ -416,15 +416,157 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" 
+                    <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                            Background="#EFEFEF"
+                            CornerRadius="14,0,0,14">
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Border.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation From="#EFEFEF" To="#3E94D1"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                        <ColorAnimation From="#3E94D1" To="White" 
+                                                Storyboard.TargetName="testTimeForBorder"
+                                            Storyboard.TargetProperty="(TextBox.Foreground).(SolidColorBrush.Color)"
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Border.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation From="#3E94D1" To="#EFEFEF" 
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                        <ColorAnimation From="White" To="#3E94D1" 
+                                                Storyboard.TargetName="testTimeForBorder"
+                                            Storyboard.TargetProperty="(TextBox.Foreground).(SolidColorBrush.Color)"
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0" Name="testTimeForBorder"
+                                   Content="Время теста"
+                                   HorizontalContentAlignment="Center"
+                                   VerticalContentAlignment="Center"
+                                   FontSize="30"
+                                   FontWeight="Bold"
+                                   Foreground="#3E94D1"/>
+                            <TextBox Name="timeCount"
+                                     Grid.Row="0" Grid.Column="1"
+                                     Margin="15"
+                                     HorizontalContentAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     FontSize="30"
+                                     FontWeight="Bold"
+                                     Foreground="black"
+                                     BorderBrush="#3E94D1"
+                                     BorderThickness="2" TextChanged="timeCount_TextChanged" PreviewKeyDown="textBox_PreviewKeyDown" LostFocus="timeCount_LostFocus">
+                                <TextBox.Resources>
+                                    <!--CornerRadius for textBox-->
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
+                            
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" 
+                            Background="#EFEFEF"
+                            CornerRadius="0,14,14,0">
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Border.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation From="#EFEFEF" To="#3E94D1"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                        <ColorAnimation From="#3E94D1" To="White" 
+                                                Storyboard.TargetName="tipsForBorder"
+                                            Storyboard.TargetProperty="(TextBox.Foreground).(SolidColorBrush.Color)"
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Border.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation From="#3E94D1" To="#EFEFEF" 
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                        <ColorAnimation From="White" To="#3E94D1" 
+                                                Storyboard.TargetName="tipsForBorder"
+                                            Storyboard.TargetProperty="(TextBox.Foreground).(SolidColorBrush.Color)"
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0" Name="tipsForBorder"
+                                   Content="Визуальные подсказки"
+                                   HorizontalContentAlignment="Center"
+                                   VerticalContentAlignment="Center"
+                                   FontSize="30"
+                                   FontWeight="Bold"
+                                   Foreground="#3E94D1"
+                                   BorderThickness="2,0,0,0"
+                                   BorderBrush="#3E94D1"/>
+
+                            <TextBox Name="tipCount"
+                                     Grid.Row="0" Grid.Column="1"
+                                     Margin="15"
+                                     HorizontalContentAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     FontSize="30"
+                                     FontWeight="Bold"
+                                     Foreground="black"
+                                     BorderBrush="#3E94D1"
+                                     BorderThickness="2" TextChanged="tipCount_TextChanged" PreviewKeyDown="textBox_PreviewKeyDown">
+                                <TextBox.Resources>
+                                    <!--CornerRadius for textBox-->
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
+
+                        </Grid>
+                    </Border>
+                    
+                    <!--<Label Grid.Row="0" Grid.Column="0" Name="testTimeForBorder"
                            Content="Время теста"
                            HorizontalContentAlignment="Center"
                            VerticalContentAlignment="Center"
                            FontSize="30"
                            FontWeight="Bold"
-                           Foreground="#3E94D1"/>
+                           Foreground="#3E94D1"/>-->
 
-                    <TextBox Name="timeCount"
+                    <!--<TextBox Name="timeCount"
                              Grid.Row="0" Grid.Column="1"
                              Margin="15"
                              HorizontalContentAlignment="Center"
@@ -435,14 +577,14 @@
                              BorderBrush="#3E94D1"
                              BorderThickness="2" TextChanged="timeCount_TextChanged" PreviewKeyDown="textBox_PreviewKeyDown" LostFocus="timeCount_LostFocus">
                         <TextBox.Resources>
-                            <!--CornerRadius for textBox-->
+                            --><!--CornerRadius for textBox--><!--
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="5"/>
                             </Style>
                         </TextBox.Resources>
-                    </TextBox>
+                    </TextBox>-->
 
-                    <Label Grid.Row="0" Grid.Column="2" 
+                    <!--<Label Grid.Row="0" Grid.Column="2" 
                            Content="Визуальные подсказки"
                            HorizontalContentAlignment="Center"
                            VerticalContentAlignment="Center"
@@ -463,12 +605,12 @@
                              BorderBrush="#3E94D1"
                              BorderThickness="2" TextChanged="tipCount_TextChanged" PreviewKeyDown="textBox_PreviewKeyDown">
                         <TextBox.Resources>
-                            <!--CornerRadius for textBox-->
+                            --><!--CornerRadius for textBox--><!--
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="5"/>
                             </Style>
                         </TextBox.Resources>
-                    </TextBox>
+                    </TextBox>-->
 
                 </Grid>
             </Border>

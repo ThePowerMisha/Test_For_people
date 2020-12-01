@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WpfApp1.View.choiceBlock"
+<UserControl x:Class="WpfApp1.View.choiceBlock"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -219,7 +219,6 @@
         <!--выпадающий список-->
 
         <!--стиль карточек-->        
-
         <Style TargetType="Button" x:Key="buttonCard">
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -286,9 +285,7 @@
             <Setter Property="BorderBrush" Value="#3E94D1"/>
             <Setter Property="BorderThickness" Value="2"/>
         </Style>
-
         <!--стиль карточек-->
-
     </UserControl.Resources>
 
     <Grid>
@@ -375,7 +372,6 @@
         <Popup Name="NextPopup" IsOpen="False" StaysOpen="True" PopupAnimation="Fade" AllowsTransparency="True" Placement="Center" PlacementTarget="{Binding ElementName=onNextPage}" Cursor="Arrow"  VerticalOffset="-1">
             <Label Name="DataPopupText" FontFamily="Arial" Width="{Binding Path=ActualWidth, ElementName=onNextPage}" Height="{Binding Path=ActualHeight, ElementName=onNextPage}" FontSize="20" FontWeight="Bold" Foreground="White" Background="#FF4040" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">ВЫБЕРИТЕ БЛОК</Label>
         </Popup>
-
         <!--ТЕКСТ ТЕКУЩЕГО ОКНА-->
 
         <Grid Name="contentBlock" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
@@ -433,7 +429,7 @@
 
                     </WrapPanel>
                 </ScrollViewer>
-
+                
             </Border>
 
             <!--ОСНОВНАЯ ЧАСТЬ-->
