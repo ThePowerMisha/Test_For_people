@@ -7,6 +7,7 @@
         xmlns:view="clr-namespace:WpfApp1.View"
         mc:Ignorable="d"
         Name="windowApp"
+        Icon="View\VOLGGTU_LOGO.ico"
         Title="контролирующее-обучающая программа" Height="1080" Width="1920" ResizeMode="NoResize" WindowState="Maximized" Background="#EFEFEF" Loaded="windowApp_Loaded">
 
     <!--Styles-->

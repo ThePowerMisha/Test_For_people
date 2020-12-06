@@ -32,8 +32,30 @@ namespace WpfApp1.View {
             result7.Content = score;
             result8.Content = testPage.correctAnswersCount.ToString();
             result9.Content = DateTime.Today.ToString("D");
+
+            resultsMass.Clear();
+            resultsMass.Add("theme", choiceBlock.dataList[0]);
+            resultsMass.Add("theme", choiceBlock.dataList[1]);
+            resultsMass.Add("theme", choiceNextPage.dataList[0]);
+            resultsMass.Add("theme", choiceNextPage.dataList[1]);
+            resultsMass.Add("theme", timeWaste);
+            resultsMass.Add("theme", choiceNextPage.dataList[2]);
+            resultsMass.Add("theme", score);
+            resultsMass.Add("theme", testPage.correctAnswersCount.ToString());
+            resultsMass.Add("theme", DateTime.Today.ToString("D"));
         }
         private static ContentControl contentControl;
+
+        /// <summary>
+        /// Возвращает словарь результатов теста
+        /// </summary>
+        /// <returns>словарь результатов теста</returns>
+        public static Dictionary<string, string> getResultsMass() => resultsMass;
+
+        //массив данных для записи в бд
+        private static Dictionary<string, string> resultsMass = new Dictionary<string, string>() {};
+
+        //переход на главную страницу
         private void onPreviousPage_Click(object sender, RoutedEventArgs e) {
             contentControl.Content = WpfApp1.MainWindow.getMainPage();
         }

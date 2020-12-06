@@ -73,6 +73,7 @@ namespace WpfApp1 {
                 label.Content = text+" = ?";
                 this.tPage.QuestionVals.Children.Add(label);
             }
+            //this.tPage.QuestionValueCB.ItemsSource = null;
             this.tPage.QuestionValueCB.Items.Clear();
             this.tPage.QuestionValueCB.ItemsSource = valsMass;
             this.tPage.QuestionValueCB.SelectedIndex = 0;
