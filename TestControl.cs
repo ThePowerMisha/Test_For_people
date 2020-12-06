@@ -73,9 +73,33 @@ namespace WpfApp1 {
                 label.Content = text+" = ?";
                 this.tPage.QuestionVals.Children.Add(label);
             }
+            //this.tPage.QuestionValueCB.ItemsSource = null;
             this.tPage.QuestionValueCB.Items.Clear();
             this.tPage.QuestionValueCB.ItemsSource = valsMass;
             this.tPage.QuestionValueCB.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// Записывает новое значение в переменную из "Задача" под определенным индексом
+        /// </summary>
+        /// <param name="index">индекст переменной</param>
+        /// <param name="text">новое значение</param>
+        public void QuestionVal(int index, string text) {
+            (this.tPage.QuestionVals.Children[index] as Label).Content = (this.tPage.QuestionVals.Children[index] as Label).Content.ToString().Remove((this.tPage.QuestionVals.Children[index] as Label).Content.ToString().Length - 1) + text;
+        }
+
+        /// <summary>
+        /// Записывает новое значение в переменную из "Задача" под определенным именем
+        /// </summary>
+        /// <param name="val">имя переменной</param>
+        /// <param name="text">новое значение</param>
+        public void QuestionVal(string val, string text) {
+            foreach(Label label in this.tPage.QuestionVals.Children) {
+                if (label.Content.ToString() == val+" = ?") {
+                    label.Content = label.Content.ToString().Remove(label.Content.ToString().Length - 1) + text; 
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -214,7 +238,7 @@ namespace WpfApp1 {
             logo.UriSource = new Uri(path, UriKind.Relative);
             logo.EndInit();
 
-            double percent = logo.Width > this.tPage.Tips.ActualWidth ? (this.tPage.Tips.ActualWidth+27) / logo.Width : 1 ;
+            double percent = logo.Width > this.tPage.Tips.ActualWidth ? (this.tPage.Tips.ActualWidth + 57) / logo.Width : 1 ;
             Border border = new Border();
             border.Tag = path;
             border.Height = logo.Height * percent;

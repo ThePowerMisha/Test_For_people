@@ -111,7 +111,7 @@ namespace WpfApp1.View {
         }
         private void answer_TextChanged(object sender, TextChangedEventArgs e) {
             string input = (sender as TextBox).Text;
-            if (!Regex.IsMatch(input, "(^[0-9a-zA-Z\\/\\*\\^\\+\\-\\(\\)\\.]*$|^Введите ответ$)")) {
+            if (!Regex.IsMatch(input, "(^[0-9a-zA-Z\\/\\*\\^\\+\\-\\(\\)\\,\\.]*$|^Введите ответ$)")) {
                 if (input.Length != 0) {
                     (sender as TextBox).Text = textBeforeChange;
                     input = textBeforeChange;
@@ -257,7 +257,6 @@ namespace WpfApp1.View {
             AnswerPopup.IsOpen = true;
             await Task.Delay(2000);
             AnswerPopup.IsOpen = false;
-
         }
 
         //выход их попапа

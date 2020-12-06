@@ -166,6 +166,7 @@ namespace WpfApp1.View {
             }
         }
 
+        //обработка введенности данных
         private async void onNextPage_Click(object sender, RoutedEventArgs e) {
             bool isWrong = false;
             if (timeCount.Text== "Время в минутах") {

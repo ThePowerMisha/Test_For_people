@@ -708,7 +708,7 @@
                                 </Style>
                             </StackPanel.Resources>
 
-                            <Border Tag="View\Karpenko.jpeg" Width="228" Height="120"/>
+                            <!--<Border Tag="View\Karpenko.jpeg" Width="228" Height="120"/>-->
 
                         </StackPanel>
                     </ScrollViewer>
