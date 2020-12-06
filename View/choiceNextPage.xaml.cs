@@ -229,7 +229,11 @@ namespace WpfApp1.View {
             test.DataExtraInfo(testtext);
 
             // Загружаем неизвестные переменные, которые нужно найти
-            test.QuestionVals(loaderClass.returnQuestionFindParams());
+            //test.QuestionVals(loaderClass.returnQuestionFindParams());
+
+            // Загружаем неизвестные переменные, которые нужно найти
+            test.TestVals1(loaderClass.returnQuestionFindParams());
+            test.TestVals2(loaderClass.returnQuestionFindParams(), checkAnswer.Variables);
 
             // test.AnswerTip("shalom!", "red");
             // test.AnswerTip("hallo!", "green");

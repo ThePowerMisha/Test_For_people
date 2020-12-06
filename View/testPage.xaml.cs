@@ -214,6 +214,9 @@ namespace WpfApp1.View {
                 {
                     checkAnswer.Variables.Add(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()], Convert.ToDouble(formulaCorrect));
                 }
+
+                // В графе "задача" список неизвестных переменных обновляется
+                //test_one.QuestionVal(test_one.SelectedIndex(), formulaCorrect);
             }
 
             // Если ответы не совпали, то выводим информацию об ошибке и выводим правильную формулу. Правильный ответ не засчитывается
@@ -234,11 +237,13 @@ namespace WpfApp1.View {
                 {
                     checkAnswer.Variables.Add(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()], Convert.ToDouble(formulaCorrect));
                 }
+
+                // В графе "задача" список неизвестных переменных обновляется
+                //test_one.QuestionVal(test_one.SelectedIndex(), formulaCorrect);
             }
 
-            // В графе "задача" список неизвестных переменных обновляется
-            test_one.QuestionVal(test_one.SelectedIndex(), formulaCorrect);
-
+            // ТЕСТ ТЕСТ ТЕСТ ТЕСТ ТЕСТ
+            test_one.TestVals2(loaderClass.returnQuestionFindParams(), checkAnswer.Variables);
 
             AnswerPopup.IsOpen = true;
             await Task.Delay(2000);

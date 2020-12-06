@@ -79,6 +79,33 @@ namespace WpfApp1 {
             this.tPage.QuestionValueCB.SelectedIndex = 0;
         }
 
+        public void TestVals1(List<string> valsMass) {
+            this.tPage.QuestionValueCB.ItemsSource = null;
+            this.tPage.QuestionValueCB.Items.Clear();
+            this.tPage.QuestionValueCB.ItemsSource = valsMass;
+            this.tPage.QuestionValueCB.SelectedIndex = 0;
+        }
+
+        public void TestVals2(List<string> valsMass, Dictionary<string, double> valDict) {
+            this.tPage.QuestionVals.Children.Clear();
+            foreach (string text in valsMass)
+            {
+
+                Label label = new Label();
+
+                if (!valDict.ContainsKey(text))
+                {
+                    label.Content = text + " = ?";
+                }
+                else
+                {
+                    label.Content = text + " = " + valDict[text];
+                }
+
+                this.tPage.QuestionVals.Children.Add(label);
+            }
+        }
+
         /// <summary>
         /// Записывает новое значение в переменную из "Задача" под определенным индексом
         /// </summary>
