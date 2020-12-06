@@ -34,15 +34,15 @@ namespace WpfApp1.View {
             result9.Content = DateTime.Today.ToString("D");
 
             resultsMass.Clear();
-            resultsMass.Add("theme", choiceBlock.dataList[0]);
-            //resultsMass.Add("theme", choiceBlock.dataList[1]);
-            //resultsMass.Add("theme", choiceNextPage.dataList[0]);
-            //resultsMass.Add("theme", choiceNextPage.dataList[1]);
-            //resultsMass.Add("theme", timeWaste);
-            //resultsMass.Add("theme", choiceNextPage.dataList[2]);
-            //resultsMass.Add("theme", score);
-            //resultsMass.Add("theme", testPage.correctAnswersCount.ToString());
-            //resultsMass.Add("theme", DateTime.Today.ToString("D"));
+            resultsMass.Add("theme1", choiceBlock.dataList[0]);
+            resultsMass.Add("theme2", choiceBlock.dataList[1]);
+            resultsMass.Add("theme3", choiceNextPage.dataList[0]);
+            resultsMass.Add("theme4", choiceNextPage.dataList[1]);
+            resultsMass.Add("theme5", timeWaste);
+            resultsMass.Add("theme6", choiceNextPage.dataList[2]);
+            resultsMass.Add("theme7", score);
+            resultsMass.Add("theme8", testPage.correctAnswersCount.ToString());
+            resultsMass.Add("theme9", DateTime.Today.ToString("D"));
         }
         private static ContentControl contentControl;
 
