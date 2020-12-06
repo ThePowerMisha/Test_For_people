@@ -199,21 +199,18 @@ namespace WpfApp1.View {
             {
                 AnswerPopupContent.Background = SpecialColor.green();
                 AnswerPopupContent.Content = "ПРАВИЛЬНО";
+
+                // +1 к счетчику правильных ответов
                 correctAnswersCount++;
+                // За правильный ответ дается 5 баллов
+                test_one.Score(5);
+
                 test_one.AnswerTipsClear();
                 test_one.AnswerTip($"Правильно! Ответ: {formulaCorrectExport}", "green");
 
 
                 // Если эта переменная еще не найдена, то добавляем ее в словарь переменных
-                int checkKey = 0;
-                foreach (var i in checkAnswer.Variables)
-                {
-                    if (i.Key == loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()])
-                    {
-                        checkKey = 1;
-                    }
-                }
-                if (checkKey == 0)
+                if (!checkAnswer.Variables.ContainsKey(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()]))
                 {
                     checkAnswer.Variables.Add(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()], Convert.ToDouble(formulaCorrect));
                 }
@@ -224,34 +221,23 @@ namespace WpfApp1.View {
             {
                 AnswerPopupContent.Background = SpecialColor.red();
                 AnswerPopupContent.Content = "НЕПРАВИЛЬНО";
+
+                // За не правильный ответ балл на 1
+                test_one.Score(-1);
+
                 test_one.AnswerTipsClear();
                 test_one.AnswerTip($"Правильная формула: {formulaCorrectExport}", "red");
                 //test_one.AnswerTip(loaderClass.returnFormula()[test_one.SelectedIndex()], "red");
 
                 // Если эта переменная еще не найдена, то добавляем ее в словарь переменных
-                int checkKey = 0;
-                foreach (var i in checkAnswer.Variables)
-                {
-                    if (i.Key == loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()])
-                    {
-                        checkKey = 1;
-                    }
-                }
-                if (checkKey == 0)
+                if (!checkAnswer.Variables.ContainsKey(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()]))
                 {
                     checkAnswer.Variables.Add(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()], Convert.ToDouble(formulaCorrect));
                 }
-
             }
 
-
-            // Обновляем данные словаря на графический интерфейс
-            string testtext = "";
-            foreach (var massiv in checkAnswer.Variables)
-            {
-                testtext += $"{massiv.Key} = {massiv.Value}\n";
-            }
-            test_one.DataExtraInfo(testtext);
+            // В графе "задача" список неизвестных переменных обновляется
+            test_one.QuestionVal(test_one.SelectedIndex(), formulaCorrect);
 
 
             AnswerPopup.IsOpen = true;
