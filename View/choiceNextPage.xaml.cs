@@ -212,9 +212,9 @@ namespace WpfApp1.View {
             //=================
             TestControl test = new TestControl();
             //test.DataMainInfo(test.DataExtraInfo());
-            //test.QuestionVals(new List<string>() { "val1", "val2" });
             test.QuestionVals(new List<string>() { "val1", "val2" });
-            test.QuestionVals(new List<string>() { "val1", "val2", "val3" });
+            //test.QuestionVals(new List<string>() { "val1", "val2" });
+            //test.QuestionVals(new List<string>() { "val1", "val2", "val3" });
             //test.AnswerTip("shalom!", "red");
             //test.AnswerTip("hallo!", "green");
             //test.GraphContent("View/Karpenko.jpeg");
@@ -229,6 +229,12 @@ namespace WpfApp1.View {
             //test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Smirnov.jpg");
             //test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Sinitsin.jpg");
             //test.DataExtraInfo(test.Time());
+            test.QuestionVal(0, "1.122333");
+            test.QuestionVal(0, "123.2");
+            test.QuestionVal(0, "2.2");
+            test.QuestionVal("val2", "12.22");
+            test.QuestionVal("val2", "2.342");
+            test.QuestionVal("val2", "32.2222");
             //==================
         }
         public static testPage getTestPage() {
