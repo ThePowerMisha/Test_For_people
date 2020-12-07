@@ -85,7 +85,10 @@ namespace WpfApp1 {
         /// <param name="index">индекст переменной</param>
         /// <param name="text">новое значение</param>
         public void QuestionVal(int index, string text) {
-            (this.tPage.QuestionVals.Children[index] as Label).Content = (this.tPage.QuestionVals.Children[index] as Label).Content.ToString().Remove((this.tPage.QuestionVals.Children[index] as Label).Content.ToString().Length - 1) + text;
+            string[] tmpMass = (this.tPage.QuestionVals.Children[index] as Label).Content.ToString().Split(' ');
+            tmpMass[2] = text;
+            (this.tPage.QuestionVals.Children[index] as Label).Content = String.Join(" ", tmpMass);
+            //(this.tPage.QuestionVals.Children[index] as Label).Content = (this.tPage.QuestionVals.Children[index] as Label).Content.ToString().Remove((this.tPage.QuestionVals.Children[index] as Label).Content.ToString().Length - 1) + text;
         }
 
         /// <summary>
@@ -95,8 +98,11 @@ namespace WpfApp1 {
         /// <param name="text">новое значение</param>
         public void QuestionVal(string val, string text) {
             foreach(Label label in this.tPage.QuestionVals.Children) {
-                if (label.Content.ToString() == val+" = ?") {
-                    label.Content = label.Content.ToString().Remove(label.Content.ToString().Length - 1) + text; 
+                if (label.Content.ToString().Split(' ')[0] == val) {
+                    string[] tmpMass = label.Content.ToString().Split(' ');
+                    tmpMass[2] = text;
+                    label.Content = String.Join(" ", tmpMass);
+                    //label.Content = label.Content.ToString().Remove(label.Content.ToString().Length - 1) + text; 
                     break;
                 }
             }
