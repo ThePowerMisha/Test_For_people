@@ -10,19 +10,19 @@ namespace WpfApp1
    public class LoaderClass
     {
         //Путь к вопросу
-        private string path;
+        public string path;
         
         //Спиток известных переменных и их значений
-        private Dictionary<string, double> dictionary;
+        public Dictionary<string, double> dictionary;
         
         //Текст вопроса
-        private string QuestionText;
+        public string QuestionText;
         
         //ОТветы в виде формул на вопрос
-        private List<string> Formula;
+        public List<string> Formula;
         
         //Переменные которые нажо найти
-        private List<string> QuestionFindParams;
+        public List<string> QuestionFindParams;
         
         //Конструктор класса
         public LoaderClass(string path)
@@ -48,13 +48,29 @@ namespace WpfApp1
             bool isText = false;
             bool isFormula = false;
             bool isFindParams = false;
+            bool isId = false;
            
             using (StreamReader sr = new StreamReader(path))
             {
                 string line;
                 while ((line =  sr.ReadLine()) != null)
                 {
+                    if ("[/QuestionId]" == line)
+                    {
+                        isId = false;
+                    }
 
+                    if (isId)
+                    {
+                        arr.Add(line);
+
+                    }
+
+                    if ("[QuestionId]" == line)
+                    {
+                        isId = true;
+                    }            
+        
                     if ("[/QuestionParams]" == line)
                     {
                         isDict = false;
