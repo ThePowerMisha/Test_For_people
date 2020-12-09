@@ -40,7 +40,13 @@ namespace WpfApp1.View {
             contentControl = cC;
         }
 
+        private int currentQuestion = 0;
+
         LoaderClass loaderClass = new LoaderClass("Questions.txt");
+        LoaderClass loaderClass2 = new LoaderClass("Questions2.txt");
+        
+        List<LoaderClass> loaderClasses =new List<LoaderClass>();
+        
 
         private static ContentControl contentControl;
         public double aWidth;
@@ -141,11 +147,21 @@ namespace WpfApp1.View {
             mainLayout.Opacity = 0.3;
             mainLayout.IsEnabled = false;
         }
-
+        CheckAnswer checkAnswer =new CheckAnswer();
         //подтверждение ответа
         private async void confirmAnswer_Click(object sender, RoutedEventArgs e) {
+            
             TestControl test_one = new TestControl();
-            CheckAnswer checkAnswer = new CheckAnswer(loaderClass.returnVariables());
+            // Загружаем Исходные данные
+            if (checkAnswer.Variables == null)
+                checkAnswer.Variables = loaderClass.returnVariables();
+            //Добавляю впоросы 1 и 2
+            if (loaderClasses.Count <= 0)
+            {
+                loaderClasses.Add(loaderClass);
+                loaderClasses.Add(loaderClass2);
+            }
+            
 
 
             // Рассчитывем введенную формулу
@@ -153,7 +169,7 @@ namespace WpfApp1.View {
             string formualaInput = checkAnswer.Check();
 
             // Строка правильной формулы
-            checkAnswer.Formula = loaderClass.returnFormula()[test_one.SelectedIndex()];
+            checkAnswer.Formula = loaderClasses[currentQuestion].returnFormula()[test_one.SelectedIndex()];
             string formulaCorrectExport = checkAnswer.Formula;
             string formulaCorrect = checkAnswer.Check();
 
@@ -210,10 +226,13 @@ namespace WpfApp1.View {
 
 
                 // Если эта переменная еще не найдена, то добавляем ее в словарь переменных
-                if (!checkAnswer.Variables.ContainsKey(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()]))
+                if (!checkAnswer.Variables.ContainsKey(loaderClasses[currentQuestion].returnQuestionFindParams()[test_one.SelectedIndex()]))
                 {
-                    checkAnswer.Variables.Add(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()], Convert.ToDouble(formulaCorrect));
+                    checkAnswer.Variables.Add(loaderClasses[currentQuestion].returnQuestionFindParams()[test_one.SelectedIndex()], Convert.ToDouble(formulaCorrect));
                 }
+                test_one.QuestionVal(test_one.SelectedIndex(), formulaCorrect);
+                loaderClasses[currentQuestion].QuestionFindParams.Remove(test_one.SelectedValue());
+                loaderClasses[currentQuestion].Formula.RemoveAt(test_one.SelectedIndex());
             }
 
             // Если ответы не совпали, то выводим информацию об ошибке и выводим правильную формулу. Правильный ответ не засчитывается
@@ -230,19 +249,46 @@ namespace WpfApp1.View {
                 //test_one.AnswerTip(loaderClass.returnFormula()[test_one.SelectedIndex()], "red");
 
                 // Если эта переменная еще не найдена, то добавляем ее в словарь переменных
-                if (!checkAnswer.Variables.ContainsKey(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()]))
+                if (!checkAnswer.Variables.ContainsKey(loaderClasses[currentQuestion].returnQuestionFindParams()[test_one.SelectedIndex()]))
                 {
-                    checkAnswer.Variables.Add(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()], Convert.ToDouble(formulaCorrect));
+                    checkAnswer.Variables.Add(loaderClasses[currentQuestion].returnQuestionFindParams()[test_one.SelectedIndex()], Convert.ToDouble(formulaCorrect));
                 }
+                
+                test_one.QuestionVal(test_one.SelectedIndex(), formulaCorrect);
+                loaderClasses[currentQuestion].QuestionFindParams.Remove(test_one.SelectedValue());
+                loaderClasses[currentQuestion].Formula.RemoveAt(test_one.SelectedIndex());
             }
 
             // В графе "задача" список неизвестных переменных обновляется
-            test_one.QuestionVal(test_one.SelectedIndex(), formulaCorrect);
-
+            
+            test_one.QuestionVals(loaderClasses[currentQuestion].returnQuestionFindParams());
 
             AnswerPopup.IsOpen = true;
-            await Task.Delay(2000);
+            await Task.Delay(1000);
             AnswerPopup.IsOpen = false;
+            
+            string testtext = "";
+            foreach (var massiv in checkAnswer.Variables)
+            {
+                testtext += $"{massiv.Key} = {massiv.Value}\n";
+            }
+            test_one.DataExtraInfo(testtext);
+            
+
+            
+            if (loaderClasses[currentQuestion].returnQuestionFindParams().Count <= 0)
+            {
+                currentQuestion += 1;
+                if (currentQuestion >= loaderClasses.Count)
+                    popupButton_Click(sender, e);
+                else
+                {
+                    test_one.DataMainInfo(loaderClasses[currentQuestion].returnQuestionText());
+                    test_one.QuestionVals(loaderClasses[currentQuestion].returnQuestionFindParams());
+                }
+            }
+            
+            //popupButton_Click( sender, e);
         }
 
         //выход их попапа
