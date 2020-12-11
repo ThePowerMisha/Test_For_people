@@ -9,22 +9,25 @@ namespace WpfApp1
 {
    public class LoaderClass
     {
-        //Путь к вопросу
-        private string path;
+        // Путь к вопросу
+        public string path;
         
-        //Спиток известных переменных и их значений
-        private Dictionary<string, double> dictionary;
+        // Спиток известных переменных и их значений
+        public Dictionary<string, double> dictionary;
         
-        //Текст вопроса
-        private string QuestionText;
+        // Текст вопроса
+        public string QuestionText;
         
-        //ОТветы в виде формул на вопрос
-        private List<string> Formula;
+        // Ответы в виде формул на вопрос
+        public List<string> Formula;
         
-        //Переменные которые нажо найти
-        private List<string> QuestionFindParams;
-        
-        //Конструктор класса
+        // Переменные которые надо найти
+        public List<string> QuestionFindParams;
+
+        // Cчетчик попыток для каждой неизвестной переменной
+        public List<int> QuestionFindParamsTry;
+
+        // Конструктор класса
         public LoaderClass(string path)
         {
             this.path = path;
@@ -36,25 +39,45 @@ namespace WpfApp1
         /// </summary>
         public void LoadQuestion()
         {
-            //Спиток известных переменных и их значений
+            // Спиток известных переменных и их значений
             List<string> arr = new List<string>();
-            //ОТветы в виде формул на вопрос
+            // Ответы в виде формул на вопрос
             List<string> formula = new List<string>();
-            //Текст вопроса
+            // Текст вопроса
             string text = "";
-            // Переменыне которые надо найти
+            // Переменные которые надо найти
             List<string> Params = new List<string>();
+            // Счетчик попыток для каждой неизвестной переменной
+            List<int> counter = new List<int>();
+
+
             bool isDict = false;
             bool isText = false;
             bool isFormula = false;
             bool isFindParams = false;
+            bool isId = false;
            
             using (StreamReader sr = new StreamReader(path))
             {
                 string line;
                 while ((line =  sr.ReadLine()) != null)
                 {
+                    if ("[/QuestionId]" == line)
+                    {
+                        isId = false;
+                    }
 
+                    if (isId)
+                    {
+                        arr.Add(line);
+
+                    }
+
+                    if ("[QuestionId]" == line)
+                    {
+                        isId = true;
+                    }            
+        
                     if ("[/QuestionParams]" == line)
                     {
                         isDict = false;
@@ -110,6 +133,7 @@ namespace WpfApp1
                     if (isFindParams)
                     {
                         Params.Add(line);
+                        counter.Add(0);
                     }
 
                     if ("[QuestionFind]" == line)
@@ -126,6 +150,7 @@ namespace WpfApp1
             QuestionText = text;
             Formula = formula;
             QuestionFindParams = Params;
+            QuestionFindParamsTry = counter;
         }
         
         /// <summary>
@@ -163,6 +188,15 @@ namespace WpfApp1
         public List<string> returnQuestionFindParams()
         {
             return QuestionFindParams;
+        }
+
+        /// <summary>
+        /// Возвращает счетчик попыпот ответа на вопрос для каждой из неизвестный переменных
+        /// </summary>
+        /// <returns></returns>
+        public List<int> returnQuestionParamsTry()
+        {
+            return QuestionFindParamsTry;
         }
     }
 }

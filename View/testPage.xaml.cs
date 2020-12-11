@@ -40,7 +40,13 @@ namespace WpfApp1.View {
             contentControl = cC;
         }
 
+        private int currentQuestion = 0;
+
         LoaderClass loaderClass = new LoaderClass("Questions.txt");
+        LoaderClass loaderClass2 = new LoaderClass("Questions2.txt");
+        
+        List<LoaderClass> loaderClasses =new List<LoaderClass>();
+        
 
         private static ContentControl contentControl;
         public double aWidth;
@@ -141,11 +147,21 @@ namespace WpfApp1.View {
             mainLayout.Opacity = 0.3;
             mainLayout.IsEnabled = false;
         }
-
+        CheckAnswer checkAnswer =new CheckAnswer();
         //подтверждение ответа
         private async void confirmAnswer_Click(object sender, RoutedEventArgs e) {
+            
             TestControl test_one = new TestControl();
-            CheckAnswer checkAnswer = new CheckAnswer(loaderClass.returnVariables());
+            // Загружаем Исходные данные
+            if (checkAnswer.Variables == null)
+                checkAnswer.Variables = loaderClass.returnVariables();
+            //Добавляю впоросы 1 и 2
+            if (loaderClasses.Count <= 0)
+            {
+                loaderClasses.Add(loaderClass);
+                loaderClasses.Add(loaderClass2);
+            }
+            
 
 
             // Рассчитывем введенную формулу
@@ -153,7 +169,7 @@ namespace WpfApp1.View {
             string formualaInput = checkAnswer.Check();
 
             // Строка правильной формулы
-            checkAnswer.Formula = loaderClass.returnFormula()[test_one.SelectedIndex()];
+            checkAnswer.Formula = loaderClasses[currentQuestion].returnFormula()[test_one.SelectedIndex()];
             string formulaCorrectExport = checkAnswer.Formula;
             string formulaCorrect = checkAnswer.Check();
 
@@ -202,21 +218,16 @@ namespace WpfApp1.View {
 
                 // +1 к счетчику правильных ответов
                 correctAnswersCount++;
+
                 // За правильный ответ дается 5 баллов
                 test_one.Score(5);
+
+                // На вопрос был дан ответ, следовательно попытки больше не нужны
+                loaderClasses[currentQuestion].returnQuestionParamsTry()[test_one.SelectedIndex()] = 3;
 
                 test_one.AnswerTipsClear();
                 test_one.AnswerTip($"Правильно! Ответ: {formulaCorrectExport}", "green");
 
-
-                // Если эта переменная еще не найдена, то добавляем ее в словарь переменных
-                if (!checkAnswer.Variables.ContainsKey(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()]))
-                {
-                    checkAnswer.Variables.Add(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()], Convert.ToDouble(formulaCorrect));
-                }
-
-                // В графе "задача" список неизвестных переменных обновляется
-                //test_one.QuestionVal(test_one.SelectedIndex(), formulaCorrect);
             }
 
             // Если ответы не совпали, то выводим информацию об ошибке и выводим правильную формулу. Правильный ответ не засчитывается
@@ -228,26 +239,71 @@ namespace WpfApp1.View {
                 // За не правильный ответ балл на 1
                 test_one.Score(-1);
 
+                // +1 к кол-ву попыток
+                loaderClasses[currentQuestion].returnQuestionParamsTry()[test_one.SelectedIndex()]++;
+
+                // Очищаем другие уведомления
                 test_one.AnswerTipsClear();
-                test_one.AnswerTip($"Правильная формула: {formulaCorrectExport}", "red");
-                //test_one.AnswerTip(loaderClass.returnFormula()[test_one.SelectedIndex()], "red");
 
-                // Если эта переменная еще не найдена, то добавляем ее в словарь переменных
-                if (!checkAnswer.Variables.ContainsKey(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()]))
+                if (loaderClasses[currentQuestion].returnQuestionParamsTry()[test_one.SelectedIndex()] < 3)
                 {
-                    checkAnswer.Variables.Add(loaderClass.returnQuestionFindParams()[test_one.SelectedIndex()], Convert.ToDouble(formulaCorrect));
+                    test_one.AnswerTip($"Дан неправильный ответ. У вас осталось еще {3 - loaderClasses[currentQuestion].returnQuestionParamsTry()[test_one.SelectedIndex()]} попытки(-а)", "red");
                 }
-
-                // В графе "задача" список неизвестных переменных обновляется
-                //test_one.QuestionVal(test_one.SelectedIndex(), formulaCorrect);
+                else
+                {
+                    test_one.AnswerTip($"Попыток больше нет!", "red");
+                    test_one.AnswerTip($"Правильная формула: {formulaCorrectExport}", "red");
+                }
             }
 
-            // ТЕСТ ТЕСТ ТЕСТ ТЕСТ ТЕСТ
-            test_one.TestVals2(loaderClass.returnQuestionFindParams(), checkAnswer.Variables);
+            // Если попыток больше нет
+            if (loaderClasses[currentQuestion].returnQuestionParamsTry()[test_one.SelectedIndex()] >= 3)
+            {
+                // Если эта переменная еще не найдена, то добавляем ее в словарь переменных
+                if (!checkAnswer.Variables.ContainsKey(loaderClasses[currentQuestion].returnQuestionFindParams()[test_one.SelectedIndex()]))
+                {
+                    checkAnswer.Variables.Add(loaderClasses[currentQuestion].returnQuestionFindParams()[test_one.SelectedIndex()], Convert.ToDouble(formulaCorrect));
+                }
+                test_one.QuestionVal(test_one.SelectedValue(), formulaCorrect);
+
+                // Удаляем найденную переменную из списка неизвестных переменных и выпадающего списка
+                loaderClasses[currentQuestion].QuestionFindParams.Remove(test_one.SelectedValue());
+                loaderClasses[currentQuestion].QuestionFindParamsTry.RemoveAt(test_one.SelectedIndex());
+                loaderClasses[currentQuestion].Formula.RemoveAt(test_one.SelectedIndex());
+
+                // Очищаем вводное поле
+                answer.Clear();
+
+                // Обновляем выпадающий список
+                test_one.QuestionValsСВ(loaderClasses[currentQuestion].returnQuestionFindParams());
+            }
 
             AnswerPopup.IsOpen = true;
-            await Task.Delay(2000);
+            await Task.Delay(1000);
             AnswerPopup.IsOpen = false;
+            
+            // Если закончился 1-ый этап ответов на вопрос, то переходим к следующему, иначе завершаем тест
+            if (loaderClasses[currentQuestion].returnQuestionFindParams().Count <= 0)
+            {
+                currentQuestion += 1;
+                if (currentQuestion >= loaderClasses.Count)
+                    popupButton_Click(sender, e);
+                else
+                {
+                    // Обновляем исходные данные
+                    string testtext = "";
+                    foreach (var massiv in checkAnswer.Variables)
+                    {
+                        testtext += $"{massiv.Key} = {massiv.Value}\n";
+                    }
+                    test_one.DataExtraInfo(testtext);
+
+                    test_one.DataMainInfo(loaderClasses[currentQuestion].returnQuestionText());
+                    test_one.QuestionVals(loaderClasses[currentQuestion].returnQuestionFindParams());
+                }
+            }
+            
+            //popupButton_Click( sender, e);
         }
 
         //выход их попапа

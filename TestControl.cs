@@ -79,32 +79,20 @@ namespace WpfApp1 {
             this.tPage.QuestionValueCB.SelectedIndex = 0;
         }
 
-        public void TestVals1(List<string> valsMass) {
+
+        /// <summary>
+        /// Создает новый выпадающий список неизвестных переменных, которые необходимо найти
+        /// </summary>
+        /// <param name="valsMass">массив переменных в формате строки</param>
+        public void QuestionValsСВ(List<string> valsMass)
+        {
             this.tPage.QuestionValueCB.ItemsSource = null;
             this.tPage.QuestionValueCB.Items.Clear();
             this.tPage.QuestionValueCB.ItemsSource = valsMass;
             this.tPage.QuestionValueCB.SelectedIndex = 0;
         }
 
-        public void TestVals2(List<string> valsMass, Dictionary<string, double> valDict) {
-            this.tPage.QuestionVals.Children.Clear();
-            foreach (string text in valsMass)
-            {
 
-                Label label = new Label();
-
-                if (!valDict.ContainsKey(text))
-                {
-                    label.Content = text + " = ?";
-                }
-                else
-                {
-                    label.Content = text + " = " + valDict[text];
-                }
-
-                this.tPage.QuestionVals.Children.Add(label);
-            }
-        }
 
         /// <summary>
         /// Записывает новое значение в переменную из "Задача" под определенным индексом
@@ -112,7 +100,10 @@ namespace WpfApp1 {
         /// <param name="index">индекст переменной</param>
         /// <param name="text">новое значение</param>
         public void QuestionVal(int index, string text) {
-            (this.tPage.QuestionVals.Children[index] as Label).Content = (this.tPage.QuestionVals.Children[index] as Label).Content.ToString().Remove((this.tPage.QuestionVals.Children[index] as Label).Content.ToString().Length - 1) + text;
+            string[] tmpMass = (this.tPage.QuestionVals.Children[index] as Label).Content.ToString().Split(' ');
+            tmpMass[2] = text;
+            (this.tPage.QuestionVals.Children[index] as Label).Content = String.Join(" ", tmpMass);
+            //(this.tPage.QuestionVals.Children[index] as Label).Content = (this.tPage.QuestionVals.Children[index] as Label).Content.ToString().Remove((this.tPage.QuestionVals.Children[index] as Label).Content.ToString().Length - 1) + text;
         }
 
         /// <summary>
@@ -122,8 +113,11 @@ namespace WpfApp1 {
         /// <param name="text">новое значение</param>
         public void QuestionVal(string val, string text) {
             foreach(Label label in this.tPage.QuestionVals.Children) {
-                if (label.Content.ToString() == val+" = ?") {
-                    label.Content = label.Content.ToString().Remove(label.Content.ToString().Length - 1) + text; 
+                if (label.Content.ToString().Split(' ')[0] == val) {
+                    string[] tmpMass = label.Content.ToString().Split(' ');
+                    tmpMass[2] = text;
+                    label.Content = String.Join(" ", tmpMass);
+                    //label.Content = label.Content.ToString().Remove(label.Content.ToString().Length - 1) + text; 
                     break;
                 }
             }
