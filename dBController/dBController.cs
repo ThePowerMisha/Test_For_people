@@ -130,20 +130,7 @@ namespace dBController
             }
             return themeName;
         }
-        public static List<string> getBlocksImgPath(string themeName)
-        {
-            themeName = getTrueName(themeName);
-            JObject quesBase = getBase();            
-            List<string> listImgPath = new List<string>();
-            JArray arr_blocks = quesBase.GetValue(themeName)["blocks"] as JArray;
-            foreach (JToken item in arr_blocks)
-            {
-                listImgPath.Add(item["pathToBlockImg"].ToString());
-            }
-            
-            return listImgPath;
-        }
-
+        
         public static JObject getBlock(string themeName, int blockID)
         {
             JObject quesBase = getBase();
@@ -175,27 +162,99 @@ namespace dBController
             }
             return load;
         }
-        public static List<string> getLoadsImgPath(string themeName, int blockID)
+
+        public static List<List<string>> getBlocksImgPath(string themeName)
         {
-            List<string> listLoadsImgPath = new List<string>();
+            themeName = getTrueName(themeName);
+            JObject quesBase = getBase();
+            List<List<string>> ListImgPath = new List<List<string>>();
+            JArray arr_blocks = quesBase.GetValue(themeName)["blocks"] as JArray;
+            foreach (JToken item in arr_blocks)
+            {
+                ListImgPath.Add(new List<string>() { item["blockID"].ToString(), item["pathToBlockImg"].ToString() });
+            }
+
+            return ListImgPath;
+        }
+
+        public static List<List<string>> getLoadsImgPath(string themeName, int blockID)
+        {
+            List<List<string>> ListLoadsImgPath = new List<List<string>>();
             JObject block = getBlock(themeName, blockID);
             foreach (JToken item in block["loads"])
             {
-                listLoadsImgPath.Add(item["pathToLoadImg"].ToString());
+                ListLoadsImgPath.Add(new List<string>() { item["loadID"].ToString(), item["pathToLoadImg"].ToString() });
             }
-            return listLoadsImgPath;
+            return ListLoadsImgPath;
         }
 
-        public static List<string> getVariantsImgPath(string themeName, int blockID, int loadID)
+        public static List<List<string>> getVariantsImgPath(string themeName, int blockID, int loadID)
         {
-            List<string> listVariantsImgPath = new List<string>();
+            List<List<string>> ListVariantsImgPath = new List<List<string>>();
             themeName = getTrueName(themeName);
             JObject load = getLoad(themeName, blockID, loadID);
             foreach(JToken item in load["variants"])
             {
-                listVariantsImgPath.Add(item["pathToMainBlock"].ToString());
+                ListVariantsImgPath.Add(new List<string>() { item["variantID"].ToString(), item["pathToMainBlock"].ToString() });
             }
-            return listVariantsImgPath;
+            return ListVariantsImgPath;
         }
+
+       public static JObject getVariant(string themeName, int blockID, int loadID, int variantID)
+       {
+            JObject variant = new JObject();
+            themeName = getTrueName(themeName);
+            JToken variants = getLoad(themeName, blockID, loadID)["variants"];
+            foreach (JObject item in variants)
+            {
+                if (item["variantID"].ToString() == loadID.ToString())
+                {
+                    variant = item;
+                }
+            }
+            return variant;
+
+        }
+
+       public static Dictionary<string, double> getQuestionParams(string themeName, int blockID, int loadID, int variantID)
+       {
+            JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
+            Dictionary<string, double> par = new Dictionary<string, double>();
+            foreach(JProperty item in variant["questionParams"])
+            {
+                par.Add(item.Name, System.Convert.ToDouble(item.Value.ToString()));
+            }
+            return par;
+
+       }
+
+       public static string getQuestionText(string themeName, int blockID, int loadID, int variantID, int stageNumber)
+       {
+            JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
+            string questionText = variant["questionText"][stageNumber - 1].ToString();
+            return questionText;
+       }
+
+       public static List<string> getQuestionFinds(string themeName, int blockID, int loadID, int variantID, int stageNumber)
+       {
+            List<string> questionFinds = new List<string>();
+            JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
+            foreach (JToken item in variant["questionFind"][stageNumber - 1])
+            {
+                questionFinds.Add(item.ToString());
+            }
+            return questionFinds;
+       }
+
+       public static List<string> getQuestionFormuls(string themeName, int blockID, int loadID, int variantID, int stageNumber)
+       {
+            List<string> questionFormuls = new List<string>();
+            JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
+            foreach (JToken item in variant["questionFormula"][stageNumber - 1])
+            {
+                questionFormuls.Add(item.ToString());
+            }
+            return questionFormuls;
+       }
     }
 }
