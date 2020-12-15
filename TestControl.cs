@@ -79,6 +79,21 @@ namespace WpfApp1 {
             this.tPage.QuestionValueCB.SelectedIndex = 0;
         }
 
+
+        /// <summary>
+        /// Создает новый выпадающий список неизвестных переменных, которые необходимо найти
+        /// </summary>
+        /// <param name="valsMass">массив переменных в формате строки</param>
+        public void QuestionValsСВ(List<string> valsMass)
+        {
+            this.tPage.QuestionValueCB.ItemsSource = null;
+            this.tPage.QuestionValueCB.Items.Clear();
+            this.tPage.QuestionValueCB.ItemsSource = valsMass;
+            this.tPage.QuestionValueCB.SelectedIndex = 0;
+        }
+
+
+
         /// <summary>
         /// Записывает новое значение в переменную из "Задача" под определенным индексом
         /// </summary>
