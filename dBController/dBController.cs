@@ -23,6 +23,7 @@ namespace dBController
         public JArray load { get; set; }
         public JArray variant { get; set; }
         public JArray timeSpent { get; set; }
+        public JArray scoreResult { get; set; }
         public JArray correctAnswers { get; set; }
         public JArray testDate { get; set; }
 
@@ -42,6 +43,7 @@ namespace dBController
                 JArray arr_load = obj_students.GetValue("load") as JArray;
                 JArray arr_variant = obj_students.GetValue("variant") as JArray;
                 JArray arr_timeSpent = obj_students.GetValue("timeSpent") as JArray;
+                JArray arr_scoreResult = obj_students.GetValue("scoreResult") as JArray;
                 JArray arr_correctAnswers = obj_students.GetValue("correctAnswers") as JArray;
                 JArray arr_testDate = obj_students.GetValue("testDate") as JArray;
 
@@ -56,6 +58,7 @@ namespace dBController
                     load = arr_load,
                     variant = arr_variant,
                     timeSpent = arr_timeSpent,
+                    scoreResult = arr_scoreResult,
                     correctAnswers = arr_correctAnswers,
                     testDate = arr_testDate
 
@@ -64,13 +67,9 @@ namespace dBController
             }
         }
 
-        public static void saveInput(results r, int id, string lastName, string firstName, string secondName, string group)
+        public static void saveData(results r)
+        // Загрузка в Results.json
         {
-            r.ID.Add(id);
-            r.lastName.Add(lastName);
-            r.firstName.Add(firstName);
-            r.secondName.Add(secondName);
-            r.group.Add(group);
             using (StreamWriter file = File.CreateText("Database/Results_Test.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
@@ -78,15 +77,32 @@ namespace dBController
             }
         }
 
-        public static int idGeneration(results r)
+        // "Генерация" ID
+        public static int idGeneration(results r, int id = -1)
         {
             Random rnd = new Random();
-            int id = rnd.Next(100000, 999999);
-            foreach (int item in r.ID)
+            // Провреятся если такой пользователь
+            for(int i = 0; i < r.ID.Count(); i++)
             {
-                if (id == item)
+                if (r.lastName[i].ToString() == r.lastName[r.lastName.Count() - 1].ToString() && 
+                    r.firstName[i].ToString() == r.firstName[r.firstName.Count() - 1].ToString() && 
+                    r.secondName[i].ToString() == r.secondName[r.secondName.Count() - 1].ToString() &&
+                    r.group[i].ToString() == r.group[r.group.Count() - 1].ToString())
                 {
-                    id = idGeneration(r);
+                    id = System.Convert.ToInt32(r.ID[i]);
+                }
+            }
+            // Если нет, то генерируется случайное ID
+            if (id == -1)
+            {
+                restart:
+                id = rnd.Next(100000, 999999); 
+                foreach (int item in r.ID)  // Проверка на наличие такого же ID
+                {
+                    if (id == item)
+                    {
+                        goto restart;  // Если ID слуйчано уже получилось такое, какое есть генерируется новое и проврка начинается заного
+                    }
                 }
             }
             return id;
@@ -96,6 +112,7 @@ namespace dBController
     public class questions
     {
         public static JObject getBase()
+        /* Возвращает полную базу данных */
         {
             using (StreamReader file = new StreamReader("Database/Questions.json", System.Text.Encoding.UTF8))
             {
@@ -106,6 +123,7 @@ namespace dBController
         }
 
         public static List<string> getThemesName()
+        /* Возвращает список имен всех тем */
         {
             List<string> listThems = getBase().Properties().Select(p => p.Name).ToList();
             JObject quesBase = getBase();
@@ -118,6 +136,7 @@ namespace dBController
         }
 
         public static string getTrueName(string themeName)
+        /* Возвращает имя темы для работы методов */
         {
             JObject quesBase = getBase();
             List<string> listThems = quesBase.Properties().Select(p => p.Name).ToList();
@@ -132,6 +151,7 @@ namespace dBController
         }
         
         public static JObject getBlock(string themeName, int blockID)
+        /* Возвращает JToken конкретного блока */
         {
             JObject quesBase = getBase();
             themeName = getTrueName(themeName);
@@ -149,6 +169,7 @@ namespace dBController
         }
 
         public static JObject getLoad(string themeName, int blockID, int loadID)
+        /* Возвращает JToken конкретной нагрузки */
         {
             JObject load = new JObject();
             themeName = getTrueName(themeName);
@@ -164,6 +185,7 @@ namespace dBController
         }
 
         public static List<List<string>> getBlocksImgPath(string themeName)
+        /* Возвращает массив пар элементов ввида [ID, путь к картинке] для всех блоков данной темы */
         {
             themeName = getTrueName(themeName);
             JObject quesBase = getBase();
@@ -178,6 +200,7 @@ namespace dBController
         }
 
         public static List<List<string>> getLoadsImgPath(string themeName, int blockID)
+        /* Возвращает массив пар элементов ввида [ID, путь к картинке] для всех нагрузок конкретного блока */
         {
             List<List<string>> ListLoadsImgPath = new List<List<string>>();
             JObject block = getBlock(themeName, blockID);
@@ -189,6 +212,7 @@ namespace dBController
         }
 
         public static List<List<string>> getVariantsImgPath(string themeName, int blockID, int loadID)
+        /* Возвращает массив пар элементов ввида [ID, путь к картинке] для всех вариантов конкретного блока и нагрузки */
         {
             List<List<string>> ListVariantsImgPath = new List<List<string>>();
             themeName = getTrueName(themeName);
@@ -201,13 +225,14 @@ namespace dBController
         }
 
        public static JObject getVariant(string themeName, int blockID, int loadID, int variantID)
+       /* Вовзращает JToken конкретного варианта */
        {
             JObject variant = new JObject();
             themeName = getTrueName(themeName);
             JToken variants = getLoad(themeName, blockID, loadID)["variants"];
             foreach (JObject item in variants)
             {
-                if (item["variantID"].ToString() == loadID.ToString())
+                if (item["variantID"].ToString() == variantID.ToString())
                 {
                     variant = item;
                 }
@@ -217,6 +242,7 @@ namespace dBController
         }
 
        public static Dictionary<string, double> getQuestionParams(string themeName, int blockID, int loadID, int variantID)
+       /* Возвращает словарь исходных данных вида переменная: значение */
        {
             JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
             Dictionary<string, double> par = new Dictionary<string, double>();
@@ -229,14 +255,16 @@ namespace dBController
        }
 
        public static string getQuestionText(string themeName, int blockID, int loadID, int variantID, int stageNumber)
-       {
+        /* Возвращает описание того, что нужно найти на этапе stageNumber */
+        {
             JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
             string questionText = variant["questionText"][stageNumber - 1].ToString();
             return questionText;
-       }
+        }
 
        public static List<string> getQuestionFinds(string themeName, int blockID, int loadID, int variantID, int stageNumber)
-       {
+        /* Возвращает список переменых, которые нужно найти в этапе stageNumber */
+        {
             List<string> questionFinds = new List<string>();
             JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
             foreach (JToken item in variant["questionFind"][stageNumber - 1])
@@ -244,17 +272,29 @@ namespace dBController
                 questionFinds.Add(item.ToString());
             }
             return questionFinds;
-       }
+        }
 
-       public static List<string> getQuestionFormuls(string themeName, int blockID, int loadID, int variantID, int stageNumber)
-       {
-            List<string> questionFormuls = new List<string>();
+       public static List<Dictionary<string, string>> getQuestionFormuls(string themeName, int blockID, int loadID, int variantID, int stageNumber)
+        /* Возвращает словарь вида 0/или найденная перменная: формула */
+        {
+            List<Dictionary<string, string>> questionFormuls = new List<Dictionary<string, string>>();
             JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
             foreach (JToken item in variant["questionFormula"][stageNumber - 1])
             {
-                questionFormuls.Add(item.ToString());
+                Dictionary<string, string> par = new Dictionary<string, string>();
+                foreach(JProperty item_ in item)
+                {
+                    par.Add(item_.Name, item_.Value.ToString() );
+                }
+                questionFormuls.Add(par);
             }
             return questionFormuls;
        }
+
+        public static string getMainVariantImgPath(string themeName, int blockID, int loadID, int variantID)
+        /*Возвращает путь главного чертежа варианта.*/
+        {
+            return getVariant(getTrueName(themeName), blockID, loadID, variantID)["pathToMainBlock"].ToString();
+        }
     }
 }
