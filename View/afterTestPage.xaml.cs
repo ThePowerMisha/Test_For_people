@@ -33,27 +33,19 @@ namespace WpfApp1.View {
             result8.Content = testPage.correctAnswersCount.ToString();
             result9.Content = DateTime.Today.ToString("D");
 
-            resultsMass.Clear();
-            resultsMass.Add("theme1", choiceBlock.dataList[0]);
-            resultsMass.Add("theme2", choiceBlock.dataList[1]);
-            resultsMass.Add("theme3", choiceNextPage.dataList[0]);
-            resultsMass.Add("theme4", choiceNextPage.dataList[1]);
-            resultsMass.Add("theme5", timeWaste);
-            resultsMass.Add("theme6", choiceNextPage.dataList[2]);
-            resultsMass.Add("theme7", score);
-            resultsMass.Add("theme8", testPage.correctAnswersCount.ToString());
-            resultsMass.Add("theme9", DateTime.Today.ToString("D"));
+
+            mainPage.data.theme.Add(choiceBlock.dataList[0]);
+            mainPage.data.block.Add(choiceBlock.dataList[1]);
+            mainPage.data.load.Add(choiceNextPage.dataList[0]);
+            mainPage.data.variant.Add(choiceNextPage.dataList[1]);
+            mainPage.data.timeSpent.Add(timeWaste);
+            mainPage.data.scoreResult.Add(score);
+            mainPage.data.correctAnswers.Add(testPage.correctAnswersCount.ToString());
+            mainPage.data.testDate.Add(DateTime.Today.ToString("D"));
+            dBController.results.saveData(mainPage.data);
+
         }
         private static ContentControl contentControl;
-
-        /// <summary>
-        /// Возвращает словарь результатов теста
-        /// </summary>
-        /// <returns>словарь результатов теста</returns>
-        public static Dictionary<string, string> getResultsMass() => resultsMass;
-
-        //массив данных для записи в бд
-        private static Dictionary<string, string> resultsMass = new Dictionary<string, string>() {};
 
         //переход на главную страницу
         private void onPreviousPage_Click(object sender, RoutedEventArgs e) {

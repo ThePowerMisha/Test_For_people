@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Diagnostics.Tracing;
 using System.Data;
+using dBController;
 
 namespace WpfApp1.View {
     /// <summary>
@@ -31,13 +32,14 @@ namespace WpfApp1.View {
             mainWin = win;
             curRec = currec;
             contentControl = cC;
+            data = results.createEntery();
 
             rPage = new resultsPage(mainWin, curRec, contentControl);
             cBlock = new choiceBlock(contentControl);
 
             //ширина попапа
             DataPopup.Width = SystemParameters.VirtualScreenWidth / 2;
-            
+
             //=============mainStyle================
             //placeholders
             Placeholder.add(lastName, "Фамилия");
@@ -48,6 +50,8 @@ namespace WpfApp1.View {
         }
         private static resultsPage rPage;
         private static choiceBlock cBlock;
+
+        public static results data;
 
         public static choiceBlock getChoiceBlock() {
             return cBlock;
@@ -63,14 +67,14 @@ namespace WpfApp1.View {
             mainWin.Close();
         }
 
-        private static bool saveDataFlag=true;
+        private static bool saveDataFlag = true;
         //ПРОВЕРКА ВВЕДЕННОСТИ ДАННЫХ
         private async void saveData_Click(object sender, RoutedEventArgs e) {
-            if(saveDataFlag == true) {
+            if (saveDataFlag == true) {
                 saveDataFlag = false;
 
-                bool isCurrentData=false;
-                if (lastName.Text!="" && lastName.Text!="Фамилия" &&
+                bool isCurrentData = false;
+                if (lastName.Text != "" && lastName.Text != "Фамилия" &&
                     firstName.Text != "" && firstName.Text != "Имя" &&
                     secondName.Text != "" && secondName.Text != "Отчество" &&
                     group.Text != "" && group.Text != "Группа") {
@@ -82,10 +86,20 @@ namespace WpfApp1.View {
                         regGroup.IsMatch(group.Text)) {
                         curRec.Content = lastName.Text + " " + firstName.Text + " " + secondName.Text + " " + group.Text;
                         isCurrentData = true;
-                    }  
+                    }
                 }
 
-                DataPopupText.Content = isCurrentData == true ? "ДАННЫЕ СОХРАНЕНЫ" : "ДАННЫЕ НЕ СОХРАНЕННЫ";
+                if (isCurrentData == true) {
+                    DataPopupText.Content = "ДАННЫЕ СОХРАНЕНЫ";
+                    data.lastName.Add(lastName.Text);
+                    data.firstName.Add(firstName.Text);
+                    data.secondName.Add(secondName.Text);
+                    data.group.Add(group.Text);
+                    data.ID.Add(results.idGeneration(data));
+
+                } else {
+                    DataPopupText.Content = "ДАННЫЕ НЕ СОХРАНЕННЫ";
+                }
                 DataPopupText.Background = isCurrentData == true ? SpecialColor.green() : SpecialColor.red();
                 DataPopup.IsOpen = true;
                 await Task.Delay(2000);
@@ -133,8 +147,7 @@ namespace WpfApp1.View {
                 mainContentGrid.Opacity = 0.3;
                 mainContentGrid.IsEnabled = false;
                 popupTextBox.Clear();
-            }
-            else {
+            } else {
                 mainContentGrid.Opacity = 1;
                 mainContentGrid.IsEnabled = true;
             }
@@ -192,7 +205,7 @@ namespace WpfApp1.View {
         }
         //закрывает попап resultPopup
         public void setPopupStatus() {
-            resultPopup.IsOpen=false;
+            resultPopup.IsOpen = false;
             mainContentGrid.Opacity = 1;
             mainContentGrid.IsEnabled = true;
         }
