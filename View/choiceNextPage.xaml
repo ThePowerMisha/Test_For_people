@@ -528,7 +528,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0" Name="tipsForBorder"
-                                   Content="Визуальные подсказки"
+                                   Content="Прав на ошибку"
                                    HorizontalContentAlignment="Center"
                                    VerticalContentAlignment="Center"
                                    FontSize="30"

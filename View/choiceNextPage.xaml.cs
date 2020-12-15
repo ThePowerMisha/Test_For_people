@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using dBController;
 
 namespace WpfApp1.View {
     /// <summary>
@@ -24,8 +26,8 @@ namespace WpfApp1.View {
 
             contentControl = cC;
 
-            Placeholder.add(timeCount, "Время в минутах");
-            Placeholder.add(tipCount, "Подсказки");
+            Placeholder.add(timeCount, "60");
+            Placeholder.add(tipCount, "1");
 
             titleLabel.Content = title;
         }
@@ -46,7 +48,7 @@ namespace WpfApp1.View {
         }
         private void timeCount_TextChanged(object sender, TextChangedEventArgs e) {
             string input = (sender as TextBox).Text;            
-            if (!Regex.IsMatch(input, "(^([0-9]){1,3}$|^Время в минутах$)")) {
+            if (!Regex.IsMatch(input, "(^([0-9]){1,3}$|^60х$)")) {
                 if (input.Length != 0) {
                     (sender as TextBox).Text = textBeforeChange;
                     input = textBeforeChange; 
@@ -54,7 +56,7 @@ namespace WpfApp1.View {
                 (sender as TextBox).SelectionStart = selectionBeforeChange;
                 (sender as TextBox).SelectionLength = selectionLengthBeforeChange;
             }
-            if (input != "Время в минутах" && input.Length != 0) {
+            if (input != "60" && input.Length != 0) {
                 if (Int32.Parse(input) > 180)
                     input = "180";
                 else if (Int32.Parse(input) == 0)
@@ -64,7 +66,7 @@ namespace WpfApp1.View {
         }
         private void timeCount_LostFocus(object sender, RoutedEventArgs e) {
             string input = (sender as TextBox).Text;
-            if (input != "Время в минутах" && input.Length != 0) {
+            if (input != "60" && input.Length != 0) {
                 if (Int32.Parse(input) < 10)
                     input = "10";
                 (sender as TextBox).Text = Int32.Parse(input).ToString();
@@ -72,7 +74,7 @@ namespace WpfApp1.View {
         }
         private void tipCount_TextChanged(object sender, TextChangedEventArgs e) {
             string input = (sender as TextBox).Text;
-            if (!Regex.IsMatch(input, "(^([0-9]){1,1}$|^Подсказки$)")) {
+            if (!Regex.IsMatch(input, "(^([0-9]){1,1}$|^1$)")) {
                 if (input.Length != 0) {
                     (sender as TextBox).Text = textBeforeChange;
                     input = textBeforeChange;
@@ -88,28 +90,22 @@ namespace WpfApp1.View {
         }
 
         //Первый массив карточек
-        private static List<Card> loadPositionСardMass = new List<Card> {
-            new Card("I.","View/Karpenko.jpeg"),
-            new Card("II.","View/Sinitsin.jpg"),
-            new Card("III.","View/Jagaev.jpg"),
-            new Card("IV.","View/Smirnov.jpg")
-        };
+        private static List<List<string>> loadPositionСardMass;
         //Второй массив карточек
-        private static List<Card> variantCardMass = new List<Card> {
-            new Card("I.","View/Karpenko.jpeg"),
-            new Card("II.","View/Sinitsin.jpg"),
-            new Card("III.","View/Jagaev.jpg"),
-            new Card("IV.","View/Smirnov.jpg")
-        };
+        private static List<List<string>> variantCardMass;
 
-        //загрузка всех карточек
+        //загрузка всех карточек(изначально варианты загружаются для первого полежения)
         private void UserControl_Loaded(object sender, RoutedEventArgs e) {
+            loadPositionСardMass = questions.getLoadsImgPath(choiceBlock.theme, choiceBlock.blockID);
+            //variantCardMass = questions.getVariantsImgPath(choiceBlock.theme, choiceBlock.blockID, 1);
 
-            foreach (Card card in loadPositionСardMass) {
+            int num = 1;
+            foreach (List<string> card in loadPositionСardMass) {
                 Button button = new Button();
                 button.Style = this.Resources["buttonCard"] as Style;
-                button.Content = card.title;
-                button.Tag = card.path;
+                button.Content = choiceBlock.ToRoman(num);
+                num++;
+                button.Tag = System.IO.Path.GetFullPath(card[1]);
                 button.Width = (loadPosition.ActualHeight)/5*8;
                 button.Height = (loadPosition.ActualHeight);
                 button.Foreground = SpecialColor.mainBlue();
@@ -117,19 +113,23 @@ namespace WpfApp1.View {
                 loadPosition.Children.Add(button);
             }
 
-            foreach (Card card in variantCardMass) {
-                Button button = new Button();
-                button.Style = this.Resources["buttonCard"] as Style;
-                button.Content = card.title;
-                button.Tag = card.path;
-                button.Width = (variant.ActualHeight) / 5 * 8;
-                button.Height = (variant.ActualHeight);
-                button.Foreground = SpecialColor.mainBlue();
-                button.Click += card_Click2;
-                variant.Children.Add(button);
-            }
+            //num = 1;
+            //foreach (string card in variantCardMass) {
+            //    Button button = new Button();
+            //    button.Style = this.Resources["buttonCard"] as Style;
+            //    button.Content = choiceBlock.ToRoman(num);
+            //    num++;
+            //    button.Tag = System.IO.Path.GetFullPath(card);
+            //    button.Width = (variant.ActualHeight) / 5 * 8;
+            //    button.Height = (variant.ActualHeight);
+            //    button.Foreground = SpecialColor.mainBlue();
+            //    button.Click += card_Click2;
+            //    variant.Children.Add(button);
+            //}
         }
 
+        public static int loadID;
+        public static int variantID;
         //выделение для массива с выбором нагрузок
         private static Button loadPositioСurrentButton = null;
         private void card_Click(object sender, RoutedEventArgs e) {
@@ -141,10 +141,47 @@ namespace WpfApp1.View {
                 (sender as Button).Background = SpecialColor.mainBlue();
                 (sender as Button).Foreground = SpecialColor.white();
                 loadPositioСurrentButton = (sender as Button);
+
+                
+                int id = 0;
+                foreach(Button button in loadPosition.Children) {
+                    if (loadPositioСurrentButton == button) {
+                        variantCardMass = questions.getVariantsImgPath(choiceBlock.theme, choiceBlock.blockID, Int32.Parse(loadPositionСardMass[id][0]));
+                        loadID = Int32.Parse(loadPositionСardMass[id][0]);
+                        break;
+                    }
+                    id++;
+                }
+                //изменение вариантов
+                //variantCardMass = questions.getVariantsImgPath(choiceBlock.theme, choiceBlock.blockID, ID);
+                variantСurrentButton = null;
+                variant.Children.Clear();
+                int num = 1;
+                foreach (List<string> card in variantCardMass) {
+                    Button button = new Button();
+                    button.Style = this.Resources["buttonCard"] as Style;
+                    button.Content = choiceBlock.ToRoman(num);
+                    num++;
+                    button.Tag = System.IO.Path.GetFullPath(card[1]);
+                    button.Width = (variant.ActualHeight) / 5 * 8;
+                    button.Height = (variant.ActualHeight);
+                    button.Foreground = SpecialColor.mainBlue();
+                    button.Click += card_Click2;
+                    variant.Children.Add(button);
+                }
             } else {
                 (sender as Button).Background = SpecialColor.mainBack();
                 (sender as Button).Foreground = SpecialColor.mainBlue();
                 loadPositioСurrentButton = null;
+
+                
+                if (variantСurrentButton != null) {
+                    variantСurrentButton.Background = SpecialColor.mainBack();
+                    variantСurrentButton.Foreground = SpecialColor.mainBlue();
+                }
+                variantСurrentButton = null;
+                variant.Children.Clear();
+
             }
         }
 
@@ -159,6 +196,15 @@ namespace WpfApp1.View {
                 (sender as Button).Background = SpecialColor.mainBlue();
                 (sender as Button).Foreground = SpecialColor.white();
                 variantСurrentButton = (sender as Button);
+
+                int id = 0;
+                foreach (Button button in variant.Children) {
+                    if (variantСurrentButton == button) {
+                        variantID = Int32.Parse(variantCardMass[id][0]);
+                        break;
+                    }
+                    id++;
+                }
             } else {
                 (sender as Button).Background = SpecialColor.mainBack();
                 (sender as Button).Foreground = SpecialColor.mainBlue();
@@ -169,7 +215,7 @@ namespace WpfApp1.View {
         //обработка введенности данных
         private async void onNextPage_Click(object sender, RoutedEventArgs e) {
             bool isWrong = false;
-            if (timeCount.Text== "Время в минутах") {
+            /*if (timeCount.Text== "Время в минутах") {
                 DataPopupText.Content = "ВВЕДИТЕ ВРЕМЯ";
                 NextPopup.IsOpen = true;
                 isWrong = true;
@@ -177,7 +223,7 @@ namespace WpfApp1.View {
                 DataPopupText.Content = "ВВЕДИТЕ ПОДСКАЗКИ";
                 NextPopup.IsOpen = true;
                 isWrong = true;
-            } else if (loadPositioСurrentButton==null) {
+            } else */if (loadPositioСurrentButton==null) {
                 DataPopupText.Content = "ВЫБЕРИТЕ ПОЛОЖЕНИЕ ОПОР";
                 NextPopup.IsOpen = true;
                 isWrong = true;
@@ -211,30 +257,41 @@ namespace WpfApp1.View {
 
             //=================
             TestControl test = new TestControl();
-            //test.DataMainInfo(test.DataExtraInfo());
-            test.QuestionVals(new List<string>() { "val1", "val2" });
-            //test.QuestionVals(new List<string>() { "val1", "val2" });
-            //test.QuestionVals(new List<string>() { "val1", "val2", "val3" });
-            //test.AnswerTip("shalom!", "red");
-            //test.AnswerTip("hallo!", "green");
-            //test.GraphContent("View/Karpenko.jpeg");
-            //test.SecondGraphContent("View/Karpenko.jpeg");
-            //test.SecondGraphContent("View/Karpenko.jpeg");
-            //test.AnswerTipRemove("Правильный ответ...");
-            //test.AnswerTipRemove(1);
-            //test.SecondGraphContentRemove(1);
-            //test.SecondGraphContentRemove("View/Karpenko.jpeg");
-            //test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Karpenko.jpeg");
-            //test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Jagaev.jpg");
-            //test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Smirnov.jpg");
-            //test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Sinitsin.jpg");
-            //test.DataExtraInfo(test.Time());
-            test.QuestionVal(0, "1.122333");
-            test.QuestionVal(0, "123.2");
-            test.QuestionVal(0, "2.2");
-            test.QuestionVal("val2", "12.22");
-            test.QuestionVal("val2", "2.342");
-            test.QuestionVal("val2", "32.2222");
+            LoaderClass loaderClass = new LoaderClass("Questions.txt");
+            CheckAnswer checkAnswer = new CheckAnswer();
+
+            // Загружаем из файла словарь
+            checkAnswer.Variables = loaderClass.returnVariables();
+
+            // Загружаем текст вопроса
+            test.DataMainInfo(loaderClass.returnQuestionText());
+
+            // Загружаем в графический интерфейс данные массива
+            string testtext = "";
+            foreach (var massiv in checkAnswer.Variables)
+            {
+                testtext += $"{massiv.Key} = {massiv.Value}\n";
+            }
+            test.DataExtraInfo(testtext);
+
+            // Загружаем неизвестные переменные, которые нужно найти
+
+            test.QuestionVals(loaderClass.returnQuestionFindParams());
+
+            // test.AnswerTip("shalom!", "red");
+            // test.AnswerTip("hallo!", "green");
+            // test.GraphContent("View/Karpenko.jpeg");
+            // test.SecondGraphContent("View/Karpenko.jpeg");
+            // test.SecondGraphContent("View/Karpenko.jpeg");
+            // test.AnswerTipRemove("Правильный ответ...");
+            // test.AnswerTipRemove(1);
+            // test.SecondGraphContentRemove(1);
+            // test.SecondGraphContentRemove("View/Karpenko.jpeg");
+            // test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Karpenko.jpeg");
+            // test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Jagaev.jpg");
+            // test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Smirnov.jpg");
+            // test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Sinitsin.jpg");
+            // test.DataExtraInfo(test.Time());
             //==================
         }
         public static testPage getTestPage() {

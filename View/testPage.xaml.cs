@@ -37,8 +37,19 @@ namespace WpfApp1.View {
             //общие данные (Timer and Score)
             timer(time);
 
+            mainLayout.MaxWidth = SystemParameters.PrimaryScreenWidth;
+
             contentControl = cC;
         }
+
+        private int currentQuestion = 0;
+
+        LoaderClass loaderClass = new LoaderClass("Questions.txt");
+        LoaderClass loaderClass2 = new LoaderClass("Questions2.txt");
+        
+        List<LoaderClass> loaderClasses =new List<LoaderClass>();
+        
+
         private static ContentControl contentControl;
         public double aWidth;
 
@@ -105,6 +116,9 @@ namespace WpfApp1.View {
             textBeforeChange = (sender as TextBox).Text;
             selectionBeforeChange = (sender as TextBox).SelectionStart;
             selectionLengthBeforeChange = (sender as TextBox).SelectionLength;
+
+            if (e.Key == Key.Enter)
+                confirmAnswer_Click(sender, e);
         }
         private void answer_TextChanged(object sender, TextChangedEventArgs e) {
             string input = (sender as TextBox).Text;
@@ -138,20 +152,163 @@ namespace WpfApp1.View {
             mainLayout.Opacity = 0.3;
             mainLayout.IsEnabled = false;
         }
-
+        CheckAnswer checkAnswer =new CheckAnswer();
         //подтверждение ответа
         private async void confirmAnswer_Click(object sender, RoutedEventArgs e) {
-            if (false) {
+            
+            TestControl test_one = new TestControl();
+            // Загружаем Исходные данные
+            if (checkAnswer.Variables == null)
+                checkAnswer.Variables = loaderClass.returnVariables();
+            //Добавляю впоросы 1 и 2
+            if (loaderClasses.Count <= 0)
+            {
+                loaderClasses.Add(loaderClass);
+                loaderClasses.Add(loaderClass2);
+            }
+            
+
+
+            // Рассчитывем введенную формулу
+            checkAnswer.Formula = answer.Text;
+            string formualaInput = checkAnswer.Check();
+
+            // Строка правильной формулы
+            checkAnswer.Formula = loaderClasses[currentQuestion].returnFormula()[test_one.SelectedIndex()];
+            string formulaCorrectExport = checkAnswer.Formula;
+            string formulaCorrect = checkAnswer.Check();
+
+            // Проверяем на ошибку "NullOrEmpty Error!" - если была передана пустая строка
+            if (formualaInput == "NullOrEmpty Error!")
+            {
+                AnswerPopupContent.Background = SpecialColor.orange();
+                AnswerPopupContent.Content = "ОШИБКА";
+                test_one.AnswerTipsClear();
+                test_one.AnswerTip($"Ошибка! Введена пустая строка", "orange");
+            }
+
+            // Проверяем на ошибку "Syntax Error!" - если была выявлена синтаксическая ошибка
+            else if (formualaInput == "Syntax Error!")
+            {
+                AnswerPopupContent.Background = SpecialColor.orange();
+                AnswerPopupContent.Content = "ОШИБКА";
+                test_one.AnswerTipsClear();
+                test_one.AnswerTip($"Была выявлена синтаксическая ошибка!", "orange");
+            }
+
+            // Проверяем на ошибку "Bracket Error!" - если была выявлена ошибка правильности написания скобок
+            else if (formualaInput == "Bracket Error!")
+            {
+                AnswerPopupContent.Background = SpecialColor.orange();
+                AnswerPopupContent.Content = "ОШИБКА";
+                test_one.AnswerTipsClear();
+                test_one.AnswerTip($"Ошибка! Неправильно расставлены скобки!", "orange");
+            }
+
+            // Проверяем на ошибку "UnknownData Error!" - если были переданы неизвестные данные
+            else if (formualaInput == "UnknownData Error!")
+            {
+                AnswerPopupContent.Background = SpecialColor.orange();
+                AnswerPopupContent.Content = "ОШИБКА";
+                test_one.AnswerTipsClear();
+                test_one.AnswerTip($"Ошибка! Введены неизвестные данные!", "orange");
+            }
+
+            // Если ошибок нет, то проводим рассчет введенной формулы и сравниваем её с правильной формулой
+            // Если ответ совпал, то выводим информацию о "правильности" ответа и засчитываем правильный ответ.
+            else if (Convert.ToDouble(formulaCorrect) == Convert.ToDouble(formualaInput))
+            {
                 AnswerPopupContent.Background = SpecialColor.green();
                 AnswerPopupContent.Content = "ПРАВИЛЬНО";
+
+                // +1 к счетчику правильных ответов
                 correctAnswersCount++;
-            } else {
+
+                // За правильный ответ дается 5 баллов
+                test_one.Score(5);
+
+                // На вопрос был дан ответ, следовательно попытки больше не нужны
+                loaderClasses[currentQuestion].returnQuestionParamsTry()[test_one.SelectedIndex()] = 3;
+
+                test_one.AnswerTipsClear();
+                test_one.AnswerTip($"Правильно! Ответ: {formulaCorrectExport}", "green");
+
+            }
+
+            // Если ответы не совпали, то выводим информацию об ошибке и выводим правильную формулу. Правильный ответ не засчитывается
+            else
+            {
                 AnswerPopupContent.Background = SpecialColor.red();
                 AnswerPopupContent.Content = "НЕПРАВИЛЬНО";
+
+                // За не правильный ответ балл на 1
+                test_one.Score(-1);
+
+                // +1 к кол-ву попыток
+                loaderClasses[currentQuestion].returnQuestionParamsTry()[test_one.SelectedIndex()]++;
+
+                // Очищаем другие уведомления
+                test_one.AnswerTipsClear();
+
+                if (loaderClasses[currentQuestion].returnQuestionParamsTry()[test_one.SelectedIndex()] < 3)
+                {
+                    test_one.AnswerTip($"Дан неправильный ответ. У вас осталось еще {3 - loaderClasses[currentQuestion].returnQuestionParamsTry()[test_one.SelectedIndex()]} попытки(-а)", "red");
+                }
+                else
+                {
+                    test_one.AnswerTip($"Попыток больше нет!", "red");
+                    test_one.AnswerTip($"Правильная формула: {formulaCorrectExport}", "red");
+                }
             }
+
+            // Если попыток больше нет
+            if (loaderClasses[currentQuestion].returnQuestionParamsTry()[test_one.SelectedIndex()] >= 3)
+            {
+                // Если эта переменная еще не найдена, то добавляем ее в словарь переменных
+                if (!checkAnswer.Variables.ContainsKey(loaderClasses[currentQuestion].returnQuestionFindParams()[test_one.SelectedIndex()]))
+                {
+                    checkAnswer.Variables.Add(loaderClasses[currentQuestion].returnQuestionFindParams()[test_one.SelectedIndex()], Convert.ToDouble(formulaCorrect));
+                }
+                test_one.QuestionVal(test_one.SelectedValue(), formulaCorrect);
+
+                // Удаляем найденную переменную из списка неизвестных переменных и выпадающего списка
+                loaderClasses[currentQuestion].QuestionFindParams.Remove(test_one.SelectedValue());
+                loaderClasses[currentQuestion].QuestionFindParamsTry.RemoveAt(test_one.SelectedIndex());
+                loaderClasses[currentQuestion].Formula.RemoveAt(test_one.SelectedIndex());
+
+                // Очищаем вводное поле
+                answer.Clear();
+
+                // Обновляем выпадающий список
+                test_one.QuestionValsСВ(loaderClasses[currentQuestion].returnQuestionFindParams());
+            }
+
             AnswerPopup.IsOpen = true;
-            await Task.Delay(2000);
+            await Task.Delay(1000);
             AnswerPopup.IsOpen = false;
+            
+            // Если закончился 1-ый этап ответов на вопрос, то переходим к следующему, иначе завершаем тест
+            if (loaderClasses[currentQuestion].returnQuestionFindParams().Count <= 0)
+            {
+                currentQuestion += 1;
+                if (currentQuestion >= loaderClasses.Count)
+                    popupButton_Click(sender, e);
+                else
+                {
+                    // Обновляем исходные данные
+                    string testtext = "";
+                    foreach (var massiv in checkAnswer.Variables)
+                    {
+                        testtext += $"{massiv.Key} = {massiv.Value}\n";
+                    }
+                    test_one.DataExtraInfo(testtext);
+
+                    test_one.DataMainInfo(loaderClasses[currentQuestion].returnQuestionText());
+                    test_one.QuestionVals(loaderClasses[currentQuestion].returnQuestionFindParams());
+                }
+            }
+            
+            //popupButton_Click( sender, e);
         }
 
         //выход их попапа
