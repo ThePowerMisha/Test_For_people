@@ -218,6 +218,12 @@ namespace WpfApp1.View {
             }
             contentControl.Content = cBlock;
         }
+
+        //событие на Enter
+        private void popupButton_PreviewKeyDown(object sender, KeyEventArgs e) {
+            if (e.Key == Key.Enter)
+                popupButton_Click(sender, e);
+        }
         //=======================mainLayout=======================
     }
 

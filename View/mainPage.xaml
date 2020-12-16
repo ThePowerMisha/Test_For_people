@@ -27,7 +27,7 @@
             <!--mainLayout-->
             <!--left-->
             <!--НАЧАТЬ ТЕСТИРОВАНИЕ-->
-            <Button x:Name="mainLayoutStart" BorderBrush="#3E94D1" Grid.Row="1" Grid.Column="0" Content="НАЧАТЬ ТЕСТИРОВАНИЕ" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" FontFamily="Arial" Click="mainLayoutStart_Click">
+            <Button x:Name="mainLayoutStart" TabIndex="0" BorderBrush="#3E94D1" Grid.Row="1" Grid.Column="0" Content="НАЧАТЬ ТЕСТИРОВАНИЕ" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" FontFamily="Arial" Click="mainLayoutStart_Click">
                 <Button.Triggers>
                     <EventTrigger RoutedEvent="Button.MouseEnter">
                         <BeginStoryboard>
@@ -61,7 +61,7 @@
             </Button>
 
             <!--РЕЗУЛЬТАТЫ ТЕСТИРОВАНИЙ-->
-            <Button x:Name="mainLayoutResults" BorderBrush="#3E94D1" Grid.Row="2" Grid.Column="0" Content="РЕЗУЛЬТАТЫ ТЕСТИРОВАНИЙ" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" FontFamily="Arial" Click="mainLayoutResults_Click">
+            <Button x:Name="mainLayoutResults" TabIndex="1" BorderBrush="#3E94D1" Grid.Row="2" Grid.Column="0" Content="РЕЗУЛЬТАТЫ ТЕСТИРОВАНИЙ" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" FontFamily="Arial" Click="mainLayoutResults_Click">
                 <Button.Triggers>
                     <EventTrigger RoutedEvent="Button.MouseEnter">
                         <BeginStoryboard>
@@ -110,7 +110,7 @@
                         <StackPanel>
                             <Label Margin="30" Foreground="#3E94D1" FontSize="32" FontFamily="Arial" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">ВВЕДИТЕ ПАРОЛЬ</Label>
 
-                            <PasswordBox Name="popupTextBox" BorderBrush="#3E94D1" BorderThickness="2" Margin="15,0,15,30" MaxWidth="450"  Background="#EFEFEF"  FontWeight="Bold" Foreground="black" FontSize="28" Padding="15" FontFamily="Arial" MaxLength="5" Height="65" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <PasswordBox Name="popupTextBox" BorderBrush="#3E94D1" BorderThickness="2" Margin="15,0,15,30" MaxWidth="450"  Background="#EFEFEF"  FontWeight="Bold" Foreground="black" FontSize="28" Padding="15" FontFamily="Arial" MaxLength="5" Height="65" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewKeyDown="popupButton_PreviewKeyDown">
                                 <PasswordBox.Resources>
                                     <Style TargetType="{x:Type Border}">
                                         <Setter Property="CornerRadius" Value="5"/>
@@ -201,7 +201,7 @@
             </Popup>
             
             <!--ВЫХОД-->
-            <Button x:Name="mainLayoutExit" BorderBrush="#3E94D1" Grid.Row="3" Grid.Column="0" Content="ВЫХОД" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" FontFamily="Arial" Click="mainLayoutExit_Click">
+            <Button x:Name="mainLayoutExit" TabIndex="2" BorderBrush="#3E94D1" Grid.Row="3" Grid.Column="0" Content="ВЫХОД" Background="#EFEFEF" FontSize="32" FontWeight="Bold" Foreground="#3E94D1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="Auto,Auto,Auto,Auto" RenderTransformOrigin="0.509,0.529" Cursor="Hand" FontFamily="Arial" Click="mainLayoutExit_Click">
                 <Button.Triggers>
                     <EventTrigger RoutedEvent="Button.MouseEnter">
                         <BeginStoryboard>
