@@ -24,7 +24,7 @@ namespace WpfApp1.View {
             InitializeComponent();
 
             //массив значений для loadDataSubTypeCB
-            loadDataSubTypeCB.ItemsSource = loadDataSubType;
+            //loadDataSubTypeCB.ItemsSource = loadDataSubType;
             Placeholder.add(searchData, "Введите ключевое слово");
 
             //массив результатов людей для resultsPeople
@@ -37,9 +37,9 @@ namespace WpfApp1.View {
             contentControl = cC;
         }
         //массив для поиска (это тестовые значения, потом этот массив будет заполняться из бд)
-        private static List<string> loadDataSubType = new List<string>{
-            "Something1","Something2","Something3","Something4","Something5"
-        };
+        //private static List<string> loadDataSubType = new List<string>{
+        //    "Something1","Something2","Something3","Something4","Something5"
+        //};
 
         //массив для таблицы данных (это тестовые значения, потом этот массив будет заполняться из бд)
         private static List<Person> loadResultsPeople = new List<Person> {

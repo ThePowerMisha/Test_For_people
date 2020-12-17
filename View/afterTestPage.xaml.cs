@@ -23,13 +23,23 @@ namespace WpfApp1.View {
 
             contentControl = cC;
 
+            string gradate="";
+            if (Int32.Parse(score) <= 23)
+                gradate = "Неудовлетворительно";
+            else if(Int32.Parse(score) > 23 && Int32.Parse(score)<=31)
+                gradate = "Удовлетворительно";
+            else if (Int32.Parse(score) > 31 && Int32.Parse(score) <= 37)
+                gradate = "Хорошо";
+            else
+                gradate = "Отлично";
+
             result1.Content = choiceBlock.dataList[0];
             result2.Content = choiceBlock.dataList[1];
             result3.Content = choiceNextPage.dataList[0];
             result4.Content = choiceNextPage.dataList[1];
             result5.Content = timeWaste;
             result6.Content = choiceNextPage.dataList[2];
-            result7.Content = score;
+            result7.Content = score +" / "+gradate;
             result8.Content = testPage.correctAnswersCount.ToString();
             result9.Content = DateTime.Today.ToString("D");
 
@@ -39,7 +49,7 @@ namespace WpfApp1.View {
             mainPage.data.load.Add(choiceNextPage.dataList[0]);
             mainPage.data.variant.Add(choiceNextPage.dataList[1]);
             mainPage.data.timeSpent.Add(timeWaste);
-            mainPage.data.scoreResult.Add(score);
+            mainPage.data.scoreResult.Add(score + " / " + gradate);
             mainPage.data.correctAnswers.Add(testPage.correctAnswersCount.ToString());
             mainPage.data.testDate.Add(DateTime.Today.ToString("D"));
             dBController.results.saveData(mainPage.data);
