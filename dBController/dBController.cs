@@ -262,7 +262,19 @@ namespace dBController
             return questionText;
         }
 
-       public static List<string> getQuestionFinds(string themeName, int blockID, int loadID, int variantID, int stageNumber)
+        public static int getMaxQuestionFinds(string themeName, int blockID, int loadID, int variantID)
+        /* Возвращает максимальное число этапов вопросов */
+        {
+            int maxStageNumber = 0;
+            JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
+            foreach (JToken item in variant["questionFind"])
+            {
+                maxStageNumber++;
+            }
+            return maxStageNumber;
+        }
+
+        public static List<string> getQuestionFinds(string themeName, int blockID, int loadID, int variantID, int stageNumber)
         /* Возвращает список переменых, которые нужно найти в этапе stageNumber */
         {
             List<string> questionFinds = new List<string>();

@@ -211,14 +211,13 @@ namespace WpfApp1.View {
 
             //=================
             TestControl test = new TestControl();
-            LoaderClass loaderClass = new LoaderClass("Questions.txt");
+            CheckAnswer checkAnswer = new CheckAnswer();
+
+            TestControl test = new TestControl();
             CheckAnswer checkAnswer = new CheckAnswer();
 
             // Загружаем из файла словарь
-            checkAnswer.Variables = loaderClass.returnVariables();
-
-            // Загружаем текст вопроса
-            test.DataMainInfo(loaderClass.returnQuestionText());
+            checkAnswer.Variables = questions.getQuestionParams(choiceBlock.theme, choiceBlock.blockID, loadID, variantID);
 
             // Загружаем в графический интерфейс данные массива
             string testtext = "";
@@ -228,8 +227,15 @@ namespace WpfApp1.View {
             }
             test.DataExtraInfo(testtext);
 
+            // Загружаем текст вопроса
+            test.DataMainInfo(questions.getQuestionText(choiceBlock.theme, choiceBlock.blockID, loadID, variantID, 1));
+
             // Загружаем неизвестные переменные, которые нужно найти
-            test.QuestionVals(loaderClass.returnQuestionFindParams());
+            test.QuestionVals(questions.getQuestionFinds(choiceBlock.theme, choiceBlock.blockID, loadID, variantID, 1));
+
+            // Добавляем основную картинку
+            test.GraphContent(System.IO.Path.GetFullPath(questions.getVariantsImgPath(choiceBlock.theme, choiceBlock.blockID, loadID)[0][1].ToString()));
+
 
             // test.AnswerTip("shalom!", "red");
             // test.AnswerTip("hallo!", "green");

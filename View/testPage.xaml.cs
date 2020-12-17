@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Globalization;
+using dBController;
 
 namespace WpfApp1.View {
     /// <summary>
@@ -148,6 +149,22 @@ namespace WpfApp1.View {
             mainLayout.IsEnabled = false;
         }
         CheckAnswer checkAnswer =new CheckAnswer();
+
+        // счетчик текущего этапа вопросов
+        public int stageNum = 1;
+
+        // Список попыток ответа для каждой неизветсной переменной
+        public List<int> numTry = null;
+
+        // Список неизвестных переменных
+        public List<string> questionFindList = null;
+
+        // Список правильных формул для неизвестных переменных
+        public List<Dictionary<string, string>> questionFormulasDict = null;
+
+        // число всех вариантов этапов вопросов
+        public int maxStageNum = questions.getMaxQuestionFinds(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID);
+
         //подтверждение ответа
         private async void confirmAnswer_Click(object sender, RoutedEventArgs e) {
             
