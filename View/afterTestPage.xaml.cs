@@ -12,12 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using dBController;
 
 namespace WpfApp1.View {
     /// <summary>
     /// Логика взаимодействия для afterTestPage.xaml
     /// </summary>
+
     public partial class afterTestPage : UserControl {
+        public static results data;
         public afterTestPage(ContentControl cC, string timeWaste, string score) {
             InitializeComponent();
 
@@ -48,16 +51,23 @@ namespace WpfApp1.View {
             else if (gradate == "Удовлетворительно")
                 gradate = "Удов.";
 
-            mainPage.data.theme.Add(choiceBlock.dataList[0]);
-            mainPage.data.block.Add(choiceBlock.dataList[1]);
-            mainPage.data.load.Add(choiceNextPage.dataList[0]);
-            mainPage.data.variant.Add(choiceNextPage.dataList[1]);
-            mainPage.data.timeSpent.Add(timeWaste);
-            mainPage.data.scoreResult.Add(score + " / " + gradate);
-            mainPage.data.correctAnswers.Add(testPage.correctAnswersCount.ToString());
-            mainPage.data.testDate.Add(DateTime.Today.ToString("D"));
-            mainPage.data.tips.Add(choiceNextPage.dataList[2]);
-            dBController.results.saveData(mainPage.data);
+             
+            data = results.createEntery();
+            data.lastName.Add(mainPage.lastName_data);
+            data.firstName.Add(mainPage.firstName_data);
+            data.secondName.Add(mainPage.secondName_data);
+            data.group.Add(mainPage.group_data);
+            data.ID.Add(results.idGeneration(data));
+            data.theme.Add(choiceBlock.dataList[0]);
+            data.block.Add(choiceBlock.dataList[1]);
+            data.load.Add(choiceNextPage.dataList[0]);
+            data.variant.Add(choiceNextPage.dataList[1]);
+            data.timeSpent.Add(timeWaste);
+            data.scoreResult.Add(score + " / " + gradate);
+            data.tips.Add(choiceNextPage.dataList[2]);
+            data.correctAnswers.Add(testPage.correctAnswersCount.ToString());
+            data.testDate.Add(DateTime.Today.ToString("D"));
+            results.saveData(data);
 
         }
         private static ContentControl contentControl;

@@ -32,7 +32,6 @@ namespace WpfApp1.View {
             mainWin = win;
             curRec = currec;
             contentControl = cC;
-            data = results.createEntery();
 
             rPage = new resultsPage(mainWin, curRec, contentControl);
             cBlock = new choiceBlock(contentControl);
@@ -51,7 +50,10 @@ namespace WpfApp1.View {
         private static resultsPage rPage;
         private static choiceBlock cBlock;
 
-        public static results data;
+        public static string lastName_data;
+        public static string firstName_data;
+        public static string secondName_data;
+        public static string group_data;
 
         public static choiceBlock getChoiceBlock() {
             return cBlock;
@@ -212,11 +214,10 @@ namespace WpfApp1.View {
                 WpfApp1.View.choiceBlock.currentButton.Background = SpecialColor.mainBack();
                 WpfApp1.View.choiceBlock.currentButton = null;
             }
-            data.lastName.Add(lastName.Text);
-            data.firstName.Add(firstName.Text);
-            data.secondName.Add(secondName.Text);
-            data.group.Add(group.Text);
-            data.ID.Add(results.idGeneration(data));
+            lastName_data = lastName.Text;
+            firstName_data = firstName.Text;
+            secondName_data = secondName.Text;
+            group_data = group.Text;
             contentControl.Content = cBlock;
         }
 
@@ -227,5 +228,4 @@ namespace WpfApp1.View {
         }
         //=======================mainLayout=======================
     }
-
 }
