@@ -91,11 +91,7 @@ namespace WpfApp1.View {
 
                 if (isCurrentData == true) {
                     DataPopupText.Content = "ДАННЫЕ СОХРАНЕНЫ";
-                    data.lastName.Add(lastName.Text);
-                    data.firstName.Add(firstName.Text);
-                    data.secondName.Add(secondName.Text);
-                    data.group.Add(group.Text);
-                    data.ID.Add(results.idGeneration(data));
+                    
 
                 } else {
                     DataPopupText.Content = "ДАННЫЕ НЕ СОХРАНЕННЫ";
@@ -216,6 +212,11 @@ namespace WpfApp1.View {
                 WpfApp1.View.choiceBlock.currentButton.Background = SpecialColor.mainBack();
                 WpfApp1.View.choiceBlock.currentButton = null;
             }
+            data.lastName.Add(lastName.Text);
+            data.firstName.Add(firstName.Text);
+            data.secondName.Add(secondName.Text);
+            data.group.Add(group.Text);
+            data.ID.Add(results.idGeneration(data));
             contentControl.Content = cBlock;
         }
 

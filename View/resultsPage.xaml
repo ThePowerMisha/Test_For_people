@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfApp1.View"
              mc:Ignorable="d" 
-             d:DesignHeight="1046" d:DesignWidth="1920" Background="#EFEFEF">
+             d:DesignHeight="1046" d:DesignWidth="1920" Background="#EFEFEF" Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
         <ControlTemplate  x:Key="ComboBoxToggleButtonLeft" TargetType="{x:Type ToggleButton}">
@@ -362,11 +362,11 @@
                           FontSize="25" 
                           VerticalContentAlignment="Center"
                           SelectedIndex="0">
-                    <ComboBoxItem Content="всему"/>
+                    <!--<ComboBoxItem Content="всему"/>-->
+                    <ComboBoxItem Content="группе"/>
                     <ComboBoxItem Content="фамилии"/>
                     <ComboBoxItem Content="имени"/>
                     <ComboBoxItem Content="отчеству"/>
-                    <ComboBoxItem Content="группе"/>
                 </ComboBox>
                 <!--<ComboBox Name="loadDataSubTypeCB" Style="{StaticResource CBStyleRight}"
                           Margin="-2,0,0,0"

@@ -43,6 +43,10 @@ namespace WpfApp1.View {
             result8.Content = testPage.correctAnswersCount.ToString();
             result9.Content = DateTime.Today.ToString("D");
 
+            if (gradate == "Неудовлетворительно")
+                gradate = "Неуд.";
+            else if (gradate == "Удовлетворительно")
+                gradate = "Удов.";
 
             mainPage.data.theme.Add(choiceBlock.dataList[0]);
             mainPage.data.block.Add(choiceBlock.dataList[1]);
@@ -52,6 +56,7 @@ namespace WpfApp1.View {
             mainPage.data.scoreResult.Add(score + " / " + gradate);
             mainPage.data.correctAnswers.Add(testPage.correctAnswersCount.ToString());
             mainPage.data.testDate.Add(DateTime.Today.ToString("D"));
+            mainPage.data.tips.Add(choiceNextPage.dataList[2]);
             dBController.results.saveData(mainPage.data);
 
         }
