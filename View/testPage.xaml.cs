@@ -38,15 +38,12 @@ namespace WpfApp1.View {
             //общие данные (Timer and Score)
             timer(time);
 
+            mainLayout.MaxWidth = SystemParameters.PrimaryScreenWidth;
+
             contentControl = cC;
         }
 
         private int currentQuestion = 0;
-
-        LoaderClass loaderClass = new LoaderClass("Questions.txt");
-        LoaderClass loaderClass2 = new LoaderClass("Questions2.txt");
-        
-        List<LoaderClass> loaderClasses =new List<LoaderClass>();
         
 
         private static ContentControl contentControl;
@@ -150,8 +147,8 @@ namespace WpfApp1.View {
         }
         CheckAnswer checkAnswer =new CheckAnswer();
 
-        // счетчик текущего этапа вопросов
-        public int stageNum = 1;
+        // счетчик
+        public int Num = 1;
 
         // Список попыток ответа для каждой неизветсной переменной
         public List<int> numTry = null;
@@ -162,14 +159,12 @@ namespace WpfApp1.View {
         // Список правильных формул для неизвестных переменных
         public List<Dictionary<string, string>> questionFormulasDict = null;
 
-        // число всех вариантов этапов вопросов
         public int maxStageNum = questions.getMaxQuestionFinds(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID);
 
         //подтверждение ответа
         private async void confirmAnswer_Click(object sender, RoutedEventArgs e) {
             
             TestControl test_one = new TestControl();
-
 
             // Создаем словарь исходных данных
             if (checkAnswer.Variables == null)
@@ -179,28 +174,31 @@ namespace WpfApp1.View {
             if (numTry == null)
             {
                 numTry = new List<int>();
-                foreach (var item in questions.getQuestionFinds(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, stageNum))
+                foreach (var item in questions.getQuestionFinds(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, Num))
                 {
                     numTry.Add(0);
                 }
             }
 
+
+
             // Создаем список неизвестных переменных
-            if (questionFindList == null)
-                questionFindList = questions.getQuestionFinds(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, stageNum);
+            if (questionFindList == null) 
+                questionFindList = questions.getQuestionFinds(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, Num);
 
             if (questionFormulasDict == null)
-                questionFormulasDict = questions.getQuestionFormuls(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, stageNum);
-
+                questionFormulasDict = questions.getQuestionFormuls(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, Num);
 
             // Рассчитывем введенную формулу
             checkAnswer.Formula = answer.Text;
             string formualaInput = checkAnswer.Check();
 
+
             // Строка правильной формулы
             checkAnswer.Formula = questionFormulasDict[test_one.SelectedIndex()]["0"];
             string formulaCorrectExport = checkAnswer.Formula;
             string formulaCorrect = checkAnswer.Check();
+
 
             // Проверяем на ошибку "NullOrEmpty Error!" - если была передана пустая строка
             if (formualaInput == "NullOrEmpty Error!")
@@ -211,6 +209,7 @@ namespace WpfApp1.View {
                 test_one.AnswerTip($"Ошибка! Введена пустая строка", "orange");
             }
 
+
             // Проверяем на ошибку "Syntax Error!" - если была выявлена синтаксическая ошибка
             else if (formualaInput == "Syntax Error!")
             {
@@ -220,6 +219,7 @@ namespace WpfApp1.View {
                 test_one.AnswerTip($"Была выявлена синтаксическая ошибка!", "orange");
             }
 
+
             // Проверяем на ошибку "Bracket Error!" - если была выявлена ошибка правильности написания скобок
             else if (formualaInput == "Bracket Error!")
             {
@@ -228,6 +228,7 @@ namespace WpfApp1.View {
                 test_one.AnswerTipsClear();
                 test_one.AnswerTip($"Ошибка! Неправильно расставлены скобки!", "orange");
             }
+
 
             // Проверяем на ошибку "UnknownData Error!" - если были переданы неизвестные данные
             else if (formualaInput == "UnknownData Error!")
@@ -258,8 +259,6 @@ namespace WpfApp1.View {
                 test_one.AnswerTip($"Правильно! Ответ: {formulaCorrectExport}", "green");
 
             }
-
-            // Если ответы не совпали, то выводим информацию об ошибке и выводим правильную формулу. Правильный ответ не засчитывается
             else
             {
                 AnswerPopupContent.Background = SpecialColor.red();
@@ -282,7 +281,7 @@ namespace WpfApp1.View {
                 {
                     test_one.AnswerTip($"Попыток больше нет!", "red");
                     test_one.AnswerTip($"Правильная формула: {formulaCorrectExport}", "red");
-                    foreach (var item in questionFormulasDict[test_one.SelectedIndex()])
+                    foreach(var item in questionFormulasDict[test_one.SelectedIndex()])
                     {
                         if (checkAnswer.Variables.ContainsKey(item.Key))
                         {
@@ -296,7 +295,7 @@ namespace WpfApp1.View {
             {
                 // Если эта переменная еще не найдена, то добавляем ее в словарь переменных
                 checkAnswer.Variables.Add(questionFindList[test_one.SelectedIndex()].ToLower(), Convert.ToDouble(formulaCorrect));
-
+                
                 // Обновляем в графическом интерфейсе граф "задача"
                 test_one.QuestionVal(test_one.SelectedValue(), formulaCorrect);
 
@@ -320,12 +319,14 @@ namespace WpfApp1.View {
             await Task.Delay(1000);
             AnswerPopup.IsOpen = false;
 
+            
             // Если закончился 1-ый этап ответов на вопрос, то переходим к следующему, иначе завершаем тест
+            
             if (questionFindList.Count <= 0)
             {
-                stageNum += 1;
-
-                if (stageNum >= maxStageNum + 1)
+                Num += 1;
+                
+                if (Num >=maxStageNum + 1)
                     popupButton_Click(sender, e);
                 else
                 {
@@ -337,18 +338,60 @@ namespace WpfApp1.View {
                     }
                     test_one.DataExtraInfo(testtext);
 
-                    test_one.DataMainInfo(questions.getQuestionText(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, stageNum));
-                    test_one.QuestionVals(questions.getQuestionFinds(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, stageNum));
+                    test_one.DataMainInfo(questions.getQuestionText(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, Num));
+                    test_one.QuestionVals(questions.getQuestionFinds(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, Num));
 
                     numTry = null;
                     questionFindList = null;
                     questionFormulasDict = null;
-
+                   
                 }
-
+                
             }
+            
+            
 
+            /*
+            
+
+            
+            
+
+            
+
+            // Если ответы не совпали, то выводим информацию об ошибке и выводим правильную формулу. Правильный ответ не засчитывается
+            
+
+            // Если попыток больше нет
+            
+
+            AnswerPopup.IsOpen = true;
+            await Task.Delay(1000);
+            AnswerPopup.IsOpen = false;
+            
+            // Если закончился 1-ый этап ответов на вопрос, то переходим к следующему, иначе завершаем тест
+            if (loaderClasses[currentQuestion].returnQuestionFindParams().Count <= 0)
+            {
+                currentQuestion += 1;
+                if (currentQuestion >= loaderClasses.Count)
+                    popupButton_Click(sender, e);
+                else
+                {
+                    // Обновляем исходные данные
+                    string testtext = "";
+                    foreach (var massiv in checkAnswer.Variables)
+                    {
+                        testtext += $"{massiv.Key} = {massiv.Value}\n";
+                    }
+                    test_one.DataExtraInfo(testtext);
+
+                    test_one.DataMainInfo(loaderClasses[currentQuestion].returnQuestionText());
+                    test_one.QuestionVals(loaderClasses[currentQuestion].returnQuestionFindParams());
+                }
+            }
+            
             //popupButton_Click( sender, e);
+            */
         }
 
         //выход их попапа
