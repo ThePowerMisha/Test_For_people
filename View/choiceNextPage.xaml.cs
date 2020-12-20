@@ -16,28 +16,24 @@ using System.Windows.Shapes;
 using System.IO;
 using dBController;
 
-namespace WpfApp1.View
-{
+namespace WpfApp1.View {
     /// <summary>
     /// Логика взаимодействия для choiceNextPage.xaml
     /// </summary>
-    public partial class choiceNextPage : UserControl
-    {
-        public choiceNextPage(ContentControl cC, string title)
-        {
+    public partial class choiceNextPage : UserControl {
+        public choiceNextPage(ContentControl cC, string title) {
             InitializeComponent();
 
             contentControl = cC;
 
-            Placeholder.add(timeCount, "Время в минутах");
-            Placeholder.add(tipCount, "Подсказки");
+            Placeholder.add(timeCount, "60");
+            Placeholder.add(tipCount, "1");
 
             titleLabel.Content = title;
         }
         private static ContentControl contentControl;
 
-        private void onPreviousPage_Click(object sender, RoutedEventArgs e)
-        {
+        private void onPreviousPage_Click(object sender, RoutedEventArgs e) {
             contentControl.Content = WpfApp1.View.mainPage.getChoiceBlock();
         }
 
@@ -45,27 +41,22 @@ namespace WpfApp1.View
         private string textBeforeChange;
         private int selectionBeforeChange;
         private int selectionLengthBeforeChange;
-        private void textBox_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
+        private void textBox_PreviewKeyDown(object sender, KeyEventArgs e) {
             textBeforeChange = (sender as TextBox).Text;
             selectionBeforeChange = (sender as TextBox).SelectionStart;
             selectionLengthBeforeChange = (sender as TextBox).SelectionLength;
         }
-        private void timeCount_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string input = (sender as TextBox).Text;
-            if (!Regex.IsMatch(input, "(^([0-9]){1,3}$|^Время в минутах$)"))
-            {
-                if (input.Length != 0)
-                {
+        private void timeCount_TextChanged(object sender, TextChangedEventArgs e) {
+            string input = (sender as TextBox).Text;            
+            if (!Regex.IsMatch(input, "(^([0-9]){1,3}$|^60х$)")) {
+                if (input.Length != 0) {
                     (sender as TextBox).Text = textBeforeChange;
-                    input = textBeforeChange;
+                    input = textBeforeChange; 
                 }
                 (sender as TextBox).SelectionStart = selectionBeforeChange;
                 (sender as TextBox).SelectionLength = selectionLengthBeforeChange;
             }
-            if (input != "Время в минутах" && input.Length != 0)
-            {
+            if (input != "60" && input.Length != 0) {
                 if (Int32.Parse(input) > 180)
                     input = "180";
                 else if (Int32.Parse(input) == 0)
@@ -73,31 +64,25 @@ namespace WpfApp1.View
                 (sender as TextBox).Text = Int32.Parse(input).ToString();
             }
         }
-        private void timeCount_LostFocus(object sender, RoutedEventArgs e)
-        {
+        private void timeCount_LostFocus(object sender, RoutedEventArgs e) {
             string input = (sender as TextBox).Text;
-            if (input != "Время в минутах" && input.Length != 0)
-            {
+            if (input != "60" && input.Length != 0) {
                 if (Int32.Parse(input) < 10)
                     input = "10";
                 (sender as TextBox).Text = Int32.Parse(input).ToString();
             }
         }
-        private void tipCount_TextChanged(object sender, TextChangedEventArgs e)
-        {
+        private void tipCount_TextChanged(object sender, TextChangedEventArgs e) {
             string input = (sender as TextBox).Text;
-            if (!Regex.IsMatch(input, "(^([0-9]){1,1}$|^Подсказки$)"))
-            {
-                if (input.Length != 0)
-                {
+            if (!Regex.IsMatch(input, "(^([0-9]){1,1}$|^1$)")) {
+                if (input.Length != 0) {
                     (sender as TextBox).Text = textBeforeChange;
                     input = textBeforeChange;
                 }
                 (sender as TextBox).SelectionStart = selectionBeforeChange;
                 (sender as TextBox).SelectionLength = selectionLengthBeforeChange;
             }
-            if (input != "Подсказки" && input.Length != 0)
-            {
+            if (input != "Подсказки" && input.Length != 0) {
                 if (Int32.Parse(input) > 3)
                     input = "3";
                 (sender as TextBox).Text = Int32.Parse(input).ToString();
@@ -110,20 +95,18 @@ namespace WpfApp1.View
         private static List<List<string>> variantCardMass;
 
         //загрузка всех карточек(изначально варианты загружаются для первого полежения)
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
+        private void UserControl_Loaded(object sender, RoutedEventArgs e) {
             loadPositionСardMass = questions.getLoadsImgPath(choiceBlock.theme, choiceBlock.blockID);
             //variantCardMass = questions.getVariantsImgPath(choiceBlock.theme, choiceBlock.blockID, 1);
 
             int num = 1;
-            foreach (List<string> card in loadPositionСardMass)
-            {
+            foreach (List<string> card in loadPositionСardMass) {
                 Button button = new Button();
                 button.Style = this.Resources["buttonCard"] as Style;
                 button.Content = choiceBlock.ToRoman(num);
                 num++;
                 button.Tag = System.IO.Path.GetFullPath(card[1]);
-                button.Width = (loadPosition.ActualHeight) / 5 * 8;
+                button.Width = (loadPosition.ActualHeight)/5*8;
                 button.Height = (loadPosition.ActualHeight);
                 button.Foreground = SpecialColor.mainBlue();
                 button.Click += card_Click;
@@ -149,12 +132,9 @@ namespace WpfApp1.View
         public static int variantID;
         //выделение для массива с выбором нагрузок
         private static Button loadPositioСurrentButton = null;
-        private void card_Click(object sender, RoutedEventArgs e)
-        {
-            if ((sender as Button) != loadPositioСurrentButton)
-            {
-                if (loadPositioСurrentButton != null)
-                {
+        private void card_Click(object sender, RoutedEventArgs e) {
+            if ((sender as Button) != loadPositioСurrentButton) {
+                if (loadPositioСurrentButton != null) {
                     loadPositioСurrentButton.Background = SpecialColor.mainBack();
                     loadPositioСurrentButton.Foreground = SpecialColor.mainBlue();
                 }
@@ -162,12 +142,10 @@ namespace WpfApp1.View
                 (sender as Button).Foreground = SpecialColor.white();
                 loadPositioСurrentButton = (sender as Button);
 
-
+                
                 int id = 0;
-                foreach (Button button in loadPosition.Children)
-                {
-                    if (loadPositioСurrentButton == button)
-                    {
+                foreach(Button button in loadPosition.Children) {
+                    if (loadPositioСurrentButton == button) {
                         variantCardMass = questions.getVariantsImgPath(choiceBlock.theme, choiceBlock.blockID, Int32.Parse(loadPositionСardMass[id][0]));
                         loadID = Int32.Parse(loadPositionСardMass[id][0]);
                         break;
@@ -179,8 +157,7 @@ namespace WpfApp1.View
                 variantСurrentButton = null;
                 variant.Children.Clear();
                 int num = 1;
-                foreach (List<string> card in variantCardMass)
-                {
+                foreach (List<string> card in variantCardMass) {
                     Button button = new Button();
                     button.Style = this.Resources["buttonCard"] as Style;
                     button.Content = choiceBlock.ToRoman(num);
@@ -192,16 +169,13 @@ namespace WpfApp1.View
                     button.Click += card_Click2;
                     variant.Children.Add(button);
                 }
-            }
-            else
-            {
+            } else {
                 (sender as Button).Background = SpecialColor.mainBack();
                 (sender as Button).Foreground = SpecialColor.mainBlue();
                 loadPositioСurrentButton = null;
 
-
-                if (variantСurrentButton != null)
-                {
+                
+                if (variantСurrentButton != null) {
                     variantСurrentButton.Background = SpecialColor.mainBack();
                     variantСurrentButton.Foreground = SpecialColor.mainBlue();
                 }
@@ -213,12 +187,9 @@ namespace WpfApp1.View
 
         //выделение для массива с выбором варианта
         private static Button variantСurrentButton = null;
-        private void card_Click2(object sender, RoutedEventArgs e)
-        {
-            if ((sender as Button) != variantСurrentButton)
-            {
-                if (variantСurrentButton != null)
-                {
+        private void card_Click2(object sender, RoutedEventArgs e) {
+            if ((sender as Button) != variantСurrentButton) {
+                if (variantСurrentButton != null) {
                     variantСurrentButton.Background = SpecialColor.mainBack();
                     variantСurrentButton.Foreground = SpecialColor.mainBlue();
                 }
@@ -227,18 +198,14 @@ namespace WpfApp1.View
                 variantСurrentButton = (sender as Button);
 
                 int id = 0;
-                foreach (Button button in variant.Children)
-                {
-                    if (variantСurrentButton == button)
-                    {
+                foreach (Button button in variant.Children) {
+                    if (variantСurrentButton == button) {
                         variantID = Int32.Parse(variantCardMass[id][0]);
                         break;
                     }
                     id++;
                 }
-            }
-            else
-            {
+            } else {
                 (sender as Button).Background = SpecialColor.mainBack();
                 (sender as Button).Foreground = SpecialColor.mainBlue();
                 variantСurrentButton = null;
@@ -246,41 +213,30 @@ namespace WpfApp1.View
         }
 
         //обработка введенности данных
-        private async void onNextPage_Click(object sender, RoutedEventArgs e)
-        {
+        private async void onNextPage_Click(object sender, RoutedEventArgs e) {
             bool isWrong = false;
-            if (timeCount.Text == "Время в минутах")
-            {
+            /*if (timeCount.Text== "Время в минутах") {
                 DataPopupText.Content = "ВВЕДИТЕ ВРЕМЯ";
                 NextPopup.IsOpen = true;
                 isWrong = true;
-            }
-            else if (tipCount.Text == "Подсказки")
-            {
+            } else if(tipCount.Text == "Подсказки") {
                 DataPopupText.Content = "ВВЕДИТЕ ПОДСКАЗКИ";
                 NextPopup.IsOpen = true;
                 isWrong = true;
-            }
-            else if (loadPositioСurrentButton == null)
-            {
+            } else */if (loadPositioСurrentButton==null) {
                 DataPopupText.Content = "ВЫБЕРИТЕ ПОЛОЖЕНИЕ ОПОР";
                 NextPopup.IsOpen = true;
                 isWrong = true;
-            }
-            else if (variantСurrentButton == null)
-            {
+            } else if (variantСurrentButton == null) {
                 DataPopupText.Content = "ВЫБЕРИТЕ ВАРИАНТ";
                 NextPopup.IsOpen = true;
                 isWrong = true;
-            }
-            else
-            {
+            } else {
                 testPopup.IsOpen = true;
                 mainLayout.IsEnabled = false;
                 mainLayout.Opacity = 0.3;
             }
-            if (isWrong == true)
-            {
+            if (isWrong == true) {
                 await Task.Delay(2000);
                 NextPopup.IsOpen = false;
             }
@@ -289,8 +245,7 @@ namespace WpfApp1.View
         //переход к тесту
         public static List<string> dataList = new List<string>();
         private static testPage tPage;
-        private void popupButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void popupButton_Click(object sender, RoutedEventArgs e) {
             tPage = new testPage(contentControl,
                                 titleLabel.Content + " Тест " + loadPositioСurrentButton.Content + "-" + variantСurrentButton.Content,
                                 timeCount.Text);
@@ -365,38 +320,32 @@ namespace WpfApp1.View
             // test.DataExtraInfo(test.Time());
             //==================
         }
-        public static testPage getTestPage()
-        {
+        public static testPage getTestPage() {
             return tPage;
         }
 
         //закрытие попапа
-        private void popupExit_Click(object sender, RoutedEventArgs e)
-        {
+        private void popupExit_Click(object sender, RoutedEventArgs e) {
             testPopup.IsOpen = false;
             mainLayout.IsEnabled = true;
             mainLayout.Opacity = 1;
         }
         //анимация крестика попапа
-        private void popupExit_MouseEnter(object sender, MouseEventArgs e)
-        {
+        private void popupExit_MouseEnter(object sender, MouseEventArgs e) {
             line1.Stroke = SpecialColor.white();
             line2.Stroke = SpecialColor.white();
         }
-        private void popupExit_MouseLeave(object sender, MouseEventArgs e)
-        {
+        private void popupExit_MouseLeave(object sender, MouseEventArgs e) {
             line1.Stroke = SpecialColor.mainBlue();
             line2.Stroke = SpecialColor.mainBlue();
         }
 
         //возвращает состояние попапа testPopup
-        public bool getPopupStatus()
-        {
+        public bool getPopupStatus() {
             return testPopup.IsOpen;
         }
         //закрывает попап resultPopup
-        public void setPopupStatus()
-        {
+        public void setPopupStatus() {
             testPopup.IsOpen = false;
             mainLayout.Opacity = 1;
             mainLayout.IsEnabled = true;

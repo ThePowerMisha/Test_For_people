@@ -112,6 +112,9 @@ namespace WpfApp1.View {
             textBeforeChange = (sender as TextBox).Text;
             selectionBeforeChange = (sender as TextBox).SelectionStart;
             selectionLengthBeforeChange = (sender as TextBox).SelectionLength;
+
+            if (e.Key == Key.Enter)
+                confirmAnswer_Click(sender, e);
         }
         private void answer_TextChanged(object sender, TextChangedEventArgs e) {
             string input = (sender as TextBox).Text;

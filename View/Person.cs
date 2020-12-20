@@ -10,6 +10,10 @@ namespace WpfApp1.View {
     /// </summary>
     class Person {
         /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public Person() { }
+        /// <summary>
         /// Конструктор класса персональных данных
         /// </summary>
         /// <param name="lastName">Фамилия</param>
@@ -55,6 +59,10 @@ namespace WpfApp1.View {
     /// Класс массива данных пройденного теста
     /// </summary>
     class PersonData {
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public PersonData() { }
         /// <summary>
         /// Конструктор класса массива данных пройденного теста
         /// </summary>

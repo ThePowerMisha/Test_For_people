@@ -159,5 +159,10 @@
         <ContentControl Name="headerControl" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" IsEnabled="False" Opacity="0" IsHitTestVisible="False"/>
         <!--Попап для изменения содержимого шапки-->
 
+        <!--<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" Background="#3E94D1" Foreground="White" Content="РЕЛИЗ ПЕРЕНОСИТСЯ"
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="100" FontWeight="Bold" IsHitTestVisible="false" IsEnabled="False"/>-->
+        <!--<Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" Source="banner.png" Stretch="UniformToFill" IsHitTestVisible="false" IsEnabled="False"/>-->
+
+
     </Grid>
 </Window>
