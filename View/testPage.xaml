@@ -410,6 +410,22 @@
             </Grid.ColumnDefinitions>
 
             <!--ОСНОВНАЯ ЧАСТЬ-->
+            <Border Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1"
+                    IsHitTestVisible="False"
+                    IsEnabled="False"
+                    Opacity="0.3"
+                    BorderBrush="#3E94D1"
+                    BorderThickness="0,0,0,2"
+                    CornerRadius="5"
+                    Margin="7.5,0,15,0"/>
+            <Border Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="3"
+                    IsHitTestVisible="False"
+                    IsEnabled="False"
+                    Opacity="0.3"
+                    BorderBrush="#3E94D1"
+                    BorderThickness="0,0,0,2"
+                    CornerRadius="5"
+                    Margin="7.5,0,15,0"/>
 
             <Label Name="subtitleLabel" Content="123"
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
@@ -443,7 +459,7 @@
                 </Grid>
             </Border>
 
-            <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
+            <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,15,0"
                           VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Name="Data"
@@ -491,7 +507,7 @@
                 </Grid>
             </Border>
 
-            <ScrollViewer Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
+            <ScrollViewer Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,15,0"
                           VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Name="Question"
@@ -717,7 +733,7 @@
 
             <ScrollViewer Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4"
                           HorizontalScrollBarVisibility="Disabled"
-                          VerticalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Visible"
                           Margin="0,15,15,0"
                           Padding="0,0,15,0">
                 <StackPanel Name="answerTips" Margin="0,-7.5">
