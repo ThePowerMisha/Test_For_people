@@ -115,7 +115,6 @@ namespace dBController
         // Возвращает полный список результатов вида
         /* 
         {
-
             ["Фамилия", "Имя", "Отчество", "Группа"]: [
                     ["Тема", "Блок", "Нагрузка", "Вариант", "Потраченное время", "Кол-во подсказок", "Баллы/Оценка", "Правильные ответы", "Дата"],
                     ["Тема", "Блок", "Нагрузка", "Вариант", "Потраченное время", "Кол-во подсказок", "Баллы/Оценка", "Правильные ответы", "Дата"],
@@ -349,17 +348,31 @@ namespace dBController
             return questionText;
         }
 
+       public static int getMaxQuestionFinds(string themeName, int blockID, int loadID, int variantID)
+           /* Возвращает максимальное число этапов вопросов */
+       {
+           int maxStageNumber = 0;
+           JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
+           foreach (JToken item in variant["questionFind"])
+           {
+               maxStageNumber++;
+           }
+           return maxStageNumber;
+       }
+
        public static List<string> getQuestionFinds(string themeName, int blockID, int loadID, int variantID, int stageNumber)
-        /* Возвращает список переменых, которые нужно найти в этапе stageNumber */
-        {
-            List<string> questionFinds = new List<string>();
-            JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
-            foreach (JToken item in variant["questionFind"][stageNumber - 1])
-            {
-                questionFinds.Add(item.ToString());
-            }
-            return questionFinds;
-        }
+           /* Возвращает список переменых, которые нужно найти в этапе stageNumber */
+       {
+           List<string> questionFinds = new List<string>();
+           JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
+           foreach (JToken item in variant["questionFind"][stageNumber - 1])
+           {
+               questionFinds.Add(item.ToString());
+           }
+           return questionFinds;
+       }
+       
+
 
        public static List<Dictionary<string, string>> getQuestionFormuls(string themeName, int blockID, int loadID, int variantID, int stageNumber)
         /* Возвращает словарь вида 0/или найденная перменная: формула */
