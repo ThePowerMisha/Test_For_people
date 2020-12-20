@@ -63,7 +63,7 @@ namespace WpfApp1.View {
             data.load.Add(choiceNextPage.dataList[0]);
             data.variant.Add(choiceNextPage.dataList[1]);
             data.timeSpent.Add(timeWaste);
-            data.scoreResult.Add(score + " / " + gradate);
+            data.scoreResult.Add(score + " / " + gradate);//22
             data.tips.Add(choiceNextPage.dataList[2]);
             data.correctAnswers.Add(testPage.correctAnswersCount.ToString());
             data.testDate.Add(DateTime.Today.ToString("D"));
