@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -38,9 +38,12 @@
     <Reference Include="MathParser.org-mXparser, Version=4.4.2.0, Culture=neutral, PublicKeyToken=0fbab7add73ed6e2, processorArchitecture=MSIL">
       <HintPath>..\packages\MathParser.org-mXparser.4.4.2\lib\net472\MathParser.org-mXparser.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+<<<<<<< Updated upstream
       <Private>True</Private>
+=======
+>>>>>>> Stashed changes
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -63,7 +66,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CheckAnswer.cs" />
+<<<<<<< Updated upstream
     <Compile Include="dBController.cs" />
+=======
+    <Compile Include="dBController\dBController.cs" />
+>>>>>>> Stashed changes
     <Compile Include="GeneralClass.cs" />
     <Compile Include="LoaderClass.cs" />
     <Compile Include="QuestionClass.cs" />
