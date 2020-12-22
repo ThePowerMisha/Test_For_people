@@ -70,12 +70,13 @@ namespace WpfApp1.View {
         }
 
         private static bool saveDataFlag = true;
+        private static bool isCurrentData = false;
         //ПРОВЕРКА ВВЕДЕННОСТИ ДАННЫХ
         private async void saveData_Click(object sender, RoutedEventArgs e) {
             if (saveDataFlag == true) {
                 saveDataFlag = false;
 
-                bool isCurrentData = false;
+                isCurrentData = false;
                 if (lastName.Text != "" && lastName.Text != "Фамилия" &&
                     firstName.Text != "" && firstName.Text != "Имя" &&
                     secondName.Text != "" && secondName.Text != "Отчество" &&
@@ -97,6 +98,7 @@ namespace WpfApp1.View {
 
                 } else {
                     DataPopupText.Content = "ДАННЫЕ НЕ СОХРАНЕННЫ";
+                    curRec.Content = "*Учетная запись";
                 }
                 DataPopupText.Background = isCurrentData == true ? SpecialColor.green() : SpecialColor.red();
                 DataPopup.IsOpen = true;
@@ -208,17 +210,27 @@ namespace WpfApp1.View {
             mainContentGrid.IsEnabled = true;
         }
 
-        private void mainLayoutStart_Click(object sender, RoutedEventArgs e) {
-            if (WpfApp1.View.choiceBlock.currentButton != null) {
-                WpfApp1.View.choiceBlock.currentButton.Foreground = SpecialColor.mainBlue();
-                WpfApp1.View.choiceBlock.currentButton.Background = SpecialColor.mainBack();
-                WpfApp1.View.choiceBlock.currentButton = null;
+        private async void mainLayoutStart_Click(object sender, RoutedEventArgs e) {
+            if (isCurrentData) {
+                if (WpfApp1.View.choiceBlock.currentButton != null) {
+                    WpfApp1.View.choiceBlock.currentButton.Foreground = SpecialColor.mainBlue();
+                    WpfApp1.View.choiceBlock.currentButton.Background = SpecialColor.mainBack();
+                    WpfApp1.View.choiceBlock.currentButton = null;
+                }
+                lastName_data = lastName.Text;
+                firstName_data = firstName.Text;
+                secondName_data = secondName.Text;
+                group_data = group.Text;
+                contentControl.Content = cBlock;
+            } else {
+                if (!DataPopup.IsOpen) { 
+                    DataPopupText.Content = "ВВЕДИТЕ ДАННЫЕ";
+                    DataPopupText.Background = SpecialColor.red();
+                    DataPopup.IsOpen = true;
+                    await Task.Delay(2000);
+                    DataPopup.IsOpen = false;
+                }
             }
-            lastName_data = lastName.Text;
-            firstName_data = firstName.Text;
-            secondName_data = secondName.Text;
-            group_data = group.Text;
-            contentControl.Content = cBlock;
         }
 
         //событие на Enter
