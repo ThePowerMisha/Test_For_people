@@ -337,6 +337,18 @@ namespace dBController
             return ListVariantsImgPath;
         }
 
+        public static int getMaxQuestionFinds(string themeName, int blockID, int loadID, int variantID)
+        /* Возвращает максимальное число этапов вопросов */
+        {
+            int maxStageNumber = 0;
+            JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
+            foreach (JToken item in variant["questionFind"])
+            {
+                maxStageNumber++;
+            }
+            return maxStageNumber;
+        }
+
         public static JObject getVariant(string themeName, int blockID, int loadID, int variantID)
         /* Вовзращает JToken конкретного варианта */
         {
