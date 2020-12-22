@@ -36,16 +36,16 @@ namespace WpfApp1.View {
             this.headerControl.IsHitTestVisible = false;
         }
 
-        private static bool firstLoaded = true;
+        //private static bool firstLoaded = true;
         //добавление 10 пикселей сверху/снизу для элементов меню
-        private void UserControl_Loaded(object sender, RoutedEventArgs e) {
-            if (firstLoaded == true) {
-                firstLoaded = false;
-                foreach (UIElement el in navButtons.Children) {
-                    (el as Button).Height = (el as Button).ActualHeight + 20;
-                }
-            }
-        }
+        //private void UserControl_Loaded(object sender, RoutedEventArgs e) {
+            //if (firstLoaded == true) {
+            //    firstLoaded = false;
+            //    foreach (UIElement el in navButtons.Children) {
+            //        (el as Button).Height = (el as Button).ActualHeight + 20;
+            //    }
+            //}
+        //}
 
         //скролл до выбранного элемента
         private void Button_Click(object sender, RoutedEventArgs e) {
@@ -56,9 +56,11 @@ namespace WpfApp1.View {
                 if (el is Label && (el as Label).Content.ToString() == titleName) {
                     break;
                 }
-                if (el is Label) {
+                if (el is Label) 
                     heightCount += (el as Label).ActualHeight + 35;
-                } else
+                else if (el is Border)
+                    heightCount += (el as Border).ActualHeight + 30;
+                else
                     heightCount += (el as TextBlock).ActualHeight;
             }
 

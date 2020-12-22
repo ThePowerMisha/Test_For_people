@@ -5,11 +5,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfApp1.View"
              mc:Ignorable="d" 
-             d:DesignHeight="1046" d:DesignWidth="1920" Background="#EFEFEF" Loaded="UserControl_Loaded">
+             d:DesignHeight="1046" d:DesignWidth="1920" Background="#EFEFEF">
     
     <UserControl.Resources>
+        <Style TargetType="Image" x:Key="imageStyle">
+            <Setter Property="Margin" Value="15" />
+            <Setter Property="Stretch" Value="UniformToFill"/>
+        </Style>
         <Style TargetType="Label" x:Key="labelStyle">
             <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="Margin" Value="0,25,0,10"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="Label" x:Key="labelBigStyle">
+            <Setter Property="FontSize" Value="28"/>
             <Setter Property="FontFamily" Value="Arial"/>
             <Setter Property="Margin" Value="0,25,0,10"/>
             <Setter Property="Foreground" Value="Black"/>
@@ -21,20 +33,68 @@
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="Padding" Value="15,0,15,0"/>
             <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="LineHeight" Value="30"/>
+            <Setter Property="TextAlignment" Value="Justify"/>
         </Style>
         <Style TargetType="Button" x:Key="buttonStyle">
             <Setter Property="FontSize" Value="25"/>
-            <Setter Property="Padding" Value="15"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="brdr" TextBlock.Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}"/>
+                        <Border Padding="15,10" x:Name="brdr" TextBlock.Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <!--<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}"/>-->
+                            <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}"
+                                       TextWrapping="Wrap"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="#e4e4e4" 
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="Transparent" 
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.10"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button" x:Key="subButtonStyle">
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Margin="15,0,0,0" Padding="15,10" BorderThickness="2,0,0,0" BorderBrush="Black" x:Name="brdr" TextBlock.Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" >
+                            <!--<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}"/>-->
+                            <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}"
+                                       TextWrapping="Wrap"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -131,50 +191,171 @@
                 <Grid Name="contentWrapper" Grid.Row="0" Grid.Column="0">
                     <ScrollViewer x:Name="spravkaContentScroll" Padding="0,0,0,15">
                         <StackPanel x:Name="spravkaContent" Margin="0">
+                            <StackPanel.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush" Value="black"/>
+                                    <Setter Property="BorderThickness" Value="2"/>
+                                    <Setter Property="Margin" Value="15"/>
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                    <Setter Property="Background" Value="#11000000"/>
+                                </Style>
+                            </StackPanel.Resources>
 
-                            <Label Content="Something1" Style="{StaticResource labelStyle}"/>
+                            <Label Content="Введение" Style="{StaticResource labelBigStyle}"/>
                             <TextBlock Style="{StaticResource textBlockStyle}">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore quia iste repudiandae repellat necessitatibus voluptatibus veritatis earum. Sunt numquam blanditiis saepe modi fugiat? Sequi eos vitae dolorum cupiditate rerum explicabo omnis molestiae facere, nam et impedit cum. Culpa necessitatibus hic maxime, quas nulla itaque quasi eos nostrum quo sed architecto voluptatum a labore, ipsa voluptates voluptatem accusamus iure sequi? In eligendi obcaecati sed distinctio molestiae maiores minus sint non quasi, exercitationem nihil ut accusantium fugit a quis optio saepe pariatur nesciunt. Expedita, sequi! Ea quasi velit molestias recusandae nihil non cumque unde officia vel expedita. Accusamus amet nulla, consectetur maiores aliquam doloremque. Praesentium, ullam consequuntur earum error totam aspernatur tempora, minima molestiae exercitationem deserunt aperiam iusto officia amet repellat alias non atque reiciendis vero optio rem aliquid. Ut omnis modi quisquam blanditiis fuga perspiciatis illum culpa, itaque ipsum quaerat repellat rerum alias nam explicabo accusantium at nemo odit sed unde maiores! Omnis quidem officiis illum accusantium nisi sed optio praesentium ea laudantium error. Explicabo voluptate, maiores veritatis fuga soluta ipsum inventore qui accusantium odio saepe ab hic! Incidunt suscipit saepe velit ipsa? Animi veritatis perspiciatis, sed odio dolor, ea at iure minus alias, totam soluta adipisci repudiandae unde quo culpa.
+                                Данный программный продукт был разработан компанией студентов в образовательных целях. Сама программа предоставляет возможность пользователю непосредственно проходить тест и просматривать результаты прошылх тестирования, все это необходимо для проверки и оценивания знаний пользователя.
                             </TextBlock>
 
-                            <Label Content="Something2" Style="{StaticResource labelStyle}"/>
+                            <Label Content="Интерфейс программы" Style="{StaticResource labelBigStyle}"/>
                             <TextBlock Style="{StaticResource textBlockStyle}">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore quia iste repudiandae repellat necessitatibus voluptatibus veritatis earum. Sunt numquam blanditiis saepe modi fugiat? Sequi eos vitae dolorum cupiditate rerum explicabo omnis molestiae facere, nam et impedit cum. Culpa necessitatibus hic maxime, quas nulla itaque quasi eos nostrum quo sed architecto voluptatum a labore, ipsa voluptates voluptatem accusamus iure sequi? In eligendi obcaecati sed distinctio molestiae maiores minus sint non quasi, exercitationem nihil ut accusantium fugit a quis optio saepe pariatur nesciunt. Expedita, sequi! Ea quasi velit molestias recusandae nihil non cumque unde officia vel expedita. Accusamus amet nulla, consectetur maiores aliquam doloremque. Praesentium, ullam consequuntur earum error totam aspernatur tempora, minima molestiae exercitationem deserunt aperiam iusto officia amet repellat alias non atque reiciendis vero optio rem aliquid. Ut omnis modi quisquam blanditiis fuga perspiciatis illum culpa, itaque ipsum quaerat repellat rerum alias nam explicabo accusantium at nemo odit sed unde maiores! Omnis quidem officiis illum accusantium nisi sed optio praesentium ea laudantium error. Explicabo voluptate, maiores veritatis fuga soluta ipsum inventore qui accusantium odio saepe ab hic! Incidunt suscipit saepe velit ipsa? Animi veritatis perspiciatis, sed odio dolor, ea at iure minus alias, totam soluta adipisci repudiandae unde quo culpa.
+                                Интерфейс программы представляет собой полноэкранное приложение. 
                             </TextBlock>
 
-                            <Label Content="Something3" Style="{StaticResource labelStyle}"/>
+                            <Label Content="Главная страница" Style="{StaticResource labelStyle}"/>
                             <TextBlock Style="{StaticResource textBlockStyle}">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore quia iste repudiandae repellat necessitatibus voluptatibus veritatis earum. Sunt numquam blanditiis saepe modi fugiat? Sequi eos vitae dolorum cupiditate rerum explicabo omnis molestiae facere, nam et impedit cum. Culpa necessitatibus hic maxime, quas nulla itaque quasi eos nostrum quo sed architecto voluptatum a labore, ipsa voluptates voluptatem accusamus iure sequi? In eligendi obcaecati sed distinctio molestiae maiores minus sint non quasi, exercitationem nihil ut accusantium fugit a quis optio saepe pariatur nesciunt. Expedita, sequi! Ea quasi velit molestias recusandae nihil non cumque unde officia vel expedita. Accusamus amet nulla, consectetur maiores aliquam doloremque. Praesentium, ullam consequuntur earum error totam aspernatur tempora, minima molestiae exercitationem deserunt aperiam iusto officia amet repellat alias non atque reiciendis vero optio rem aliquid. Ut omnis modi quisquam blanditiis fuga perspiciatis illum culpa, itaque ipsum quaerat repellat rerum alias nam explicabo accusantium at nemo odit sed unde maiores! Omnis quidem officiis illum accusantium nisi sed optio praesentium ea laudantium error. Explicabo voluptate, maiores veritatis fuga soluta ipsum inventore qui accusantium odio saepe ab hic! Incidunt suscipit saepe velit ipsa? Animi veritatis perspiciatis, sed odio dolor, ea at iure minus alias, totam soluta adipisci repudiandae unde quo culpa.
+                                При заходе в приложение пользователя встречает главный экран программы. Главный экран представляет собой шапку, на которой расположены вкладки «Теоретический материал», «Справка», «О программе» и данные о пользователе, и основное содержимое главной страницы, то есть три кнопки «Начать тестирование», «Результаты тестирований» и «Выход», а так же панель ввода данных «Учетная запись».‎
+                            </TextBlock>
+                            <Border>
+                                <Image Source="prog1.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+
+                            <Label Content="Вкладки «Теоретический материал» и «Справка»" Style="{StaticResource labelStyle}"/>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                Вкладки «Теоретический материал» и «Справка» по своей структуре абсолютно одинаковы и представляют собой справочный материал, в котором правая часть окна является основным контентным содержимым, а правая часть его содержамнием.
+                            </TextBlock>
+                            <Border>
+                                <Image Source="prog2.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+
+                            <Label Content="Вкладка «О программе»" Style="{StaticResource labelStyle}"/>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                Вкладка «О программе» представляет собой страницу с краткой информацией о самой программе и ее разработчиках.
+                            </TextBlock>
+                            <Border>
+                                <Image Source="prog4.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+
+                            <Label Content="Страница начала тестирования (часть 1)" Style="{StaticResource labelStyle}"/>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                Начало тестирования разделено на две страницы. Первая страница начала тестирования представляет собой страницу с выбором темы и части теста. Выбор темы является выпадающиим списком с выбором тем, а выбор части теста, карточками с изображением.
+                            </TextBlock>
+                            <Border>
+                                <Image Source="prog5.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+
+                            <Label Content="Страница начала тестирования (часть 2)" Style="{StaticResource labelStyle}"/>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                Вторая страница начала тестирования представляет собой страницу с выбором положений нагрузок и варианта, а так же конструктором параметров теста, который расположен в самом верху страницы. Положение нагрузок и вариант являются карточками с изображением.
+                            </TextBlock>
+                            <Border>
+                                <Image Source="prog6.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+
+                            <Label Content="Страница теста" Style="{StaticResource labelBigStyle}"/>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                Страница теста является страницей где происходит непосредственно само тестирование. Вверху посередине страницы отображаются оставшееся время и набранный балл. В левой части экрана нахятся два изображения, верхнее - это исходный чертеж, нижнее - это эпюра моментов. Посередине ближе к верху расположенны исходные данные задания, а немного ниже само задание. Еще ниже располагается поле ответа, в самой левой части поля находится список с переменными, которые необходимо найти, в середине поля располагается место для введения ответа, а справа, кнопка подтверждения ответа. Под полем ввода находится место для текстовых подсказок. В правой части экрана находится место для графических подсказок.
+                            </TextBlock>
+                            <Border>
+                                <Image Source="prog7.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+
+                            <Label Content="Страница результатов теста" Style="{StaticResource labelStyle}"/>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                На странице результатов теста отображены данные по текцщему тестированию, так же если пользователь уже проходил данные тест то будут отображены данные прошлого тестирования.
+                            </TextBlock>
+                            <Border>
+                                <Image Source="prog8.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+
+                            <Label Content="Страница результатов тестирований" Style="{StaticResource labelStyle}"/>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                На странице результатов тестирований отображаются данные пользователей прошедших тестирование.Данные пользователей можно отсортировать при помощи сортировки или найти определенные данные при помощи сисемы поиска. Доступ к этой странице имеют только те пользователи, которые знают пароль.
+                            </TextBlock>
+                            <Border>
+                                <Image Source="prog9.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+
+
+                            <Label Content="Руководство пользования" Style="{StaticResource labelBigStyle}"/>
+                            <Label Content="Как начать тестирование" Style="{StaticResource labelStyle}"/>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                Для начала тестирования необходимо ввести свои данные в панель ввода данных «Учетная запись», затем нажать на кнопку «Сохранить данные». Если данные были введены корректно, то внизу панели ввода появится зеленая подсказка, что данные были сохранены, а ваши данные записаны в правый верхний угол экрана, в противном случае, если возникла красная подсказка уведомляющая о несохранении данных, то проверьте правильность введенных вам данных. После необходимо нажать на кнопку «Начать тестирование».
+                            </TextBlock>
+                            <Border>
+                                <Image Source="prog10.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                 Вы попадете на первую страницу начала тестирования, в ней необходимо выбрать тему и часть теста. Выбранная часть теста загорится синим цветом. Дальше необходимо нажать на кнопку «продолжить».
+                            </TextBlock>
+                            <Border>
+                                <Image Source="prog11.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                 Вы попадете на вторую страницу начала тестирования, в ней необходимо выбрать положение нагрузок и вариант. Выбранные положение нагрузок и вариант загорятся синим цветом. В конструкторе теста можно указать максимальное время прохождение теста и количество прав на ошибку. Можно выбрать любое время в минутах в диапозоне от 10 до 60 минут, так же можне выбрать любое количество прав на ошибку в диапазоне от 0 до 3. После нажмите на кнопку «Начать тест».
+                            </TextBlock>
+                            <Border>
+                                <Image Source="prog12.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                В новом окне вам будет показана предварительная информация по поводу прохождения теста. В самом низу будет продублирована кнопка «Начать тест», после нажатия по ней вы будете перемещены на страницу теста и у вас больше не будет возможности вернуться назад.
+                            </TextBlock>
+                            <Border MaxWidth="600" HorizontalAlignment="Center">
+                                <Image Source="prog12.1.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+                            <Border>
+                                <Image Source="prog7.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                На странице теста вам необходимо найти переменные из списка «Задача». Выберите переменную для ответа, введите ответ и нажмите на кнопку ответить.
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                Если введенные ответ оказался правильным, то кнопка ответа уведомит вас и загорится зеленым, так же вы получите уведомление под самим полем ввода.
+                            </TextBlock>
+                            <Border>
+                                <Image Source="prog13.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                Если введенные ответ оказался неправильным, то кнопка ответа уведомит вас и загорится красным, так же вы получите уведомление под самим полем ввода.
+                            </TextBlock>
+                            <Border>
+                                <Image Source="prog14.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                Если введенные ответ оказался некорректным, то кнопка ответа уведомит вас и загорится оранжевым, так же вы получите уведомление под самим полем ввода.
+                            </TextBlock>
+                            <Border>
+                                <Image Source="prog15.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                За каждый ответ можно получить максимум пять баллов. Всего можно ответить три раза, с каждым разом получаемый за ответ балл будет снижен на один. Если все три ответа окажутся неправильными, то вы получите уведомление, а ваш суммарный балл будет уменьшен на пять.
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                Тест будет автоматически завершен по истечении времени или вы можете завершить его самостоятельно нажав на кнопку «Завершить тест». После этого вам нужно будет повтоно подтвердить завершение теста в новом оконе.
+                            </TextBlock>
+                            <Border HorizontalAlignment="Center" MaxWidth="500">
+                                <Image Source="prog16.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource textBlockStyle}">
+                                После завершения теста вы попадете на страницу результатов теста и сможете посмотреть на итог тестирования. С этой странице вы сможете вернуться на главную страницу нажав на кнопу «на главную».
                             </TextBlock>
 
-                            <Label Content="Something4" Style="{StaticResource labelStyle}"/>
+                            <Label Content="Как посмотреть результаты тестирований" Style="{StaticResource labelStyle}"/>
                             <TextBlock Style="{StaticResource textBlockStyle}">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore quia iste repudiandae repellat necessitatibus voluptatibus veritatis earum. Sunt numquam blanditiis saepe modi fugiat? Sequi eos vitae dolorum cupiditate rerum explicabo omnis molestiae facere, nam et impedit cum. Culpa necessitatibus hic maxime, quas nulla itaque quasi eos nostrum quo sed architecto voluptatum a labore, ipsa voluptates voluptatem accusamus iure sequi? In eligendi obcaecati sed distinctio molestiae maiores minus sint non quasi, exercitationem nihil ut accusantium fugit a quis optio saepe pariatur nesciunt. Expedita, sequi! Ea quasi velit molestias recusandae nihil non cumque unde officia vel expedita. Accusamus amet nulla, consectetur maiores aliquam doloremque. Praesentium, ullam consequuntur earum error totam aspernatur tempora, minima molestiae exercitationem deserunt aperiam iusto officia amet repellat alias non atque reiciendis vero optio rem aliquid. Ut omnis modi quisquam blanditiis fuga perspiciatis illum culpa, itaque ipsum quaerat repellat rerum alias nam explicabo accusantium at nemo odit sed unde maiores! Omnis quidem officiis illum accusantium nisi sed optio praesentium ea laudantium error. Explicabo voluptate, maiores veritatis fuga soluta ipsum inventore qui accusantium odio saepe ab hic! Incidunt suscipit saepe velit ipsa? Animi veritatis perspiciatis, sed odio dolor, ea at iure minus alias, totam soluta adipisci repudiandae unde quo culpa.
+                                На глваной странице программы нажмите на кнопку «Результаты тестирований» и введите пароль в новом окне, после ввода нажмите на кнопку «Подтвердить», вы перейдете на страницу результатов тестирований.
                             </TextBlock>
-
-                            <Label Content="Something5" Style="{StaticResource labelStyle}"/>
+                            <Border HorizontalAlignment="Center" MaxWidth="500">
+                                <Image Source="prog17.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
                             <TextBlock Style="{StaticResource textBlockStyle}">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore quia iste repudiandae repellat necessitatibus voluptatibus veritatis earum. Sunt numquam blanditiis saepe modi fugiat? Sequi eos vitae dolorum cupiditate rerum explicabo omnis molestiae facere, nam et impedit cum. Culpa necessitatibus hic maxime, quas nulla itaque quasi eos nostrum quo sed architecto voluptatum a labore, ipsa voluptates voluptatem accusamus iure sequi? In eligendi obcaecati sed distinctio molestiae maiores minus sint non quasi, exercitationem nihil ut accusantium fugit a quis optio saepe pariatur nesciunt. Expedita, sequi! Ea quasi velit molestias recusandae nihil non cumque unde officia vel expedita. Accusamus amet nulla, consectetur maiores aliquam doloremque. Praesentium, ullam consequuntur earum error totam aspernatur tempora, minima molestiae exercitationem deserunt aperiam iusto officia amet repellat alias non atque reiciendis vero optio rem aliquid. Ut omnis modi quisquam blanditiis fuga perspiciatis illum culpa, itaque ipsum quaerat repellat rerum alias nam explicabo accusantium at nemo odit sed unde maiores! Omnis quidem officiis illum accusantium nisi sed optio praesentium ea laudantium error. Explicabo voluptate, maiores veritatis fuga soluta ipsum inventore qui accusantium odio saepe ab hic! Incidunt suscipit saepe velit ipsa? Animi veritatis perspiciatis, sed odio dolor, ea at iure minus alias, totam soluta adipisci repudiandae unde quo culpa.
+                                Вы можете отсортировать данные по определенным параметрам при помощи сортировки, так же вы можете найти данные по ключевому слову, поиск по ключевому слову осуществляется по параметру слева от самого ключевого слова. При нажатии на данные определенного пользователя, раскроется подробная статистика по прохождению тестов данного пользователя, а так же сам пользователь будет выделен синим цветом.
                             </TextBlock>
+                            <Border>
+                                <Image Source="prog18.jpg" Style="{StaticResource imageStyle}"/>
+                            </Border>
 
-                            <Label Content="Something6" Style="{StaticResource labelStyle}"/>
+                            <Label Content="Как выйти из приложения" Style="{StaticResource labelStyle}"/>
                             <TextBlock Style="{StaticResource textBlockStyle}">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore quia iste repudiandae repellat necessitatibus voluptatibus veritatis earum. Sunt numquam blanditiis saepe modi fugiat? Sequi eos vitae dolorum cupiditate rerum explicabo omnis molestiae facere, nam et impedit cum. Culpa necessitatibus hic maxime, quas nulla itaque quasi eos nostrum quo sed architecto voluptatum a labore, ipsa voluptates voluptatem accusamus iure sequi? In eligendi obcaecati sed distinctio molestiae maiores minus sint non quasi, exercitationem nihil ut accusantium fugit a quis optio saepe pariatur nesciunt. Expedita, sequi! Ea quasi velit molestias recusandae nihil non cumque unde officia vel expedita. Accusamus amet nulla, consectetur maiores aliquam doloremque. Praesentium, ullam consequuntur earum error totam aspernatur tempora, minima molestiae exercitationem deserunt aperiam iusto officia amet repellat alias non atque reiciendis vero optio rem aliquid. Ut omnis modi quisquam blanditiis fuga perspiciatis illum culpa, itaque ipsum quaerat repellat rerum alias nam explicabo accusantium at nemo odit sed unde maiores! Omnis quidem officiis illum accusantium nisi sed optio praesentium ea laudantium error. Explicabo voluptate, maiores veritatis fuga soluta ipsum inventore qui accusantium odio saepe ab hic! Incidunt suscipit saepe velit ipsa? Animi veritatis perspiciatis, sed odio dolor, ea at iure minus alias, totam soluta adipisci repudiandae unde quo culpa.
-                            </TextBlock>
-
-                            <Label Content="Something7" Style="{StaticResource labelStyle}"/>
-                            <TextBlock Style="{StaticResource textBlockStyle}">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore quia iste repudiandae repellat necessitatibus voluptatibus veritatis earum. Sunt numquam blanditiis saepe modi fugiat? Sequi eos vitae dolorum cupiditate rerum explicabo omnis molestiae facere, nam et impedit cum. Culpa necessitatibus hic maxime, quas nulla itaque quasi eos nostrum quo sed architecto voluptatum a labore, ipsa voluptates voluptatem accusamus iure sequi? In eligendi obcaecati sed distinctio molestiae maiores minus sint non quasi, exercitationem nihil ut accusantium fugit a quis optio saepe pariatur nesciunt. Expedita, sequi! Ea quasi velit molestias recusandae nihil non cumque unde officia vel expedita. Accusamus amet nulla, consectetur maiores aliquam doloremque. Praesentium, ullam consequuntur earum error totam aspernatur tempora, minima molestiae exercitationem deserunt aperiam iusto officia amet repellat alias non atque reiciendis vero optio rem aliquid. Ut omnis modi quisquam blanditiis fuga perspiciatis illum culpa, itaque ipsum quaerat repellat rerum alias nam explicabo accusantium at nemo odit sed unde maiores! Omnis quidem officiis illum accusantium nisi sed optio praesentium ea laudantium error. Explicabo voluptate, maiores veritatis fuga soluta ipsum inventore qui accusantium odio saepe ab hic! Incidunt suscipit saepe velit ipsa? Animi veritatis perspiciatis, sed odio dolor, ea at iure minus alias, totam soluta adipisci repudiandae unde quo culpa.
-                            </TextBlock>
-
-                            <Label Content="Something8" Style="{StaticResource labelStyle}"/>
-                            <TextBlock Style="{StaticResource textBlockStyle}">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore quia iste repudiandae repellat necessitatibus voluptatibus veritatis earum. Sunt numquam blanditiis saepe modi fugiat? Sequi eos vitae dolorum cupiditate rerum explicabo omnis molestiae facere, nam et impedit cum. Culpa necessitatibus hic maxime, quas nulla itaque quasi eos nostrum quo sed architecto voluptatum a labore, ipsa voluptates voluptatem accusamus iure sequi? In eligendi obcaecati sed distinctio molestiae maiores minus sint non quasi, exercitationem nihil ut accusantium fugit a quis optio saepe pariatur nesciunt. Expedita, sequi! Ea quasi velit molestias recusandae nihil non cumque unde officia vel expedita. Accusamus amet nulla, consectetur maiores aliquam doloremque. Praesentium, ullam consequuntur earum error totam aspernatur tempora, minima molestiae exercitationem deserunt aperiam iusto officia amet repellat alias non atque reiciendis vero optio rem aliquid. Ut omnis modi quisquam blanditiis fuga perspiciatis illum culpa, itaque ipsum quaerat repellat rerum alias nam explicabo accusantium at nemo odit sed unde maiores! Omnis quidem officiis illum accusantium nisi sed optio praesentium ea laudantium error. Explicabo voluptate, maiores veritatis fuga soluta ipsum inventore qui accusantium odio saepe ab hic! Incidunt suscipit saepe velit ipsa? Animi veritatis perspiciatis, sed odio dolor, ea at iure minus alias, totam soluta adipisci repudiandae unde quo culpa.
-                            </TextBlock>
-
-                            <Label Content="Something9" Style="{StaticResource labelStyle}"/>
-                            <TextBlock Style="{StaticResource textBlockStyle}">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore quia iste repudiandae repellat necessitatibus voluptatibus veritatis earum. Sunt numquam blanditiis saepe modi fugiat? Sequi eos vitae dolorum cupiditate rerum explicabo omnis molestiae facere, nam et impedit cum. Culpa necessitatibus hic maxime, quas nulla itaque quasi eos nostrum quo sed architecto voluptatum a labore, ipsa voluptates voluptatem accusamus iure sequi? In eligendi obcaecati sed distinctio molestiae maiores minus sint non quasi, exercitationem nihil ut accusantium fugit a quis optio saepe pariatur nesciunt. Expedita, sequi! Ea quasi velit molestias recusandae nihil non cumque unde officia vel expedita. Accusamus amet nulla, consectetur maiores aliquam doloremque. Praesentium, ullam consequuntur earum error totam aspernatur tempora, minima molestiae exercitationem deserunt aperiam iusto officia amet repellat alias non atque reiciendis vero optio rem aliquid. Ut omnis modi quisquam blanditiis fuga perspiciatis illum culpa, itaque ipsum quaerat repellat rerum alias nam explicabo accusantium at nemo odit sed unde maiores! Omnis quidem officiis illum accusantium nisi sed optio praesentium ea laudantium error. Explicabo voluptate, maiores veritatis fuga soluta ipsum inventore qui accusantium odio saepe ab hic! Incidunt suscipit saepe velit ipsa? Animi veritatis perspiciatis, sed odio dolor, ea at iure minus alias, totam soluta adipisci repudiandae unde quo culpa.
+                                На главной странице программы нажмите на кнопку «Выход».
                             </TextBlock>
 
                         </StackPanel>
@@ -186,38 +367,24 @@
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
 
                     <StackPanel Name="navButtons">
-                        <Button Content="Something1" Style="{StaticResource buttonStyle}">
-                            <!--<Button.Triggers>
-                                <EventTrigger RoutedEvent="Button.MouseEnter">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation To="#e4e4e4" 
-                                                Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
-                                                FillBehavior="HoldEnd" 
-                                                Duration="0:0:0.10"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="Button.MouseLeave">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation To="Transparent" 
-                                                Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
-                                                FillBehavior="HoldEnd" 
-                                                Duration="0:0:0.10"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Button.Triggers>-->
-                        </Button>
-                        <Button Content="Something2" Style="{StaticResource buttonStyle}"/>
-                        <Button Content="Something3" Style="{StaticResource buttonStyle}"/>
-                        <Button Content="Something4" Style="{StaticResource buttonStyle}"/>
-                        <Button Content="Something5" Style="{StaticResource buttonStyle}"/>
-                        <Button Content="Something6" Style="{StaticResource buttonStyle}"/>
-                        <Button Content="Something7" Style="{StaticResource buttonStyle}"/>
-                        <Button Content="Something8" Style="{StaticResource buttonStyle}"/>
-                        <Button Content="Something9" Style="{StaticResource buttonStyle}"/>
+
+                        <Button Content="Введение" Style="{StaticResource buttonStyle}"/>
+                        
+                        <Button Content="Интерфейс программы" Style="{StaticResource buttonStyle}"/>
+                        <Button Content="Главная страница" Style="{StaticResource subButtonStyle}"/>
+                        <Button Content="Вкладки «Теоретический материал» и «Справка»" Style="{StaticResource subButtonStyle}"/>
+                        <Button Content="Вкладка «О программе»" Style="{StaticResource subButtonStyle}"/>
+                        <Button Content="Страница начала тестирования (часть 1)" Style="{StaticResource subButtonStyle}"/>
+                        <Button Content="Страница начала тестирования (часть 2)" Style="{StaticResource subButtonStyle}"/>
+                        <Button Content="Страница теста" Style="{StaticResource subButtonStyle}"/>
+                        <Button Content="Страница результатов тестирований" Style="{StaticResource subButtonStyle}"/>
+                        
+                        <Button Content="Руководство пользования" Style="{StaticResource buttonStyle}"/>
+                        <Button Content="Как начать тестирование" Style="{StaticResource subButtonStyle}"/>
+                        <Button Content="Как посмотреть результаты тестирований" Style="{StaticResource subButtonStyle}"/>
+                        <Button Content="Как выйти из приложения" Style="{StaticResource subButtonStyle}"/>
+
+
                     </StackPanel>
                     
                 </ScrollViewer>

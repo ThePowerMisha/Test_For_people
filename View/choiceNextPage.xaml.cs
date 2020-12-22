@@ -57,8 +57,8 @@ namespace WpfApp1.View {
                 (sender as TextBox).SelectionLength = selectionLengthBeforeChange;
             }
             if (input != "60" && input.Length != 0) {
-                if (Int32.Parse(input) > 180)
-                    input = "180";
+                if (Int32.Parse(input) > 60)
+                    input = "60";
                 else if (Int32.Parse(input) == 0)
                     input = "10";
                 (sender as TextBox).Text = Int32.Parse(input).ToString();
@@ -257,9 +257,32 @@ namespace WpfApp1.View {
 
             //=================
             TestControl test = new TestControl();
-            LoaderClass loaderClass = new LoaderClass("Questions.txt");
+            //LoaderClass loaderClass = new LoaderClass("Questions.txt");
             CheckAnswer checkAnswer = new CheckAnswer();
 
+            // Загружаем из файла словарь
+            checkAnswer.Variables = questions.getQuestionParams(choiceBlock.theme, choiceBlock.blockID, loadID, variantID);
+            
+            // Загружаем в графический интерфейс данные массива
+            string testtext = "";
+            foreach (var massiv in checkAnswer.Variables)
+            {
+                testtext += $"{massiv.Key} = {massiv.Value}\n";
+            }
+            test.DataExtraInfo(testtext);
+
+            // Загружаем текст вопроса
+            test.DataMainInfo(questions.getQuestionText(choiceBlock.theme, choiceBlock.blockID, loadID, variantID, 1));
+
+            // Загружаем неизвестные переменные, которые нужно найти
+            test.QuestionVals(questions.getQuestionFinds(choiceBlock.theme, choiceBlock.blockID, loadID, variantID, 1));
+
+            
+
+            test.GraphContent(System.IO.Path.GetFullPath(questions.getVariantsImgPath(choiceBlock.theme, choiceBlock.blockID, loadID)[0][1].ToString()));
+
+
+            /*
             // Загружаем из файла словарь
             checkAnswer.Variables = loaderClass.returnVariables();
 
@@ -275,9 +298,12 @@ namespace WpfApp1.View {
             test.DataExtraInfo(testtext);
 
             // Загружаем неизвестные переменные, которые нужно найти
+            //test.QuestionVals(loaderClass.returnQuestionFindParams());
+
+            // Загружаем неизвестные переменные, которые нужно найти
 
             test.QuestionVals(loaderClass.returnQuestionFindParams());
-
+            */
             // test.AnswerTip("shalom!", "red");
             // test.AnswerTip("hallo!", "green");
             // test.GraphContent("View/Karpenko.jpeg");

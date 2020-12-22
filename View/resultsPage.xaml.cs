@@ -211,7 +211,7 @@ namespace WpfApp1.View {
         //загрузка и конвертация данных из 
         private void UserControl_Loaded(object sender, RoutedEventArgs e) {
 
-            Dictionary<Tuple<string, string, string, string>, List<List<string>>> dict = dBController.results.getAllResults(afterTestPage.data);
+            Dictionary<Tuple<string, string, string, string>, List<List<string>>> dict = dBController.results.getAllResults();
             List<Tuple<string, string, string, string>> massKeys = new List<Tuple<string, string, string, string>>(dict.Keys);
             loadResultsPeople.Clear();
             foreach (Tuple<string, string, string, string> man in massKeys) {
