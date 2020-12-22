@@ -57,8 +57,8 @@ namespace WpfApp1.View {
                 (sender as TextBox).SelectionLength = selectionLengthBeforeChange;
             }
             if (input != "60" && input.Length != 0) {
-                if (Int32.Parse(input) > 180)
-                    input = "180";
+                if (Int32.Parse(input) > 60)
+                    input = "60";
                 else if (Int32.Parse(input) == 0)
                     input = "10";
                 (sender as TextBox).Text = Int32.Parse(input).ToString();
