@@ -365,5 +365,17 @@ namespace dBController {
         {
             return getVariant(getTrueName(themeName), blockID, loadID, variantID)["pathToMainBlock"].ToString();
         }
+
+        public static List<string> getTipsPath(string themeName, int blockID, int loadID, int variantID)
+        // Возвращает список путей картинок подсказок
+        {
+            List<string> tipsPath = new List<string>();
+            JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
+            foreach(var item in variant["tips"])
+            {
+                tipsPath.Add(item.ToString());
+            }
+            return tipsPath;
+        }
     }
 }
