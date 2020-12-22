@@ -43,7 +43,7 @@ namespace WpfApp1.View {
             result5.Content = timeWaste;
             result6.Content = choiceNextPage.dataList[2];
             result7.Content = score +" / "+gradate;
-            result8.Content = testPage.correctAnswersCount.ToString();
+            result8.Content = testPage.correctAnswersCount.ToString()+ " / "+ questions.getQuestionCount(choiceBlock.dataList[0], choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID).ToString();
             result9.Content = DateTime.Today.ToString("D");
 
             if (gradate == "Неудовлетворительно")
@@ -63,11 +63,28 @@ namespace WpfApp1.View {
             data.load.Add(choiceNextPage.dataList[0]);
             data.variant.Add(choiceNextPage.dataList[1]);
             data.timeSpent.Add(timeWaste);
-            data.scoreResult.Add(score + " / " + gradate);//22
+            data.scoreResult.Add(score + " / " + gradate);
             data.tips.Add(choiceNextPage.dataList[2]);
-            data.correctAnswers.Add(testPage.correctAnswersCount.ToString());
+            data.correctAnswers.Add(testPage.correctAnswersCount.ToString() + " / " + questions.getQuestionCount(choiceBlock.dataList[0], choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID).ToString());
             data.testDate.Add(DateTime.Today.ToString("D"));
             results.saveData(data);
+
+
+            string pr1, pr2, pr3, pr4;
+            pr1 = pr2 = pr3 = pr4 = "НЕТ ДАННЫХ";
+            List<string> prevDataMass = results.getLastResults(System.Convert.ToInt32(data.ID[data.ID.Count() - 1]), choiceBlock.dataList[0], choiceBlock.dataList[1], choiceNextPage.dataList[0]);
+            Console.WriteLine(prevDataMass);
+            if (prevDataMass.Count!=0) {
+                pr1 = prevDataMass[0];
+                pr2 = prevDataMass[1];
+                pr3 = prevDataMass[2];
+                pr4 = prevDataMass[3];
+            }
+
+            previusResult1.Content = pr1;
+            previusResult2.Content = pr2;
+            previusResult3.Content = pr3;
+            previusResult4.Content = pr4;
 
         }
         private static ContentControl contentControl;

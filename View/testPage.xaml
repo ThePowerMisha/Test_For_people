@@ -590,7 +590,7 @@
                           FontSize="25" 
                           VerticalContentAlignment="Center"
                           HorizontalContentAlignment="Right"
-                          SelectedIndex="0">
+                          SelectedIndex="0" SelectionChanged="QuestionValueCB_SelectionChanged">
                     <ComboBoxItem Content="Переменная 1"/>
                     <ComboBoxItem Content="Переменная 2"/>
                     <ComboBoxItem Content="Переменная 3"/>
