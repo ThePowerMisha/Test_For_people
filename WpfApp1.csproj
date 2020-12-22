@@ -214,5 +214,44 @@
   <ItemGroup>
     <Resource Include="banner.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\prog5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\prog1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\prog2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\prog10.jpg" />
+    <Resource Include="View\prog11.jpg" />
+    <Resource Include="View\prog12.1.jpg" />
+    <Resource Include="View\prog12.jpg" />
+    <Resource Include="View\prog13.jpg" />
+    <Resource Include="View\prog14.jpg" />
+    <Resource Include="View\prog15.jpg" />
+    <Resource Include="View\prog16.jpg" />
+    <Resource Include="View\prog17.jpg" />
+    <Resource Include="View\prog18.jpg" />
+    <Resource Include="View\prog4.jpg" />
+    <Resource Include="View\prog6.jpg" />
+    <Resource Include="View\prog7.jpg" />
+    <Resource Include="View\prog8.jpg" />
+    <Resource Include="View\prog9.jpg" />
+    <Content Include="View\ferms02.jpg" />
+    <Content Include="View\ferms1.jpg" />
+    <Content Include="View\ferms2.jpg" />
+    <Content Include="View\ferms3.jpg" />
+    <Content Include="View\ferms4.jpg" />
+    <Content Include="View\ferms5.jpg" />
+    <Content Include="View\ferms6.jpg" />
+    <Content Include="View\ferms7.jpg" />
+    <Content Include="View\ferms8.jpg" />
+    <Content Include="View\fermsEx1.JPG" />
+    <Content Include="View\fermsEx2.JPG" />
+    <Content Include="View\fermsEx3.JPG" />
+    <Content Include="View\fermsEx4.JPG" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
