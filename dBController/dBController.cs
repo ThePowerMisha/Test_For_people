@@ -108,7 +108,7 @@ namespace dBController
             return id;
         }
 
-        public static Dictionary<Tuple<string, string, string, string>, List<List<string>>> getAllResults(results r)
+        public static Dictionary<Tuple<string, string, string, string>, List<List<string>>> getAllResults()
         // Возвращает полный список результатов вида
         /* 
         {
@@ -125,6 +125,7 @@ namespace dBController
             ...
         } */
         {
+            results r = createEntery();
             Dictionary<Tuple<string, string, string, string>, List<List<string>>> allResults = new Dictionary<Tuple<string, string, string, string>, List<List<string>>>();
             List<string> explored = new List<string>();
             for (int i = 0; i < r.theme.Count; i++)
