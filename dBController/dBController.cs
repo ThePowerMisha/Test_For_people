@@ -415,7 +415,7 @@ namespace dBController
         {
             List<string> tipsPath = new List<string>();
             JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
-            foreach (var item in variant["tips"])
+            foreach(var item in variant["tips"])
             {
                 tipsPath.Add(item.ToString());
             }
