@@ -197,7 +197,7 @@ namespace dBController
         {
             List<string> lastResults = new List<string>();
             results data = createEntery();
-            for (int row = 0; row < data.ID.Count(); row++)
+            for (int row = 0; row < data.ID.Count() - 1; row++)
             {
                 if(System.Convert.ToInt32(data.ID[row]) == student_ID)
                 {
