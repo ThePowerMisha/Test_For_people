@@ -421,5 +421,11 @@ namespace WpfApp1.View {
                                                        TimeSpan.FromSeconds(timeWaste).ToString("c"),
                                                        score.ToString());
         }
+
+
+        //смена переменной
+        private void QuestionValueCB_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+
+        }
     }
 }
