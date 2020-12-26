@@ -40,10 +40,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-<<<<<<< Updated upstream
+
       <Private>True</Private>
-=======
->>>>>>> Stashed changes
+
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -66,11 +65,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CheckAnswer.cs" />
-<<<<<<< Updated upstream
-    <Compile Include="dBController.cs" />
-=======
+
     <Compile Include="dBController\dBController.cs" />
->>>>>>> Stashed changes
+
     <Compile Include="GeneralClass.cs" />
     <Compile Include="LoaderClass.cs" />
     <Compile Include="QuestionClass.cs" />

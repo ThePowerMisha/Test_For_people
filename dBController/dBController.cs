@@ -360,6 +360,18 @@ namespace dBController
             }
             return questionFinds;
         }
+       
+       public static int getMaxQuestionFinds(string themeName, int blockID, int loadID, int variantID)
+           /* Возвращает максимальное число этапов вопросов */
+       {
+           int maxStageNumber = 0;
+           JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
+           foreach (JToken item in variant["questionFind"])
+           {
+               maxStageNumber++;
+           }
+           return maxStageNumber;
+       }
 
        public static List<Dictionary<string, string>> getQuestionFormuls(string themeName, int blockID, int loadID, int variantID, int stageNumber)
         /* Возвращает словарь вида 0/или найденная перменная: формула */
