@@ -291,13 +291,15 @@ namespace WpfApp1.View
         private static testPage tPage;
         private void popupButton_Click(object sender, RoutedEventArgs e)
         {
-            tPage = new testPage(contentControl,
-                                titleLabel.Content + " Тест " + loadPositioСurrentButton.Content + "-" + variantСurrentButton.Content,
-                                timeCount.Text);
             dataList.Clear();
             dataList.Add(loadPositioСurrentButton.Content.ToString());
             dataList.Add(variantСurrentButton.Content.ToString());
             dataList.Add(tipCount.Text.ToString());
+
+            tPage = new testPage(contentControl,
+                                titleLabel.Content + " Тест " + loadPositioСurrentButton.Content + "-" + variantСurrentButton.Content,
+                                timeCount.Text);
+            
             contentControl.Content = tPage;
 
             //=================
@@ -307,14 +309,25 @@ namespace WpfApp1.View
 
             // Загружаем из файла словарь
             checkAnswer.Variables = questions.getQuestionParams(choiceBlock.theme, choiceBlock.blockID, loadID, variantID);
-            
+
             // Загружаем в графический интерфейс данные массива
-            string testtext = "";
-            foreach (var massiv in checkAnswer.Variables)
-            {
-                testtext += $"{massiv.Key} = {massiv.Value}\n";
+            string initalText = "";
+            int proba = 0;
+            foreach (var massiv in checkAnswer.Variables) {
+                if (massiv.Key == "h" || massiv.Key == "d") {
+                    initalText += $"{massiv.Key} = {massiv.Value} м; ";
+                }
+                else {
+                    initalText += $"{massiv.Key} = {massiv.Value} кН; ";
+                }
+                proba++;
+                if (proba >= 3) {
+                    initalText += "\n";
+                    proba = 0;
+                }
+                //testtext += $"{massiv.Key} = {massiv.Value}\n";
             }
-            test.DataExtraInfo(testtext);
+            test.DataExtraInfo(initalText);
 
             // Загружаем текст вопроса
             test.DataMainInfo(questions.getQuestionText(choiceBlock.theme, choiceBlock.blockID, loadID, variantID, 1));
@@ -323,7 +336,7 @@ namespace WpfApp1.View
             test.QuestionVals(questions.getQuestionFinds(choiceBlock.theme, choiceBlock.blockID, loadID, variantID, 1));
 
             
-
+            // Загружаем картинку
             test.GraphContent(System.IO.Path.GetFullPath(questions.getVariantsImgPath(choiceBlock.theme, choiceBlock.blockID, loadID)[0][1].ToString()));
 
 
