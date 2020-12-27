@@ -213,10 +213,40 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="banner.jpg" />
+    <Resource Include="banner.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="banner.png" />
+    <Content Include="View\ferms02.jpg" />
+    <Content Include="View\ferms1.jpg" />
+    <Content Include="View\ferms2.jpg" />
+    <Content Include="View\ferms3.jpg" />
+    <Content Include="View\ferms4.jpg" />
+    <Content Include="View\ferms5.jpg" />
+    <Content Include="View\ferms6.jpg" />
+    <Content Include="View\ferms7.jpg" />
+    <Content Include="View\ferms8.jpg" />
+    <Content Include="View\fermsEx1.JPG" />
+    <Content Include="View\fermsEx2.JPG" />
+    <Content Include="View\fermsEx3.JPG" />
+    <Content Include="View\fermsEx4.JPG" />
+    <Content Include="View\prog1.jpg" />
+    <Content Include="View\prog10.jpg" />
+    <Content Include="View\prog11.jpg" />
+    <Content Include="View\prog12.1.jpg" />
+    <Content Include="View\prog12.jpg" />
+    <Content Include="View\prog13.jpg" />
+    <Content Include="View\prog14.jpg" />
+    <Content Include="View\prog15.jpg" />
+    <Content Include="View\prog16.jpg" />
+    <Content Include="View\prog17.jpg" />
+    <Content Include="View\prog18.jpg" />
+    <Content Include="View\prog2.jpg" />
+    <Content Include="View\prog4.jpg" />
+    <Content Include="View\prog5.jpg" />
+    <Content Include="View\prog6.jpg" />
+    <Content Include="View\prog7.jpg" />
+    <Content Include="View\prog8.jpg" />
+    <Content Include="View\prog9.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
