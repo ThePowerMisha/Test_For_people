@@ -83,8 +83,8 @@ namespace WpfApp1.View {
                 (sender as TextBox).SelectionLength = selectionLengthBeforeChange;
             }
             if (input != "Подсказки" && input.Length != 0) {
-                if (Int32.Parse(input) > 3)
-                    input = "3";
+                if (Int32.Parse(input) > 2)
+                    input = "2";
                 (sender as TextBox).Text = Int32.Parse(input).ToString();
             }
         }
@@ -262,12 +262,21 @@ namespace WpfApp1.View {
 
             // Загружаем из файла словарь
             checkAnswer.Variables = questions.getQuestionParams(choiceBlock.theme, choiceBlock.blockID, loadID, variantID);
-            
+
             // Загружаем в графический интерфейс данные массива
             string testtext = "";
-            foreach (var massiv in checkAnswer.Variables)
-            {
-                testtext += $"{massiv.Key} = {massiv.Value}\n";
+            int proba = 0;
+            foreach (var massiv in checkAnswer.Variables) {
+                if (massiv.Key == "h" || massiv.Key == "d")
+                    testtext += $"{massiv.Key} = {massiv.Value} м; ";
+                else
+                    testtext += $"{massiv.Key} = {massiv.Value} кН; ";
+                proba++;
+                if (proba >= 3) {
+                    testtext += "\n";
+                    proba = 0;
+                }
+                //testtext += $"{massiv.Key} = {massiv.Value}\n";
             }
             test.DataExtraInfo(testtext);
 
