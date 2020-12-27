@@ -172,7 +172,7 @@ namespace WpfApp1.View {
         // Значение числа графических подсказок, введенных пользоватеелем
         public int graphicHintNum = Convert.ToInt32(choiceNextPage.dataList[2]);
 
-        //подтверждение ответа
+        // События, происходящие после нажатия на кнопку "ответить" в тестировании
         private async void confirmAnswer_Click(object sender, RoutedEventArgs e) {
             
             TestControl test_one = new TestControl();

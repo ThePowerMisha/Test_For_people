@@ -1,9 +1,7 @@
 using System;
 
-namespace TestTrainingProgram
-{
-    public class ResultClass
-    {
+namespace TestTrainingProgram {
+    public class ResultClass {
         /// <summary>
         /// Конструктор класса
         /// </summary>
@@ -38,7 +36,7 @@ namespace TestTrainingProgram
             get => _timeSpent;
 
             set {
-                if (value < 0){
+                if (value < 0) {
                     _timeSpent = 0;
                 }
                 else {
@@ -56,7 +54,7 @@ namespace TestTrainingProgram
             get => _testName;
 
             set {
-                if (!String.IsNullOrEmpty(value)){
+                if (!String.IsNullOrEmpty(value)) {
                     _testName = value;
                 }
                 else {
@@ -76,7 +74,7 @@ namespace TestTrainingProgram
 
             set {
             
-                if (!String.IsNullOrEmpty(value)){
+                if (!String.IsNullOrEmpty(value)) {
                     _themeName = value;
                 }
                 else {
@@ -94,10 +92,10 @@ namespace TestTrainingProgram
             get => _scoreResult;
 
             set {
-                if (value < 0){
+                if (value < 0) {
                     _scoreResult = 0;
                 }
-                else if (value > 100){
+                else if (value > 100) {
                     _scoreResult = 100;
                 }
                 else {
@@ -115,7 +113,7 @@ namespace TestTrainingProgram
             get => _variant;
 
             set {
-                if (value <= 0){
+                if (value <= 0) {
                     _variant = 1;
                 }
                 else {
@@ -133,7 +131,7 @@ namespace TestTrainingProgram
             get => _testDate;
 
             set {
-                if (!String.IsNullOrEmpty(value)){
+                if (!String.IsNullOrEmpty(value)) {
                     _testDate = value;
                 }
                 else {

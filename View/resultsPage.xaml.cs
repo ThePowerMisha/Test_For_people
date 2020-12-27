@@ -70,25 +70,6 @@ namespace WpfApp1.View {
             } else {
                 prevSelectedIndex = resultsPeople.SelectedIndex;
             }
-
-            //CheckAnswer checkF = new CheckAnswer();
-            //checkF.Formula = "sqrt(25)+(F1)";
-            //searchData.Text = checkF.Check();
-
-            //if ((e.OriginalSource as DataGridCell).IsSelected)
-            //    resultsPeople.UnselectAllCells(); 
-
-            //if (resultsPeople.SelectedItem as Person != e.OriginalSource as Person) 
-            //    resultsPeople.UnselectAllCells(); 
-
-            //if (resultsPeople.CurrentCell.Column.DisplayIndex != 7) {
-            //    searchData.Text = resultsPeople.CurrentCell.Column.DisplayIndex.ToString() + " " + e.OriginalSource.ToString();
-            //    //searchData.Text = resultsPeople.SelectedIndex.ToString(); 
-            //}
-
-            //if (resultsPeople.SelectedItem == e.OriginalSource as Person)
-            //    resultsPeople.UnselectAllCells();
-
         }
     }
 }

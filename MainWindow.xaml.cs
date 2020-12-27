@@ -16,11 +16,11 @@ using System.Windows.Media.Animation;
 using WpfApp1.View;
 using System.Runtime.CompilerServices;
 
-namespace WpfApp1{
+namespace WpfApp1 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window{
+    public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
 

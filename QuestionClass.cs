@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace TestTrainingProgram
-{
-    public class QuestionClass
-    {
+namespace TestTrainingProgram {
+    public class QuestionClass {
         /// <summary>
         /// Конструктор класса
         /// </summary>
