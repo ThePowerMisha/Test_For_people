@@ -4,10 +4,8 @@ using System.Text.RegularExpressions;
 // original author - https://github.com/mariuszgromada/MathParser.org-mXparser
 using org.mariuszgromada.math.mxparser;
 
-namespace WpfApp1
-{
-    public class CheckAnswer
-    {
+namespace WpfApp1 {
+    public class CheckAnswer {
         /// <summary>
         /// Конструктор класса
         /// </summary>
@@ -17,8 +15,7 @@ namespace WpfApp1
         /// Конструктор класса
         /// </summary>
         /// <param name="Variables">Словарь исходных данных</param>
-        public CheckAnswer(Dictionary<string, double> Variables)
-        {
+        public CheckAnswer(Dictionary<string, double> Variables) {
             this.Variables = Variables;
         }
 
@@ -35,10 +32,8 @@ namespace WpfApp1
         public Dictionary<string, double> Variables { get; set; }
 
 
-        public void AddVariables(Dictionary<string, double> variables)
-        {
-            if (variables.Count <=0)
-            {
+        public void AddVariables(Dictionary<string, double> variables) {
+            if (variables.Count <=0) {
                 return;
             }
             Variables = variables;
@@ -59,38 +54,31 @@ namespace WpfApp1
         /// <param name="Formula"></param>
         /// <returns>Булевая функция: true - если соблюдена правильность написания скобок;
         /// false - обнаружена ошибка</returns>
-        private bool BracketCheck(string Formula)
-        {
+        private bool BracketCheck(string Formula) {
             bool checkStatus = true;
             int number = 0;
 
-            for (int i = 0; i < Formula.Length; i++)
-            {
-                if (Formula[i] == '(')
-                {
+            for (int i = 0; i < Formula.Length; i++) {
+                if (Formula[i] == '(') {
                     number++;
                 }
 
-                if (Formula[i] == ')' && number == 0)
-                {
+                if (Formula[i] == ')' && number == 0) {
                     // Ошибка!
                     //"Скобка начинается с закрывающей";
                     return !checkStatus;
                 }
 
-                if (Formula[i] == ')' && number >= 1)
-                {
+                if (Formula[i] == ')' && number >= 1) {
                     number--;
                 }
             }
 
-            if (number == 0)
-            {
+            if (number == 0) {
                 // Все ок!
                 return checkStatus;
             }
-            else
-            {
+            else {
                 // Ошибка!
                 //"Где то у тебя не хватило скобки...";
                 return !checkStatus;
@@ -109,8 +97,7 @@ namespace WpfApp1
         /// <param name="Formula"></param>
         /// <returns>Булевая функция: true - если соблюдена правильность синтаксиса;
         /// false - обнаружена ошибка</returns>
-        private bool SyntaxСheck(string Formula)
-        {
+        private bool SyntaxСheck(string Formula) {
             // Булевая переменная: true - синтатических ошибок нет; false - есть
             bool checkStatus = true;
 
@@ -121,65 +108,50 @@ namespace WpfApp1
             // Если арифм. операция находится в начали или конце формулы, то вызывается ошибка
             // Примеры: "+a", "a+"
             // Исключение: "-a"
-            if (Regex.IsMatch(Formula[0].ToString(), patternOperationNoMinus) || (Regex.IsMatch(Formula[Formula.Length - 1].ToString(), patternOperation)))
-            {
+            if (Regex.IsMatch(Formula[0].ToString(), patternOperationNoMinus) || (Regex.IsMatch(Formula[Formula.Length - 1].ToString(), patternOperation))) {
                 return !checkStatus;
             }
 
             // Поэлементно разбираем формулу
-            for (int i = 0; i < Formula.Length; i++)
-            {
+            for (int i = 0; i < Formula.Length; i++) {
                 // Если арифм. операции находятся рядом друг с другом, то вызывается ошибка
                 // Примеры: "a++b", "a*-b", "a/c//b"
-                if (i > 0 && i < (Formula.Length - 1))
-                {
-                    if (Regex.IsMatch(Formula[i].ToString(), patternOperation))
-                    {
-                        if (Regex.IsMatch(Formula[i - 1].ToString(), patternOperation) || Regex.IsMatch(Formula[i + 1].ToString(), patternOperation))
-                        {
+                if (i > 0 && i < (Formula.Length - 1)) {
+                    if (Regex.IsMatch(Formula[i].ToString(), patternOperation)) {
+                        if (Regex.IsMatch(Formula[i - 1].ToString(), patternOperation) || Regex.IsMatch(Formula[i + 1].ToString(), patternOperation)) {
                             return !checkStatus;
                         }
                     }
                 }
 
                 // Рассматриваем символ открывающей скобки '('
-                if (i < (Formula.Length - 1))
-                {
-                    if (Formula[i] == '(')
-                    {
+                if (i < (Formula.Length - 1)) {
+                    if (Formula[i] == '(') {
                         // Если после открывающей скобки идет арифметическая операция, то вызывается ошибка
                         // Примеры: "a+(+b)", "(-)+a"
                         // Исключение: "a+(-b)"
-                        if (Regex.IsMatch(Formula[i + 1].ToString(), patternOperationNoMinus))
-                        {
+                        if (Regex.IsMatch(Formula[i + 1].ToString(), patternOperationNoMinus)) {
                             return !checkStatus;
                         }
 
                         // Если после открывающей скобки идет сразу закрывающая, то вызывается ошибка
                         // Примеры: "a+()"
-                        if (Formula[i + 1] == ')')
-                        {
+                        if (Formula[i + 1] == ')') {
                             return !checkStatus;
                         }
 
                         // Если перед открывающей скобкой нет арифметической операции, то вызывается ошибка (Исключение функция квадратного корня sqrt)
                         // Примеры: "a(b)", "a(b+c)"
                         // Исключение: "sqrt(b+c)", "((a+b))"
-                        if (i > 0)
-                        {
-                            if (!Regex.IsMatch(Formula[i - 1].ToString(), patternOperation))
-                            {
-                                if (Formula[i-1] != '(')
-                                {
-                                    if (i > 3)
-                                    {
-                                        if (Formula[i - 4] != 's' && Formula[i - 3] != 'q' && Formula[i - 2] != 'r' && Formula[i - 1] != 't')
-                                        {
+                        if (i > 0) {
+                            if (!Regex.IsMatch(Formula[i - 1].ToString(), patternOperation)) {
+                                if (Formula[i-1] != '(') {
+                                    if (i > 3) {
+                                        if (Formula[i - 4] != 's' && Formula[i - 3] != 'q' && Formula[i - 2] != 'r' && Formula[i - 1] != 't') {
                                             return !checkStatus;
                                         }
                                     }
-                                    else
-                                    {
+                                    else {
                                         return !checkStatus;
                                     }
                                 }
@@ -189,33 +161,26 @@ namespace WpfApp1
                 }
 
                 // Рассматриваем символ закрывающей скобки ")"
-                if (i > 0)
-                {
-                    if (Formula[i] == ')')
-                    {
+                if (i > 0) {
+                    if (Formula[i] == ')') {
                         // Если перед закрыающей скобкой находится арифметическая операция, то вызывается ошибка
                         // Примеры: "(b+)+a", "a+(b+c+)"
-                        if (Regex.IsMatch(Formula[i - 1].ToString(), patternOperation))
-                        {
+                        if (Regex.IsMatch(Formula[i - 1].ToString(), patternOperation)) {
                             return !checkStatus;
                         }
 
                         // Если перед закрывающей скобкой находится открывающая, то вызывается ошибка
                         // Примеры: "a+()"
-                        if (Formula[i - 1] == '(')
-                        {
+                        if (Formula[i - 1] == '(') {
                             return !checkStatus;
                         }
 
                         // Если после открывающей скобки нет арифметических операций, то вызывается ошибка
                         // Примеры: "(b+a)c", "(b)a"
                         // Исключение: "((a+b))"
-                        if (i < (Formula.Length - 1))
-                        {
-                            if (!Regex.IsMatch(Formula[i + 1].ToString(), patternOperation))
-                            {
-                                if (Formula[i+1] != ')')
-                                {
+                        if (i < (Formula.Length - 1)) {
+                            if (!Regex.IsMatch(Formula[i + 1].ToString(), patternOperation)) {
+                                if (Formula[i+1] != ')') {
                                     return !checkStatus;
                                 }
                             }
@@ -226,26 +191,22 @@ namespace WpfApp1
             return checkStatus;
         }
         
-        public String Check()
-        {
+        public String Check() {
             // Удаляем ненужные пробелы из строки и переводим все в нижний регистр
             Formula = Formula.Replace(" ", "").ToLower();
 
             // Проверка, пустая ли строка
-            if (String.IsNullOrEmpty(Formula))
-            {
+            if (String.IsNullOrEmpty(Formula)) {
                 return "NullOrEmpty Error!";
             }
 
             // Проверяем на правильность написания операций
-            if (!SyntaxСheck(Formula))
-            {
+            if (!SyntaxСheck(Formula)) {
                 return "Syntax Error!";
             }
 
              // Проверка на правильность написания скобок
-            if (!BracketCheck(Formula))
-            {
+            if (!BracketCheck(Formula)) {
                 // дальше не идет, выводит что то другое!
                 // Вывод текста с ошибкой
                 return "Bracket Error!";
@@ -259,44 +220,36 @@ namespace WpfApp1
             // false - такого символ не определен
             bool variableArrayCheck;
 
-            for (int i = 0; i < array.Length; i++)
-            {
+            for (int i = 0; i < array.Length; i++) {
                 variableArrayCheck = false;
-                foreach (var element in Variables)
-                {
+
+                foreach (var element in Variables) {
                     // Если этот элемент не является названием исходной переменной
-                    if (array[i] != element.Key)
-                    {
+                    if (array[i] != element.Key) {
                         // Если это целое или десячичное число
-                        if (Regex.IsMatch(array[i], @"^\d+([\.]\d+)?$"))
-                        {
+                        if (Regex.IsMatch(array[i], @"^\d+([\.]\d+)?$")) {
                             variableArrayCheck = true;
                         }
 
                         // Если это операционное выражение
-                        if (Regex.IsMatch(array[i], pattern))
-                        {
+                        if (Regex.IsMatch(array[i], pattern)) {
                             variableArrayCheck = true;
                         }
 
                         // Если это выражения квадратного корня, косинус, синус, или пустая строка
-                        if (array[i] == "sqrt" || array[i] == "")
-                        {
+                        if (array[i] == "sqrt" || array[i] == "") {
                             variableArrayCheck = true;
                         }
-
                     }
 
                     // Если элемент массива является названием исходной переменной, то заменяем название переменной на ее значение
-                    if (array[i] == element.Key)
-                    {
+                    if (array[i] == element.Key) {
                         array[i] = element.Value.ToString();
                         variableArrayCheck = true;
                     }
 
                     // Если значение переменной является десятичным числом с запятой, то меняем запятую на точку, чтобы не возникало ошибок при обработке
-                    if (Regex.IsMatch(array[i], @"^\d+([(\.)|(\,)]\d+)?$"))
-                    {
+                    if (Regex.IsMatch(array[i], @"^\d+([(\.)|(\,)]\d+)?$")) {
                         // Заменяем запятую на точку
                         array[i] = array[i].Replace(",", ".");
                         variableArrayCheck = true;
@@ -304,11 +257,9 @@ namespace WpfApp1
                 }
 
                 // Если такой элемент массива недопустим, то выводится ошибка
-                if (!variableArrayCheck)
-                {
+                if (!variableArrayCheck) {
                     return ("UnknownData Error!");
                 }
-
             }
 
             // Соединяем элементы массива обратно в строку

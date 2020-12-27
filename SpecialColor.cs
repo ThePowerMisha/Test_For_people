@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace WpfApp1{
-    public class SpecialColor{
+namespace WpfApp1 {
+    public class SpecialColor {
         //fields
         private static Color Transparent = Color.FromArgb(0, 0, 0, 0);
         private static Color MainBack = Color.FromRgb(239, 239, 239);
@@ -21,39 +21,39 @@ namespace WpfApp1{
 
         //getters
         //return color from format 'Color.FromRgb'
-        public static SolidColorBrush getColor(Color color){
+        public static SolidColorBrush getColor(Color color) {
             return new SolidColorBrush(color);
         }
         //return Transparent
-        public static SolidColorBrush transparent(){
+        public static SolidColorBrush transparent() {
             return new SolidColorBrush(Transparent);
         }
         //return MainBack
-        public static SolidColorBrush mainBack(){
+        public static SolidColorBrush mainBack() {
             return new SolidColorBrush(MainBack);
         }
         //return MainBackHover
-        public static SolidColorBrush mainBackHover(){
+        public static SolidColorBrush mainBackHover() {
             return new SolidColorBrush(MainBackHover);
         }
         //return MainBlue
-        public static SolidColorBrush mainBlue(){
+        public static SolidColorBrush mainBlue() {
             return new SolidColorBrush(MainBlue);
         }
         //return Red
-        public static SolidColorBrush red(){
+        public static SolidColorBrush red() {
             return new SolidColorBrush(Red);
         }
         //return Green
-        public static SolidColorBrush green(){
+        public static SolidColorBrush green() {
             return new SolidColorBrush(Green);
         }
         //return White
-        public static SolidColorBrush white(){
+        public static SolidColorBrush white() {
             return new SolidColorBrush(White);
         }
         //return Black
-        public static SolidColorBrush black(){
+        public static SolidColorBrush black() {
             return new SolidColorBrush(Black);
         }
         //return Orange
@@ -61,7 +61,7 @@ namespace WpfApp1{
             return new SolidColorBrush(Orange);
         }
         //return Placeholder
-        public static SolidColorBrush placeholder(){
+        public static SolidColorBrush placeholder() {
             return new SolidColorBrush(Placeholder);
         }
     }

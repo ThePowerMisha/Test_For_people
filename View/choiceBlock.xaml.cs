@@ -14,14 +14,12 @@ using System.Windows.Navigation;
 using System.IO;
 using dBController;
 
-namespace WpfApp1.View
-{
+namespace WpfApp1.View {
     /// <summary>
     /// Логика взаимодействия для choiceBlock.xaml
     /// </summary>
-    public partial class choiceBlock : UserControl
-    {
-        public choiceBlock(ContentControl cC){
+    public partial class choiceBlock : UserControl {
+        public choiceBlock(ContentControl cC) {
             InitializeComponent();
 
             contentControl = cC;
@@ -33,7 +31,7 @@ namespace WpfApp1.View
         private static ContentControl contentControl;
                 
         //возвращает на главную страницу
-        private void onMainPage_Click(object sender, RoutedEventArgs e){
+        private void onMainPage_Click(object sender, RoutedEventArgs e) {
             contentControl.Content = WpfApp1.MainWindow.getMainPage();
         }
 
@@ -41,7 +39,7 @@ namespace WpfApp1.View
         private static List<List<string>> cardMass;
 
         //загрузка карточек блоков
-        private void UserControl_Loaded(object sender, RoutedEventArgs e){
+        private void UserControl_Loaded(object sender, RoutedEventArgs e) {
             //currentButton = null;
             //choiceContent.Children.Clear();
 
@@ -62,9 +60,9 @@ namespace WpfApp1.View
             //плучение блока соответствующего теме
             cardMass = questions.getBlocksImgPath(loadDataThemesCB.Text);
 
-            if (choiceContent.Children.Count == 0){
+            if (choiceContent.Children.Count == 0) {
                 int num = 1;
-                foreach (List<string> card in cardMass){
+                foreach (List<string> card in cardMass) {
                     Button button = new Button();
                     button.Style = this.Resources["buttonCard"] as Style;
                     button.Content = choiceBlock.ToRoman(num);
@@ -82,12 +80,12 @@ namespace WpfApp1.View
         }
 
         //смена темы
-        private void loadDataThemesCB_SelectionChanged(object sender, SelectionChangedEventArgs e){
+        private void loadDataThemesCB_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             currentButton = null;
             choiceContent.Children.Clear();
             cardMass = questions.getBlocksImgPath(loadDataThemesCB.Text);
             int num = 1;
-            foreach (List<string> card in cardMass){
+            foreach (List<string> card in cardMass) {
                 Button button = new Button();
                 button.Style = this.Resources["buttonCard"] as Style;
                 button.Content = choiceBlock.ToRoman(num);
@@ -102,7 +100,7 @@ namespace WpfApp1.View
         }
 
         //Перевод в римские цифры
-        public static string ToRoman(int number){
+        public static string ToRoman(int number) {
             if ((number < 0) || (number > 3999)) throw new ArgumentOutOfRangeException("insert value betwheen 1 and 3999");
             if (number < 1) return string.Empty;
             if (number >= 1000) return "M" + ToRoman(number - 1000);
@@ -125,9 +123,9 @@ namespace WpfApp1.View
         public static Button currentButton = null;
 
         //событие на выбор карточки
-        private void card_Click(object sender, RoutedEventArgs e){
-            if ((sender as Button) != currentButton){
-                if (currentButton != null){
+        private void card_Click(object sender, RoutedEventArgs e) {
+            if ((sender as Button) != currentButton) {
+                if (currentButton != null) {
                     currentButton.Background = SpecialColor.mainBack();
                     currentButton.Foreground = SpecialColor.mainBlue();
                 }
@@ -135,7 +133,7 @@ namespace WpfApp1.View
                 (sender as Button).Foreground = SpecialColor.white();
                 currentButton = (sender as Button);
             }
-            else{
+            else {
                 (sender as Button).Background = SpecialColor.mainBack();
                 (sender as Button).Foreground = SpecialColor.mainBlue();
                 currentButton = null;
@@ -150,18 +148,18 @@ namespace WpfApp1.View
         //ВРЕМЕННОЕ ИД ПОКА СЛАВА НЕ СДЕЛАЕТ МЕТОД
         public static int blockID;
         //переход на следующий этап начала тестирования
-        private async void onNextPage_Click(object sender, RoutedEventArgs e){
-            if (currentButton == null){
+        private async void onNextPage_Click(object sender, RoutedEventArgs e) {
+            if (currentButton == null) {
                 NextPopup.IsOpen = true;
                 await Task.Delay(2000);
                 NextPopup.IsOpen = false;
             }
-            else{
+            else {
                 dataList.Clear();
                 dataList.Add(loadDataThemesCB.Text);
                 dataList.Add(currentButton.Content.ToString());
                 int id = 0;
-                foreach (Button button in choiceContent.Children){
+                foreach (Button button in choiceContent.Children) {
                     if (currentButton == button){
                         blockID = Int32.Parse(cardMass[id][0]);
                         break;
@@ -175,9 +173,8 @@ namespace WpfApp1.View
         }
 
         private static choiceNextPage cNPage;
-        public static choiceNextPage getChoiceNextPage(){
+        public static choiceNextPage getChoiceNextPage() {
             return cNPage;
         }
     }
-
 }
