@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfApp1.View"
              mc:Ignorable="d" 
-             d:DesignHeight="1046" d:DesignWidth="1920" Background="#EFEFEF">
+             d:DesignHeight="1046" d:DesignWidth="1920" Background="#EFEFEF" Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
         <ControlTemplate  x:Key="ComboBoxToggleButtonLeft" TargetType="{x:Type ToggleButton}">
@@ -50,7 +50,7 @@
                 <Border
                       x:Name="Border"
                       Grid.ColumnSpan="2"
-                      CornerRadius="0,10,10,0"
+                      CornerRadius="10"
                       Background="#EFEFEF"
                       Cursor="Hand"
                       BorderBrush="#3E94D1"
@@ -350,10 +350,11 @@
                        HorizontalContentAlignment="Center" 
                        VerticalContentAlignment="Center" 
                        FontWeight="Bold" 
-                       FontSize="25">Вывести данные по</Label>
-                <ComboBox Name="loadDataTypeCB" Style="{StaticResource CBStyleLeft}"
+                       FontSize="25">Сортировать данные по</Label>
+                <ComboBox Name="loadDataTypeCB" Style="{StaticResource CBStyleRight}"
                           Grid.Row="0" 
                           Grid.Column="1" 
+                          Grid.ColumnSpan="4"
                           Height="55" 
                           BorderBrush="#3E94D1" 
                           Foreground="#3E94D1" 
@@ -361,13 +362,13 @@
                           FontSize="25" 
                           VerticalContentAlignment="Center"
                           SelectedIndex="0">
-                    <ComboBoxItem Content="всему"/>
+                    <!--<ComboBoxItem Content="всему"/>-->
+                    <ComboBoxItem Content="группе"/>
                     <ComboBoxItem Content="фамилии"/>
                     <ComboBoxItem Content="имени"/>
                     <ComboBoxItem Content="отчеству"/>
-                    <ComboBoxItem Content="группе"/>
                 </ComboBox>
-                <ComboBox Name="loadDataSubTypeCB" Style="{StaticResource CBStyleRight}"
+                <!--<ComboBox Name="loadDataSubTypeCB" Style="{StaticResource CBStyleRight}"
                           Margin="-2,0,0,0"
                           Grid.Row="0" 
                           Grid.Column="2" 
@@ -379,13 +380,13 @@
                           FontSize="25" 
                           VerticalContentAlignment="Center"
                           SelectedIndex="0">
-                    <!--<ComboBoxItem Content="something1"/>
+                    --><!--<ComboBoxItem Content="something1"/>
                     <ComboBoxItem Content="something2"/>
                     <ComboBoxItem Content="something3"/>
                     <ComboBoxItem Content="something4"/>
-                    <ComboBoxItem Content="something5"/>-->
+                    <ComboBoxItem Content="something5"/>--><!--
                 </ComboBox>
-                <!--Вывести данные по-->
+                --><!--Вывести данные по-->
 
                 <!--Поиск данных по-->
                 <Label Grid.Row="1" 
@@ -405,7 +406,7 @@
                           FontSize="25" 
                           VerticalContentAlignment="Center"
                           SelectedIndex="0">
-                    <ComboBoxItem Content="всему"/>
+                    <ComboBoxItem Content="всем полям"/>
                     <ComboBoxItem Content="фамилии"/>
                     <ComboBoxItem Content="имени"/>
                     <ComboBoxItem Content="отчеству"/>

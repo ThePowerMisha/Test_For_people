@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
-using System.Windows.Controls;
-using static WpfApp1.View.mainPage;
 
 namespace dBController
 {
@@ -49,7 +45,8 @@ namespace dBController
                 JArray arr_correctAnswers = obj_students.GetValue("correctAnswers") as JArray;
                 JArray arr_testDate = obj_students.GetValue("testDate") as JArray;
 
-                results r = new results {
+                results r = new results
+                {
                     ID = arr_ID,
                     lastName = arr_lastName,
                     firstName = arr_firstName,
@@ -85,10 +82,10 @@ namespace dBController
         {
             Random rnd = new Random();
             // Провреятся если такой пользователь
-            for(int i = 0; i < r.ID.Count(); i++)
+            for (int i = 0; i < r.ID.Count(); i++)
             {
-                if (r.lastName[i].ToString() == r.lastName[r.lastName.Count() - 1].ToString() && 
-                    r.firstName[i].ToString() == r.firstName[r.firstName.Count() - 1].ToString() && 
+                if (r.lastName[i].ToString() == r.lastName[r.lastName.Count() - 1].ToString() &&
+                    r.firstName[i].ToString() == r.firstName[r.firstName.Count() - 1].ToString() &&
                     r.secondName[i].ToString() == r.secondName[r.secondName.Count() - 1].ToString() &&
                     r.group[i].ToString() == r.group[r.group.Count() - 1].ToString())
                 {
@@ -98,8 +95,8 @@ namespace dBController
             // Если нет, то генерируется случайное ID
             if (id == -1)
             {
-                restart:
-                id = rnd.Next(100000, 999999); 
+            restart:
+                id = rnd.Next(100000, 999999);
                 foreach (int item in r.ID)  // Проверка на наличие такого же ID
                 {
                     if (id == item)
@@ -111,11 +108,10 @@ namespace dBController
             return id;
         }
 
-        public static Dictionary<Tuple<string, string, string, string>, List<List<string>>> getAllResults(results r)
+        public static Dictionary<Tuple<string, string, string, string>, List<List<string>>> getAllResults()
         // Возвращает полный список результатов вида
         /* 
         {
-
             ["Фамилия", "Имя", "Отчество", "Группа"]: [
                     ["Тема", "Блок", "Нагрузка", "Вариант", "Потраченное время", "Кол-во подсказок", "Баллы/Оценка", "Правильные ответы", "Дата"],
                     ["Тема", "Блок", "Нагрузка", "Вариант", "Потраченное время", "Кол-во подсказок", "Баллы/Оценка", "Правильные ответы", "Дата"],
@@ -129,6 +125,7 @@ namespace dBController
             ...
         } */
         {
+            results r = createEntery();
             Dictionary<Tuple<string, string, string, string>, List<List<string>>> allResults = new Dictionary<Tuple<string, string, string, string>, List<List<string>>>();
             List<string> explored = new List<string>();
             for (int i = 0; i < r.theme.Count; i++)
@@ -171,7 +168,7 @@ namespace dBController
                         r.group[i].ToString()
                     );
                     var testData = new List<List<string>>(); // Инициализация списка, с данными о всех прохождениях студента
-                    testData.Add                            
+                    testData.Add
                         (new List<string>
                         {
                             r.theme[i].ToString(),
@@ -185,7 +182,7 @@ namespace dBController
                             r.testDate[i].ToString()
                         }
                         );
-                    foreach(List<string> row in allResults[FIOG])
+                    foreach (List<string> row in allResults[FIOG])
                     {
                         testData.Add(row);
                     }
@@ -193,6 +190,36 @@ namespace dBController
                 }
             }
             return allResults;
+        }
+
+        public static List<string> getLastResults(int student_ID, string themeName, string blockName, string loadName)
+        // Возвращает последний результат пользователя
+        {
+            List<string> lastResults = new List<string>();
+            results data = createEntery();
+            for (int row = 0; row < data.ID.Count() - 1; row++)
+            {
+                if(System.Convert.ToInt32(data.ID[row]) == student_ID)
+                {
+                    if(data.theme[row].ToString() == themeName)
+                    {
+                        if(data.block[row].ToString() == blockName)
+                        {
+                            if(data.load[row].ToString() == loadName)
+                            {
+                                lastResults = new List<string>
+                                {
+                                    data.timeSpent[row].ToString(),
+                                    data.scoreResult[row].ToString(),
+                                    data.correctAnswers[row].ToString(),
+                                    data.testDate[row].ToString()
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+            return lastResults;
         }
     }
 
@@ -215,7 +242,7 @@ namespace dBController
             List<string> listThems = getBase().Properties().Select(p => p.Name).ToList();
             JObject quesBase = getBase();
             List<string> listThemsName = new List<string>();
-            foreach(string item in listThems)
+            foreach (string item in listThems)
             {
                 listThemsName.Add(quesBase.GetValue(item)["name"].ToString());
             }
@@ -236,7 +263,7 @@ namespace dBController
             }
             return themeName;
         }
-        
+
         public static JObject getBlock(string themeName, int blockID)
         /* Возвращает JToken конкретного блока */
         {
@@ -251,7 +278,7 @@ namespace dBController
                     block = item;
                 }
             }
-            
+
             return block;
         }
 
@@ -261,9 +288,9 @@ namespace dBController
             JObject load = new JObject();
             themeName = getTrueName(themeName);
             JToken loads = getBlock(themeName, blockID)["loads"];
-            foreach(JObject item in loads)
+            foreach (JObject item in loads)
             {
-                if(item["loadID"].ToString() == loadID.ToString())
+                if (item["loadID"].ToString() == loadID.ToString())
                 {
                     load = item;
                 }
@@ -304,16 +331,28 @@ namespace dBController
             List<List<string>> ListVariantsImgPath = new List<List<string>>();
             themeName = getTrueName(themeName);
             JObject load = getLoad(themeName, blockID, loadID);
-            foreach(JToken item in load["variants"])
+            foreach (JToken item in load["variants"])
             {
                 ListVariantsImgPath.Add(new List<string>() { item["variantID"].ToString(), item["pathToMainBlock"].ToString() });
             }
             return ListVariantsImgPath;
         }
 
-       public static JObject getVariant(string themeName, int blockID, int loadID, int variantID)
-       /* Вовзращает JToken конкретного варианта */
-       {
+        public static int getMaxQuestionFinds(string themeName, int blockID, int loadID, int variantID)
+        /* Возвращает максимальное число этапов вопросов */
+        {
+            int maxStageNumber = 0;
+            JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
+            foreach (JToken item in variant["questionFind"])
+            {
+                maxStageNumber++;
+            }
+            return maxStageNumber;
+        }
+
+        public static JObject getVariant(string themeName, int blockID, int loadID, int variantID)
+        /* Вовзращает JToken конкретного варианта */
+        {
             JObject variant = new JObject();
             themeName = getTrueName(themeName);
             JToken variants = getLoad(themeName, blockID, loadID)["variants"];
@@ -328,20 +367,20 @@ namespace dBController
 
         }
 
-       public static Dictionary<string, double> getQuestionParams(string themeName, int blockID, int loadID, int variantID)
-       /* Возвращает словарь исходных данных вида переменная: значение */
-       {
+        public static Dictionary<string, double> getQuestionParams(string themeName, int blockID, int loadID, int variantID)
+        /* Возвращает словарь исходных данных вида переменная: значение */
+        {
             JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
             Dictionary<string, double> par = new Dictionary<string, double>();
-            foreach(JProperty item in variant["questionParams"])
+            foreach (JProperty item in variant["questionParams"])
             {
                 par.Add(item.Name, System.Convert.ToDouble(item.Value.ToString()));
             }
             return par;
 
-       }
+        }
 
-       public static string getQuestionText(string themeName, int blockID, int loadID, int variantID, int stageNumber)
+        public static string getQuestionText(string themeName, int blockID, int loadID, int variantID, int stageNumber)
         /* Возвращает описание того, что нужно найти на этапе stageNumber */
         {
             JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
@@ -349,7 +388,7 @@ namespace dBController
             return questionText;
         }
 
-       public static List<string> getQuestionFinds(string themeName, int blockID, int loadID, int variantID, int stageNumber)
+        public static List<string> getQuestionFinds(string themeName, int blockID, int loadID, int variantID, int stageNumber)
         /* Возвращает список переменых, которые нужно найти в этапе stageNumber */
         {
             List<string> questionFinds = new List<string>();
@@ -360,20 +399,8 @@ namespace dBController
             }
             return questionFinds;
         }
-       
-       public static int getMaxQuestionFinds(string themeName, int blockID, int loadID, int variantID)
-           /* Возвращает максимальное число этапов вопросов */
-       {
-           int maxStageNumber = 0;
-           JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
-           foreach (JToken item in variant["questionFind"])
-           {
-               maxStageNumber++;
-           }
-           return maxStageNumber;
-       }
 
-       public static List<Dictionary<string, string>> getQuestionFormuls(string themeName, int blockID, int loadID, int variantID, int stageNumber)
+        public static List<Dictionary<string, string>> getQuestionFormuls(string themeName, int blockID, int loadID, int variantID, int stageNumber)
         /* Возвращает словарь вида 0/или найденная перменная: формула */
         {
             List<Dictionary<string, string>> questionFormuls = new List<Dictionary<string, string>>();
@@ -381,14 +408,14 @@ namespace dBController
             foreach (JToken item in variant["questionFormula"][stageNumber - 1])
             {
                 Dictionary<string, string> par = new Dictionary<string, string>();
-                foreach(JProperty item_ in item)
+                foreach (JProperty item_ in item)
                 {
-                    par.Add(item_.Name, item_.Value.ToString() );
+                    par.Add(item_.Name, item_.Value.ToString());
                 }
                 questionFormuls.Add(par);
             }
             return questionFormuls;
-       }
+        }
 
         public static string getMainVariantImgPath(string themeName, int blockID, int loadID, int variantID)
         /*Возвращает путь главного чертежа варианта.*/
@@ -406,6 +433,19 @@ namespace dBController
                 tipsPath.Add(item.ToString());
             }
             return tipsPath;
+        }
+
+        public static int getQuestionCount(string themeName, int blockID, int loadID, int variantID)
+        // Возвращает кол-во вопросов
+        {
+            int questionCount = 0;
+            List<Dictionary<string, string>> questionFormuls = new List<Dictionary<string, string>>();
+            JObject variant = getVariant(getTrueName(themeName), blockID, loadID, variantID);
+            foreach(var row in variant["questionFind"])
+            {
+                questionCount += row.Count();
+            }
+            return questionCount;
         }
     }
 }

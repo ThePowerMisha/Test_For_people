@@ -528,7 +528,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0" Name="tipsForBorder"
-                                   Content="Визуальные подсказки"
+                                   Content="Графические подсказки"
                                    HorizontalContentAlignment="Center"
                                    VerticalContentAlignment="Center"
                                    FontSize="30"
@@ -849,6 +849,36 @@
 
                     </StackPanel>
                 </Border>
+
+                <ScrollViewer Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="4" 
+                              Padding="15, 0"
+                              Margin="0, 40"
+                              HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Visible">
+
+                    <StackPanel>
+                        <StackPanel.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontSize" Value="25"/>
+                                <Setter Property="Foreground" Value="#3E94D1"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                <Setter Property="TextAlignment" Value="Left"/>
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                                <Setter Property="Margin" Value="0, 15"/>
+                            </Style>
+                        </StackPanel.Resources>
+
+                        <TextBlock Text="* При выполнении контрольной работы вы должны определить опорные реакции и усилия в заданных стержнях фермы."/>
+                        <TextBlock Text="* Время работы задается преподавателем."/>
+                        <TextBlock Text="* Оставшееся время до конца работы и количество набранных баллов выводятся посередине вверху экрана."/>
+                        <TextBlock Text="* Для ответа на вопрос вам дается три попытки."/>
+                        <TextBlock Text="* При каждом неправильном ответе из общей суммы баллов вычитается 1 (один) балл. За ввод правильного ответа добавляется 5 баллов."/>
+                        <TextBlock Text="* Выражения для опорных реакций и внутренних усилий в стержнях фермы можно вводить, используя символьные обозначения переменных, а также их численные значения."/>
+                        <TextBlock Text="* Для ввода в ответ синусов и косинусов углов рекомендуем использовать функцию sqrt(x). Вы можете использовать и численные значения синусов и косинусов."/>
+                        <TextBlock Text="* Вы можете использовать теоретический материал, который расположен слева вверху экрана"/>
+                    </StackPanel>
+                    
+                </ScrollViewer>
 
                 <Button Name="popupButton" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="4" Cursor="Hand" BorderThickness="2,0,2,2" BorderBrush="#3E94D1" FontSize="25" FontWeight="SemiBold" Foreground="#3E94D1" Padding="15" Background="#EFEFEF" Content="НАЧАТЬ ТЕСТ" Click="popupButton_Click">
                     <Button.Triggers>

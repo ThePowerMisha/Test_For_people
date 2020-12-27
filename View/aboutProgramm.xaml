@@ -74,7 +74,7 @@
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FontWeight="SemiBold" Foreground="#3E94D1" FontSize="28" Padding="15" TextWrapping="Wrap"><Run Text="Данная контролирующе-обучающая программа была разработа командой студентов группы ИСТ 1-19 высшего учебного заведения ВолгГТУ ИАиС в 2020 году в общеобразовательных целях. Любые совпадения с посторонними программными продуктами являются случайними."/>
                 <LineBreak/>
                 <LineBreak/>    
-                <Label Content="Версия программы: 0.0" FontWeight="SemiBold" Foreground="#3E94D1" FontSize="28"/>
+                <Label Content="Версия программы: 1.0" FontWeight="SemiBold" Foreground="#3E94D1" FontSize="28"/>
                 <LineBreak/> 
                 <Label Content="почта поддержки: ist119@yandex.com" FontWeight="SemiBold" Foreground="#3E94D1" FontSize="28"/>
             </TextBlock>
@@ -90,25 +90,25 @@
 
             <!--О РАЗБОТЧИКАХ-->
             <TextBlock Grid.Row="2" Grid.Column="1" Foreground="White" Background="#3E94D1" FontSize="25" FontWeight="Bold" Padding="15" TextWrapping="Wrap">
-                <Label Content="Конор Макгрегор" Foreground="White" FontSize="33" FontWeight="Bold"/>
+                <Label Content="Карпенко Александр" Foreground="White" FontSize="33" FontWeight="Bold"/>
                 <LineBreak/> 
                 Программист, разработчик графического интерфейса, разработчик функционала программы, UI/UX дизайнер
             </TextBlock>
 
             <TextBlock Grid.Row="2" Grid.Column="3" Foreground="White" Background="#3E94D1" FontSize="25" FontWeight="Bold" Padding="15" TextWrapping="Wrap">
-                <Label Content="Арнольд Шварценеггер" Foreground="White" FontSize="33" FontWeight="Bold"/>
+                <Label Content="Синицын Иван" Foreground="White" FontSize="33" FontWeight="Bold"/>
                 <LineBreak/> 
                 Программист, разработчик функционала программы
             </TextBlock>
 
             <TextBlock Grid.Row="3" Grid.Column="1" Foreground="#3E94D1" Background="#EFEFEF" FontSize="25" FontWeight="Bold" Padding="15" TextWrapping="Wrap">
-                <Label Content="Гарри Поттер" Foreground="#3E94D1" FontSize="33" FontWeight="Bold"/>
+                <Label Content="Смирнов Михаил" Foreground="#3E94D1" FontSize="33" FontWeight="Bold"/>
                 <LineBreak/> 
                 Программист, разработчик функционала программы
             </TextBlock>
 
             <TextBlock Grid.Row="3" Grid.Column="3" Foreground="#3E94D1" Background="#EFEFEF" FontSize="25" FontWeight="Bold" Padding="15" TextWrapping="Wrap">
-                <Label Content="Охота Крепкое" Foreground="#3E94D1" FontSize="33" FontWeight="Bold"/>
+                <Label Content="Джагаев Вячеслав" Foreground="#3E94D1" FontSize="33" FontWeight="Bold"/>
                 <LineBreak/> 
                 Программист, разработчик базы данных
             </TextBlock>
