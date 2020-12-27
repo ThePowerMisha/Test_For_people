@@ -5,10 +5,8 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Threading.Tasks;
 
-namespace WpfApp1
-{
-   public class LoaderClass
-    {
+namespace WpfApp1 {
+   public class LoaderClass {
         // Путь к вопросу
         public string path;
         
@@ -28,8 +26,7 @@ namespace WpfApp1
         public List<int> QuestionFindParamsTry;
 
         // Конструктор класса
-        public LoaderClass(string path)
-        {
+        public LoaderClass(string path) {
             this.path = path;
             this.LoadQuestion();
         }
@@ -37,8 +34,7 @@ namespace WpfApp1
         /// <summary>
         /// Загрузка вопроса
         /// </summary>
-        public void LoadQuestion()
-        {
+        public void LoadQuestion() {
             // Спиток известных переменных и их значений
             List<string> arr = new List<string>();
             // Ответы в виде формул на вопрос
@@ -57,87 +53,68 @@ namespace WpfApp1
             bool isFindParams = false;
             bool isId = false;
            
-            using (StreamReader sr = new StreamReader(path))
-            {
+            using (StreamReader sr = new StreamReader(path)) {
                 string line;
-                while ((line =  sr.ReadLine()) != null)
-                {
-                    if ("[/QuestionId]" == line)
-                    {
+                while ((line =  sr.ReadLine()) != null) {
+                    if ("[/QuestionId]" == line) {
                         isId = false;
                     }
 
-                    if (isId)
-                    {
+                    if (isId) {
                         arr.Add(line);
-
                     }
 
-                    if ("[QuestionId]" == line)
-                    {
+                    if ("[QuestionId]" == line) {
                         isId = true;
                     }            
         
-                    if ("[/QuestionParams]" == line)
-                    {
+                    if ("[/QuestionParams]" == line) {
                         isDict = false;
                     }
 
-                    if (isDict)
-                    {
+                    if (isDict) {
                         arr.Add(line);
-
                     }
 
-                    if ("[QuestionParams]" == line)
-                    {
+                    if ("[QuestionParams]" == line) {
                         isDict = true;
                     }
 
-                    if ("[/QuestionFormula]" == line)
-                    {
+                    if ("[/QuestionFormula]" == line) {
                         isFormula = false;
                     }
 
-                    if (isFormula)
-                    {
+                    if (isFormula) {
                         formula.Add(line);
                     }
 
-                    if ("[QuestionFormula]" == line)
-                    {
+                    if ("[QuestionFormula]" == line) {
                         isFormula = true;
                     }
 
-                    if ("[/QuestionText]" == line)
-                    {
+                    if ("[/QuestionText]" == line) {
                         isText = false;
                     }
 
-                    if (isText)
-                    {
+                    if (isText) {
                         text = line;
                     }
 
-                    if ("[QuestionText]" == line)
-                    {
+                    if ("[QuestionText]" == line) {
                         isText = true;
                     }
 
-                    if ("[/QuestionFind]" == line)
-                    {
+                    if ("[/QuestionFind]" == line) {
 
                         isFindParams = false;
                     }
 
-                    if (isFindParams)
-                    {
+                    if (isFindParams) {
                         Params.Add(line);
                         counter.Add(0);
                     }
 
-                    if ("[QuestionFind]" == line)
-                    {
+                    if ("[QuestionFind]" == line) {
                         isFindParams = true;
                     }
                 }
@@ -157,8 +134,7 @@ namespace WpfApp1
         /// Возвращает текст вопроса
         /// </summary>
         /// <returns></returns>
-        public string returnQuestionText()
-        {
+        public string returnQuestionText() {
             return QuestionText;
         }
         
@@ -167,8 +143,7 @@ namespace WpfApp1
         /// Возвращает переменные и их значения
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, double> returnVariables()
-        {
+        public Dictionary<string, double> returnVariables() {
             return dictionary;
         }
         
@@ -176,8 +151,7 @@ namespace WpfApp1
         /// Возвращает формулу вопроса
         /// </summary>
         /// <returns></returns>
-        public List<string> returnFormula()
-        {
+        public List<string> returnFormula() {
             return Formula;
         }
 
@@ -185,8 +159,7 @@ namespace WpfApp1
         /// Возвращает переменные которые надо найти
         /// </summary>
         /// <returns></returns>
-        public List<string> returnQuestionFindParams()
-        {
+        public List<string> returnQuestionFindParams() {
             return QuestionFindParams;
         }
 
@@ -194,8 +167,7 @@ namespace WpfApp1
         /// Возвращает счетчик попыпот ответа на вопрос для каждой из неизвестный переменных
         /// </summary>
         /// <returns></returns>
-        public List<int> returnQuestionParamsTry()
-        {
+        public List<int> returnQuestionParamsTry() {
             return QuestionFindParamsTry;
         }
     }
