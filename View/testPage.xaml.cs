@@ -44,7 +44,7 @@ namespace WpfApp1.View {
         }
 
         private int currentQuestion = 0;
-        
+
 
         private static ContentControl contentControl;
         public double aWidth;
@@ -67,11 +67,11 @@ namespace WpfApp1.View {
         //флаг остановки при выходе времени
         private static bool timeOut = false;
         //общий счет баллов
-        public int score=0;
+        public int score = 0;
         //общий счет кол-во правельных ответов
-        public static int correctAnswersCount=0;
+        public static int correctAnswersCount = 0;
         //время затраченное на тест
-        public int timeWaste=0;
+        public int timeWaste = 0;
 
         //таймер
         public TimeSpan _time;
@@ -139,7 +139,7 @@ namespace WpfApp1.View {
                 mainLayout.Opacity = 1;
                 mainLayout.IsEnabled = true;
             }
-            
+
         }
 
         //завершение теста
@@ -148,7 +148,7 @@ namespace WpfApp1.View {
             mainLayout.Opacity = 0.3;
             mainLayout.IsEnabled = false;
         }
-        CheckAnswer checkAnswer =new CheckAnswer();
+        CheckAnswer checkAnswer = new CheckAnswer();
 
         // счетчик
         public int Num = 1;
@@ -166,7 +166,7 @@ namespace WpfApp1.View {
 
         //подтверждение ответа
         private async void confirmAnswer_Click(object sender, RoutedEventArgs e) {
-            
+
             TestControl test_one = new TestControl();
 
             // Создаем словарь исходных данных
@@ -186,7 +186,7 @@ namespace WpfApp1.View {
 
 
             // Создаем список неизвестных переменных
-            if (questionFindList == null) 
+            if (questionFindList == null)
                 questionFindList = questions.getQuestionFinds(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, Num);
 
             if (questionFormulasDict == null)
@@ -197,8 +197,10 @@ namespace WpfApp1.View {
             string formualaInput = checkAnswer.Check();
 
 
-            // Строка правильной формулы
-            checkAnswer.Formula = questionFormulasDict[test_one.SelectedIndex()]["0"];
+            if (questionFormulasDict.Count >0){
+                // Строка правильной формулы
+                checkAnswer.Formula = questionFormulasDict[test_one.SelectedIndex()]["0"];
+            
             string formulaCorrectExport = checkAnswer.Formula;
             string formulaCorrect = checkAnswer.Check();
 
@@ -284,7 +286,7 @@ namespace WpfApp1.View {
                 {
                     test_one.AnswerTip($"Попыток больше нет!", "red");
                     test_one.AnswerTip($"Правильная формула: {formulaCorrectExport}", "red");
-                    foreach(var item in questionFormulasDict[test_one.SelectedIndex()])
+                    foreach (var item in questionFormulasDict[test_one.SelectedIndex()])
                     {
                         if (checkAnswer.Variables.ContainsKey(item.Key))
                         {
@@ -298,7 +300,7 @@ namespace WpfApp1.View {
             {
                 // Если эта переменная еще не найдена, то добавляем ее в словарь переменных
                 checkAnswer.Variables.Add(questionFindList[test_one.SelectedIndex()].ToLower(), Convert.ToDouble(formulaCorrect));
-                
+
                 // Обновляем в графическом интерфейсе граф "задача"
                 test_one.QuestionVal(test_one.SelectedValue(), formulaCorrect);
 
@@ -322,37 +324,46 @@ namespace WpfApp1.View {
             await Task.Delay(1000);
             AnswerPopup.IsOpen = false;
 
-            
+
             // Если закончился 1-ый этап ответов на вопрос, то переходим к следующему, иначе завершаем тест
-            
-            if (questionFindList.Count <= 0)
-            {
-                Num += 1;
-                
-                if (Num >=maxStageNum + 1)
-                    popupButton_Click(sender, e);
-                else
+            try {
+                if (questionFindList.Count <= 0)
                 {
-                    // Обновляем исходные данные
-                    string testtext = "";
-                    foreach (var massiv in checkAnswer.Variables)
+                    Num += 1;
+
+                    if (Num >= maxStageNum + 1)
+                        popupButton_Click(sender, e);
+                    else
                     {
-                        testtext += $"{massiv.Key} = {massiv.Value}\n";
+                        // Обновляем исходные данные
+                        string testtext = "";
+                        foreach (var massiv in checkAnswer.Variables)
+                        {
+                            testtext += $"{massiv.Key} = {massiv.Value}\n";
+                        }
+                        test_one.DataExtraInfo(testtext);
+
+                        test_one.DataMainInfo(questions.getQuestionText(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, Num));
+                        test_one.QuestionVals(questions.getQuestionFinds(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, Num));
+
+                        numTry = null;
+                        questionFindList = null;
+                        questionFormulasDict = null;
+
                     }
-                    test_one.DataExtraInfo(testtext);
 
-                    test_one.DataMainInfo(questions.getQuestionText(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, Num));
-                    test_one.QuestionVals(questions.getQuestionFinds(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, Num));
-
-                    numTry = null;
-                    questionFindList = null;
-                    questionFormulasDict = null;
-                   
                 }
-                
             }
-            
-            
+            finally
+            {
+                // Создаем список неизвестных переменных
+                if (questionFindList == null)
+                    questionFindList = questions.getQuestionFinds(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, Num);
+
+                if (questionFormulasDict == null)
+                    questionFormulasDict = questions.getQuestionFormuls(choiceBlock.theme, choiceBlock.blockID, choiceNextPage.loadID, choiceNextPage.variantID, Num);
+            }
+
 
             /*
             
@@ -396,7 +407,7 @@ namespace WpfApp1.View {
             //popupButton_Click( sender, e);
             */
         }
-
+    }
         //выход их попапа
         private void popupExit_Click(object sender, RoutedEventArgs e) {
             exitTestPopup.IsOpen = false;
