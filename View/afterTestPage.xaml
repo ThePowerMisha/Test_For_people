@@ -343,7 +343,7 @@
 
         <!--ТЕКСТ ТЕКУЩЕГО ОКНА-->
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#3E94D1">
-            <Label Name="testTitle" Content="Результаты теста" FontSize="35" Foreground="white" FontWeight="Bold" HorizontalAlignment="Center"></Label>
+            <Label Name="testTitle" Content="Результаты теста (Позовите преподавателя)" FontSize="35" Foreground="white" FontWeight="Bold" HorizontalAlignment="Center"></Label>
         </StackPanel>
 
         <Button Name="onPreviousPage" Grid.Column="0" Grid.Row="0" Content="НА ГЛАВНУЮ" FontSize="20" FontWeight="Bold" Foreground="white" Background="#3E94D1" Cursor="Hand" BorderBrush="#FF3E94D1" Click="onPreviousPage_Click">
@@ -657,5 +657,110 @@
 
             <!--ОСНОВНАЯ ЧАСТЬ-->
         </Grid>
+
+        <!--Popup-->
+        <Popup Name="resultPopup" IsOpen="False" StaysOpen="True" PopupAnimation="Fade" AllowsTransparency="True" Placement="Center" PlacementTarget="{Binding ElementName=mainLayout}">
+            <Grid Background="#88000000" Width="480" Height="272">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="430"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="222"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="#EFEFEF" BorderBrush="#3E94D1" BorderThickness="2">
+                    <StackPanel>
+                        <Label Margin="30" Foreground="#3E94D1" FontSize="32" FontFamily="Arial" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">ВВЕДИТЕ ПАРОЛЬ</Label>
+
+                        <PasswordBox Name="popupTextBox" BorderBrush="#3E94D1" BorderThickness="2" Margin="15,0,15,30" MaxWidth="450"  Background="#EFEFEF"  FontWeight="Bold" Foreground="black" FontSize="28" Padding="15" FontFamily="Arial" MaxLength="5" Height="65" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewKeyDown="popupButton_PreviewKeyDown">
+                            <PasswordBox.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                </Style>
+                            </PasswordBox.Resources>
+                        </PasswordBox>
+
+                        <Button Name="popupButton" Height="66.5" Cursor="Hand" BorderThickness="0" FontSize="25" FontWeight="SemiBold" Foreground="#3E94D1" Padding="15" Background="#EFEFEF" Content="ПОДТВЕРДИТЬ" Click="popupButton_Click">
+                            <Button.Triggers>
+                                <EventTrigger RoutedEvent="Button.MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                            <ColorAnimation To="White" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="Button.MouseLeave">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation To="#EFEFEF" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                            <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </StackPanel>
+
+                </Border>
+
+                <Button x:Name="popupExit" Click="popupExit_Click" Grid.Row="0" Grid.Column="1" Cursor="Hand" BorderThickness="0,2,2,0" BorderBrush="#3E94D1" MouseEnter="popupExit_MouseEnter" MouseLeave="popupExit_MouseLeave">
+                    <Viewbox Margin="10">
+                        <Grid>
+                            <Line x:Name="line1" X1="0" Y1="0" X2="100" Y2="100" Stroke="#3E94D1" StrokeThickness="7"/>
+                            <Line x:Name="line2" X1="0" Y1="100" X2="100" Y2="0" Stroke="#3E94D1" StrokeThickness="7"/>
+                        </Grid>
+                    </Viewbox>
+
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    <ColorAnimation To="White" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="#EFEFEF" 
+                                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                    <ColorAnimation To="#3E94D1" 
+                                            Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)" 
+                                            FillBehavior="HoldEnd" 
+                                            Duration="0:0:0.10"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+            </Grid>
+        </Popup>
+        <Popup Name="popupButtonConfirm" Placement="Center" PlacementTarget="{Binding ElementName=popupButton}"  StaysOpen="True" PopupAnimation="Fade" AllowsTransparency="True" Height="70">
+            <Label Background="#FF4040" Foreground="White" FontSize="25" FontWeight="SemiBold" Padding="15"  Width="476" Height="66.5" HorizontalContentAlignment="Center">НЕВЕРНЫЙ ПАРОЛЬ</Label>
+        </Popup>
     </Grid>
 </UserControl>
