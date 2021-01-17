@@ -22,10 +22,6 @@ namespace WpfApp1.View {
             InitializeComponent();
 
             this.headerControl = headerControl;
-
-            if (SystemParameters.WorkArea.Height < 1080) {
-                aboutText.Text = "Данная контролирующе-обучающая программа была разработа командой студентов группы ИСТ 1-19 высшего учебного заведения ВолгГТУ ИАиС в 2020 году в общеобразовательных целях. Любые совпадения с посторонними программными продуктами являются случайними.\nВерсия программы: 1.0\nпочта поддержки: ist119@yandex.com";
-            }
         }
         private ContentControl headerControl;
         private void onMainPage_Click(object sender, RoutedEventArgs e) {
