@@ -248,10 +248,7 @@ namespace WpfApp1.View {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void mainPageTitle_Loaded(object sender, RoutedEventArgs e) {
-            if (MainWindow.getScreenWidth() < 1680)
-                MainWindow.adaptiveText(mainPageTitle.Content.ToString(), mainPageTitle.ActualWidth, mainPageTitle);
-        }
+
         //=======================mainLayout=======================
     }
 }

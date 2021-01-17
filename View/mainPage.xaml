@@ -22,7 +22,7 @@
 
             <!--title-->
             <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#3E94D1"></StackPanel>
-            <Label Name="mainPageTitle"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="ВОЛГОГРАДСКИЙ ГОСУДАРСТВЕННЫЙ ТЕХНИЧЕСКИЙ УНИВЕРСИТЕТ" FontFamily="Arial" FontSize="35" FontWeight="Bold" Foreground="White" Margin="0,0,10,0" Padding="0" Width="1900" Height="106" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Loaded="mainPageTitle_Loaded" />
+            <Label Name="mainPageTitle"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="ВОЛГОГРАДСКИЙ ГОСУДАРСТВЕННЫЙ ТЕХНИЧЕСКИЙ УНИВЕРСИТЕТ" FontFamily="Arial" FontSize="35" FontWeight="Bold" Foreground="White" Margin="0,0,10,0" Padding="0" Width="1900" Height="106" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
             <!--title-->
 
             <!--mainLayout-->
