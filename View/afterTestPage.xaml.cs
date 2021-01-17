@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -86,12 +87,84 @@ namespace WpfApp1.View {
             previusResult3.Content = pr3;
             previusResult4.Content = pr4;
 
+            //Popup
+            popup = resultPopup;
+            grid = mainLayout;
         }
         private static ContentControl contentControl;
 
         //переход на главную страницу
         private void onPreviousPage_Click(object sender, RoutedEventArgs e) {
-            contentControl.Content = WpfApp1.MainWindow.getMainPage();
+            //contentControl.Content = WpfApp1.MainWindow.getMainPage();
+            //resultPopup.IsOpen = true;
+            resultPopup.IsOpen = !resultPopup.IsOpen;
+            if (resultPopup.IsOpen) {
+                mainLayout.Opacity = 0.3;
+                mainLayout.IsEnabled = false;
+                popupTextBox.Clear();
+            } else {
+                mainLayout.Opacity = 1;
+                mainLayout.IsEnabled = true;
+            }
+        }
+
+        private void popupButton_PreviewKeyDown(object sender, KeyEventArgs e) {
+
+        }
+
+        //КНОПКА ПОДТВЕРДИТЬ
+        private static bool popupButtonFlag = true;
+        private async void popupButton_Click(object sender, RoutedEventArgs e) {
+            if (popupButtonFlag == true) {
+                popupButtonFlag = false;
+
+                if (popupTextBox.Password == mainPage.passwordKey) {
+                    popupButtonFlag = true;
+                    setPopupStatus();
+                    contentControl.Content = WpfApp1.MainWindow.getMainPage();//new resultsPage(mainWin, curRec, contentControl);
+                } else {
+                    popupButtonConfirm.IsOpen = true;
+                    popupTextBox.Clear();
+                    await Task.Delay(2000);
+                    popupButtonConfirm.IsOpen = false;
+                    popupButtonFlag = true;
+                }
+            }
+        }
+
+        public static Popup popup = null;
+        private static Grid grid = null;
+        //возвращает состояние попапа resultPopup
+        public static bool getPopupStatus() {
+            return popup.IsOpen;
+        }
+        //закрывает попап resultPopup
+        public static void setPopupStatus() {
+            popup.IsOpen = false;
+            grid.Opacity = 1;
+            grid.IsEnabled = true;
+        }
+
+        private void popupExit_Click(object sender, RoutedEventArgs e) {
+            resultPopup.IsOpen = !resultPopup.IsOpen;
+            if (resultPopup.IsOpen) {
+                mainLayout.Opacity = 0.3;
+                mainLayout.IsEnabled = false;
+                popupTextBox.Clear();
+            } else {
+                mainLayout.Opacity = 1;
+                mainLayout.IsEnabled = true;
+            }
+        }
+
+        //анимация крестика
+        private void popupExit_MouseEnter(object sender, MouseEventArgs e) {
+            line1.Stroke = SpecialColor.white();
+            line2.Stroke = SpecialColor.white();
+        }
+        private void popupExit_MouseLeave(object sender, MouseEventArgs e) {
+            line1.Stroke = SpecialColor.mainBlue();
+            line2.Stroke = SpecialColor.mainBlue();
         }
     }
 }
