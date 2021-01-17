@@ -225,7 +225,7 @@ namespace WpfApp1 {
 
                 foreach (var element in Variables) {
                     // Если этот элемент не является названием исходной переменной
-                    if (array[i] != element.Key) {
+                    if (array[i] != element.Key.ToLower()) {
                         // Если это целое или десячичное число
                         if (Regex.IsMatch(array[i], @"^\d+([\.]\d+)?$")) {
                             variableArrayCheck = true;
@@ -243,7 +243,7 @@ namespace WpfApp1 {
                     }
 
                     // Если элемент массива является названием исходной переменной, то заменяем название переменной на ее значение
-                    if (array[i] == element.Key) {
+                    if (array[i] == element.Key.ToLower()) {
                         array[i] = element.Value.ToString();
                         variableArrayCheck = true;
                     }

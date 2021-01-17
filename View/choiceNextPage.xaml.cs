@@ -246,13 +246,15 @@ namespace WpfApp1.View {
         public static List<string> dataList = new List<string>();
         private static testPage tPage;
         private void popupButton_Click(object sender, RoutedEventArgs e) {
-            tPage = new testPage(contentControl,
-                                titleLabel.Content + " Тест " + loadPositioСurrentButton.Content + "-" + variantСurrentButton.Content,
-                                timeCount.Text);
             dataList.Clear();
             dataList.Add(loadPositioСurrentButton.Content.ToString());
             dataList.Add(variantСurrentButton.Content.ToString());
             dataList.Add(tipCount.Text.ToString());
+
+            tPage = new testPage(contentControl,
+                                titleLabel.Content + " Тест " + loadPositioСurrentButton.Content + "-" + variantСurrentButton.Content,
+                                timeCount.Text);
+            
             contentControl.Content = tPage;
 
             //=================
@@ -276,7 +278,7 @@ namespace WpfApp1.View {
                     testtext += "\n";
                     proba = 0;
                 }
-                //testtext += $"{massiv.Key} = {massiv.Value}\n";
+                
             }
             test.DataExtraInfo(testtext);
 
@@ -288,45 +290,8 @@ namespace WpfApp1.View {
 
             
 
-            test.GraphContent(System.IO.Path.GetFullPath(questions.getVariantsImgPath(choiceBlock.theme, choiceBlock.blockID, loadID)[0][1].ToString()));
+            test.GraphContent(System.IO.Path.GetFullPath(questions.getVariantsImgPath(choiceBlock.theme, choiceBlock.blockID, loadID)[loadID][1].ToString()));
 
-
-            /*
-            // Загружаем из файла словарь
-            checkAnswer.Variables = loaderClass.returnVariables();
-
-            // Загружаем текст вопроса
-            test.DataMainInfo(loaderClass.returnQuestionText());
-
-            // Загружаем в графический интерфейс данные массива
-            string testtext = "";
-            foreach (var massiv in checkAnswer.Variables)
-            {
-                testtext += $"{massiv.Key} = {massiv.Value}\n";
-            }
-            test.DataExtraInfo(testtext);
-
-            // Загружаем неизвестные переменные, которые нужно найти
-            //test.QuestionVals(loaderClass.returnQuestionFindParams());
-
-            // Загружаем неизвестные переменные, которые нужно найти
-
-            test.QuestionVals(loaderClass.returnQuestionFindParams());
-            */
-            // test.AnswerTip("shalom!", "red");
-            // test.AnswerTip("hallo!", "green");
-            // test.GraphContent("View/Karpenko.jpeg");
-            // test.SecondGraphContent("View/Karpenko.jpeg");
-            // test.SecondGraphContent("View/Karpenko.jpeg");
-            // test.AnswerTipRemove("Правильный ответ...");
-            // test.AnswerTipRemove(1);
-            // test.SecondGraphContentRemove(1);
-            // test.SecondGraphContentRemove("View/Karpenko.jpeg");
-            // test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Karpenko.jpeg");
-            // test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Jagaev.jpg");
-            // test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Smirnov.jpg");
-            // test.VisualTip("E:/GroupProject/AppXML/WpfApp1/WpfApp1/View/Sinitsin.jpg");
-            // test.DataExtraInfo(test.Time());
             //==================
         }
         public static testPage getTestPage() {
