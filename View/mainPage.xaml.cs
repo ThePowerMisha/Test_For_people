@@ -46,6 +46,9 @@ namespace WpfApp1.View {
             Placeholder.add(secondName, "Отчество");
             Placeholder.add(group, "Группа");
             //=============mainStyle================
+
+            //if (MainWindow.getScreenWidth()<1680)
+            //    MainWindow.adaptiveText(mainPageTitle.Content.ToString(), mainPageTitle.ActualWidth, mainPageTitle);
         }
         private static resultsPage rPage;
         private static choiceBlock cBlock;
@@ -179,7 +182,7 @@ namespace WpfApp1.View {
 
         //КНОПКА ПОДТВЕРДИТЬ
         private static bool popupButtonFlag = true;
-        private static string passwordKey = "12345";
+        public static string passwordKey = "12345";
         private async void popupButton_Click(object sender, RoutedEventArgs e) {
             if (popupButtonFlag == true) {
                 popupButtonFlag = false;
@@ -238,6 +241,14 @@ namespace WpfApp1.View {
             if (e.Key == Key.Enter)
                 popupButton_Click(sender, e);
         }
+
+
+        /// <summary>
+        /// АДАПТИВ МАЗАФАКА
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         //=======================mainLayout=======================
     }
 }
