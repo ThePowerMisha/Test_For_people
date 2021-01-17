@@ -47,7 +47,7 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
 
             <!--ТЕОРЕТИЧЕСКИЙ МАТЕРИАЛ-->
-            <Button x:Name="navBarButton1" Content="Теоретиеский материал" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="8" FontFamily="Arial" FontSize="16" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" Width="194" Height="34" Click="navBarButton1_Click">
+            <Button x:Name="navBarButton1" Content="Теоретический материал" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="8" FontFamily="Arial" FontSize="16" Cursor="Hand" Background="Transparent" BorderBrush="Transparent" Width="194" Height="34" Click="navBarButton1_Click">
                 <Button.Triggers>
                     <EventTrigger RoutedEvent="Button.MouseEnter">
                         <BeginStoryboard>
